@@ -18,7 +18,9 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r trade_bot/requirements.txt
-      - name: Build performance report
+      - name: Build and send performance report
         env:
           DATABASE_PATH: trade_bot.db
-        run: python -m trade_bot.performance_report
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m trade_bot.telegram_report
