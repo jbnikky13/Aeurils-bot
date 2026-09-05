@@ -45,6 +45,15 @@ jobs:
       - name: Validate required configuration
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           STOCK_API_KEY: ${{ secrets.STOCK_API_KEY }}
           WHALE_API_KEY: ${{ secrets.WHALE_API_KEY }}
-        run: python -m trade_bot.healthcheck
+        run: |
+          python - <<'PY'
+          import os
+          required = ['TELEGRAM_BOT_TOKEN','GEMINI_API_KEY','STOCK_API_KEY','WHALE_API_KEY']
+          missing = [x for x in required if not os.getenv(x)]
+          if missing:
+              raise SystemExit('Missing GitHub secrets: ' + ', '.join(missing))
+          print('Required provider secrets are configured')
+          PY
