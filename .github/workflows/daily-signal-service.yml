@@ -1,0 +1,38 @@
+name: Aeurils Daily Signal Service
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aurelis-daily-signal-service
+  cancel-in-progress: false
+
+jobs:
+  daily-signal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install -r trade_bot/requirements.txt
+      - name: Run daily signal service
+        env:
+          DATABASE_PATH: trade_bot.db
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          MIN_SIGNAL_SCORE: '70'
+          WATCHLIST_CRYPTO: ${{ vars.WATCHLIST_CRYPTO }}
+          WATCHLIST_STOCKS: ${{ vars.WATCHLIST_STOCKS }}
+          GEM_DISCOVERY_LIMIT: '5'
+          SMALL_CAP_DISCOVERY_LIMIT: '5'
+          GEM_VALIDATION_LIMIT: '5'
+        run: |
+          python -m trade_bot.daily_service
