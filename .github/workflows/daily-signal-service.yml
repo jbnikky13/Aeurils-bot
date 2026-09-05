@@ -3,7 +3,8 @@ name: Aeurils Daily Signal Service
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 8 * * *'
+    # Daily at 08:17 UTC / 09:17 Africa/Lagos. Offset from :00 reduces peak-load scheduling contention.
+    - cron: '17 8 * * *'
 
 permissions:
   contents: read
@@ -34,5 +35,4 @@ jobs:
           GEM_DISCOVERY_LIMIT: '5'
           SMALL_CAP_DISCOVERY_LIMIT: '5'
           GEM_VALIDATION_LIMIT: '5'
-        run: |
-          python -m trade_bot.daily_service
+        run: python -m trade_bot.daily_service
