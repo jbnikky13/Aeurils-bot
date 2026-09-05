@@ -12,17 +12,21 @@ CHAT_ID=os.getenv('TELEGRAM_CHAT_ID')
 MAX_DAILY_ACTIONABLE_SIGNALS=int(os.getenv('MAX_DAILY_ACTIONABLE_SIGNALS','1'))
 MAX_UNIVERSE_SCAN=int(os.getenv('MAX_UNIVERSE_SCAN','0'))
 DAILY_FALLBACK_MIN_CONFLUENCES=int(os.getenv('DAILY_FALLBACK_MIN_CONFLUENCES','4'))
+MARKET_DATA_CONCURRENCY=int(os.getenv('MARKET_DATA_CONCURRENCY','12'))
 
 def _entry(signal):
     if signal.entry_low is None or signal.entry_high is None: raise ValueError(f'{signal.symbol}: actionable signal has no entry range')
     return (float(signal.entry_low)+float(signal.entry_high))/2
-async def _run_crypto(symbol):
-    try:return await crypto_setup(symbol)
-    except Exception:return None
+async def _run_crypto(symbol,sem):
+    async with sem:
+        try:return await crypto_setup(symbol)
+        except Exception:return None
 def _run_stock(symbol):
     try:return stock_setup(symbol)
     except Exception:return None
-async def _run_stock_async(symbol):return await asyncio.to_thread(_run_stock,symbol)
+async def _run_stock_async(symbol,sem):
+    async with sem:
+        return await asyncio.to_thread(_run_stock,symbol)
 def _gate_text(g):return f"Confluence: {g['passed']}/{g['minimum']} required\n"+'\n'.join(f"✓ {x}" for x in g['confluences'])
 def _fallback_candidates(evaluated,minimum):
     candidates=[(s,g) for kind,symbol,s,g in evaluated if s is not None and getattr(s,'direction','WAIT')!='WAIT' and g.get('passed',0)>=minimum]
@@ -35,7 +39,8 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
     if MAX_UNIVERSE_SCAN>0:base_crypto=base_crypto[:MAX_UNIVERSE_SCAN]
     stocks=[x.strip().upper() for x in (os.getenv('WATCHLIST_STOCKS') or 'NVDA,TSLA,AAPL,MSFT,AMZN').split(',') if x.strip()]
     pairs=[('crypto',s) for s in base_crypto]+[('stock',s) for s in stocks]
-    raw=await asyncio.gather(*[_run_crypto(s) if kind=='crypto' else _run_stock_async(s) for kind,s in pairs])
+    sem=asyncio.Semaphore(max(1,MARKET_DATA_CONCURRENCY))
+    raw=await asyncio.gather(*[_run_crypto(s,sem) if kind=='crypto' else _run_stock_async(s,sem) for kind,s in pairs])
     async def gated(kind,symbol,signal):
         minimum=int(os.getenv('MIN_CONFLUENCES','6'))
         if signal is None:return kind,symbol,None,{'passed':0,'minimum':minimum,'actionable':False,'confluences':[],'checks':[],'failed':['Setup generation failed'],'unknown':['Setup data unavailable']}
@@ -67,5 +72,5 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
     else:
         body=f"📊 AURELIS DAILY SIGNAL\n\n🔴 NO TRADE DATA\n\nThe scanner could not produce a valid directional setup today. This is a data/engine condition, not a fabricated trade."
     if duplicates:body+='\n\n🔁 Duplicate protection: '+', '.join(duplicates)+' suppressed.'
-    body+=f'\n\n📋 SCAN AUDIT\n✓ Qualified: {counts["QUALIFIED"]}\n✕ Rejected: {counts["REJECTED"]}\n? Insufficient data: {counts["INSUFFICIENT_DATA"]}\n\n🎯 CORE UNIVERSE: {len(base_crypto)} Binance USDT spot pairs + {len(stocks)} configured stocks.\nDiscovery feature: DISABLED.\nDaily fallback minimum: {DAILY_FALLBACK_MIN_CONFLUENCES} confluences.'
+    body+=f'\n\n📋 SCAN AUDIT\n✓ Qualified: {counts["QUALIFIED"]}\n✕ Rejected: {counts["REJECTED"]}\n? Insufficient data: {counts["INSUFFICIENT_DATA"]}\n\n🎯 CORE UNIVERSE: {len(base_crypto)} Binance USDT spot pairs + {len(stocks)} configured stocks.\nDiscovery feature: DISABLED.\nDaily fallback minimum: {DAILY_FALLBACK_MIN_CONFLUENCES} confluences.\nMarket-data concurrency: {MARKET_DATA_CONCURRENCY}.'
     for i in range(0,len(body),4000):await context.bot.send_message(chat_id=CHAT_ID,text=body[i:i+4000])
