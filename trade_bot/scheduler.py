@@ -7,9 +7,11 @@ from .signal_lifecycle import record_open
 from .paper_trader import open_paper_trade
 from .confluence_gate import evaluate
 from .confluence_providers import crypto_evidence, stock_evidence
+from .binance_universe import all_binance_usdt_spot_symbols
 
 CHAT_ID=os.getenv("TELEGRAM_CHAT_ID")
 MAX_DAILY_ACTIONABLE_SIGNALS=int(os.getenv("MAX_DAILY_ACTIONABLE_SIGNALS","3"))
+MAX_UNIVERSE_SCAN=int(os.getenv("MAX_UNIVERSE_SCAN","0"))
 
 def _entry(signal):
     if signal.entry_low is None or signal.entry_high is None: raise ValueError(f"{signal.symbol}: actionable signal has no entry range")
@@ -23,25 +25,28 @@ def _run_stock(symbol):
     try:return stock_setup(symbol)
     except Exception:return None
 
-async def _run_stock_async(symbol):
-    return await asyncio.to_thread(_run_stock,symbol)
+async def _run_stock_async(symbol): return await asyncio.to_thread(_run_stock,symbol)
 
 def _gate_text(g):
     return f"Confluence: {g['passed']}/{g['minimum']} required\n"+"\n".join(f"✓ {x}" for x in g['confluences'])
 
 async def daily_scan(context: ContextTypes.DEFAULT_TYPE):
     if not CHAT_ID: raise RuntimeError("TELEGRAM_CHAT_ID is not configured")
-    base_crypto=[x.strip().upper() for x in (os.getenv("WATCHLIST_CRYPTO") or "BTCUSDT,ETHUSDT,SOLUSDT").split(",") if x.strip()]
+    # Binance is the authoritative crypto universe. WATCHLIST_CRYPTO is only a
+    # fallback if exchangeInfo is temporarily unavailable.
+    try:
+        base_crypto=all_binance_usdt_spot_symbols()
+    except Exception:
+        base_crypto=[x.strip().upper() for x in (os.getenv("WATCHLIST_CRYPTO") or "BTCUSDT,ETHUSDT,SOLUSDT").split(",") if x.strip()]
+    if MAX_UNIVERSE_SCAN>0: base_crypto=base_crypto[:MAX_UNIVERSE_SCAN]
     stocks=[x.strip().upper() for x in (os.getenv("WATCHLIST_STOCKS") or "NVDA,TSLA,AAPL,MSFT,AMZN").split(",") if x.strip()]
     crypto_results=await asyncio.gather(*[_run_crypto(s) for s in base_crypto])
     stock_results=await asyncio.gather(*[_run_stock_async(s) for s in stocks])
     signals=[s for s in [*crypto_results,*stock_results] if s is not None]
-
     async def gated(s):
         is_crypto=s.symbol.upper().endswith('USDT')
         evidence=await crypto_evidence(s.symbol) if is_crypto else await asyncio.to_thread(stock_evidence,s)
         return s,evaluate(s,onchain=evidence if is_crypto else {},offchain=evidence if not is_crypto else {})
-
     evaluated=await asyncio.gather(*[gated(s) for s in signals])
     threshold=int(os.getenv("MIN_SIGNAL_SCORE","70"))
     candidates=[(s,g) for s,g in evaluated if s.direction!="WAIT" and s.score>=threshold and g['actionable']]
@@ -54,11 +59,10 @@ async def daily_scan(context: ContextTypes.DEFAULT_TYPE):
             except Exception as exc: raise RuntimeError(f"Paper-trade ledger failed for {signal.symbol}: {exc}") from exc
             published.append((signal,sid,gate))
         else: duplicates.append(signal.symbol)
-
     if published:
         body="📊 AURELIS DAILY SIGNAL\n\n🟢 ACTIONABLE TRADE\n\n"+"\n\n".join(format_signal(s)+f"\nSignal ID: {sid}\nStatus: OPEN | PAPER TRADE ACTIVE\n{_gate_text(gate)}" for s,sid,gate in published)+f"\n\nDaily cap: {MAX_DAILY_ACTIONABLE_SIGNALS}"
     else:
         body="📊 AURELIS DAILY SIGNAL\n\n🟡 WATCH / WAIT\n\nNo Binance crypto or configured stock setup passed the complete quality gate AND minimum 6-confluence requirement today.\nNo trade published."
     if duplicates: body+="\n\n🔁 Duplicate protection: "+", ".join(duplicates)+" suppressed."
-    body+="\n\n🎯 CORE UNIVERSE: Binance crypto pairs + configured stocks only.\nDiscovery feature: DISABLED."
+    body+=f"\n\n🎯 CORE UNIVERSE: {len(base_crypto)} Binance USDT spot pairs + {len(stocks)} configured stocks.\nDiscovery feature: DISABLED."
     for i in range(0,len(body),4000): await context.bot.send_message(chat_id=CHAT_ID,text=body[i:i+4000])
