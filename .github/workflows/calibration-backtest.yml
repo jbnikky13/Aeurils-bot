@@ -1,0 +1,22 @@
+name: Aeurils Controlled Calibration Backtest
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 11 * * 1'
+permissions:
+  contents: read
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install -r trade_bot/requirements.txt
+      - name: Compare baseline and candidate calibration
+        env:
+          DATABASE_PATH: trade_bot.db
+          BACKTEST_MIN_SAMPLE: '30'
+        run: python -m trade_bot.calibration_backtest
