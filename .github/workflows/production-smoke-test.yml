@@ -1,0 +1,31 @@
+name: Aeurils Production Smoke Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --upgrade pip
+      - run: pip install -r trade_bot/requirements.txt
+      - name: Run live end-to-end test
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          WHALE_API_KEY: ${{ secrets.WHALE_API_KEY }}
+          STOCK_API_KEY: ${{ secrets.STOCK_API_KEY }}
+          COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
+          WATCHLIST_CRYPTO: ${{ vars.WATCHLIST_CRYPTO }}
+          WATCHLIST_STOCKS: ${{ vars.WATCHLIST_STOCKS }}
+          TOKEN_CONTRACTS: ${{ vars.TOKEN_CONTRACTS }}
+          WHALE_WALLETS: ${{ vars.WHALE_WALLETS }}
+          EXCHANGE_WALLETS: ${{ vars.EXCHANGE_WALLETS }}
+          SMOKE_TEST_SYMBOL: ${{ vars.SMOKE_TEST_SYMBOL }}
+        run: python -m trade_bot.production_smoke_test
