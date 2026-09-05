@@ -1,0 +1,22 @@
+name: Aeurils Strategy Validation
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 10 * * 1'
+permissions:
+  contents: read
+jobs:
+  validate-strategy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install -r trade_bot/requirements.txt
+      - name: Validate paper strategy
+        env:
+          DATABASE_PATH: trade_bot.db
+          VALIDATION_MIN_SAMPLE: '20'
+        run: python -m trade_bot.strategy_validation
