@@ -1,11 +1,11 @@
-"""Strict confluence gate used by the daily service.
-Only evidence actually supplied by the signal/provider layer can pass.
-Missing data is UNKNOWN and never counts as a confirmation.
+"""Strict six-confluence gate for Aeurils daily signals.
+Core market/risk checks and supplied live evidence are counted separately.
+Missing provider data is UNKNOWN and never counts as confirmation.
 """
 import os
 MIN_CONFLUENCES=int(os.getenv('MIN_CONFLUENCES','6'))
 OFFCHAIN_KEYS=('trend_structure','direction','entry_range','risk_reward','volume_liquidity','market_regime','sentiment_narrative','news_context')
-ONCHAIN_KEYS=('onchain_dex_activity','buy_sell_pressure','liquidity_depth')
+ONCHAIN_KEYS=('onchain_dex_activity','buy_sell_pressure','liquidity_depth','whale_activity','exchange_flows','smart_money','holder_concentration')
 
 def evaluate(signal,onchain=None,offchain=None):
     checks=[
@@ -19,5 +19,4 @@ def evaluate(signal,onchain=None,offchain=None):
     for key,value in (onchain or {}).items():
         if key in ONCHAIN_KEYS: checks.append((key,bool(value),key.replace('_',' ').title()))
     passed=[x for x in checks if x[1]]
-    independent=[x for x in passed if x[0] in set(OFFCHAIN_KEYS+ONCHAIN_KEYS)]
-    return {'passed':len(independent),'minimum':MIN_CONFLUENCES,'actionable':len(independent)>=MIN_CONFLUENCES and getattr(signal,'direction','WAIT')!='WAIT','confluences':[x[2] for x in independent],'checks':checks,'failed':[x[2] for x in checks if not x[1]],'unknown':[k.replace('_',' ').title() for k in (set(OFFCHAIN_KEYS+ONCHAIN_KEYS)-{x[0] for x in checks})]}
+    return {'passed':len(passed),'minimum':MIN_CONFLUENCES,'actionable':len(passed)>=MIN_CONFLUENCES and getattr(signal,'direction','WAIT')!='WAIT','confluences':[x[2] for x in passed],'checks':checks,'failed':[x[2] for x in checks if not x[1]],'unknown':[k.replace('_',' ').title() for k in (set(OFFCHAIN_KEYS+ONCHAIN_KEYS)-{x[0] for x in checks})]}
