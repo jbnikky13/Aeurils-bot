@@ -42,8 +42,8 @@ def _format_validated_gems(items):
 
 async def daily_scan(context: ContextTypes.DEFAULT_TYPE):
     if not CHAT_ID: raise RuntimeError("TELEGRAM_CHAT_ID is not configured")
-    symbols=[x.strip().upper() for x in os.getenv("WATCHLIST_CRYPTO","BTCUSDT,ETHUSDT,SOLUSDT").split(",") if x.strip()]
-    stocks=[x.strip().upper() for x in os.getenv("WATCHLIST_STOCKS","NVDA,TSLA,AAPL,MSFT,AMZN").split(",") if x.strip()]
+    symbols=[x.strip().upper() for x in (os.getenv("WATCHLIST_CRYPTO") or "BTCUSDT,ETHUSDT,SOLUSDT").split(",") if x.strip()]
+    stocks=[x.strip().upper() for x in (os.getenv("WATCHLIST_STOCKS") or "NVDA,TSLA,AAPL,MSFT,AMZN").split(",") if x.strip()]
     crypto_results=await asyncio.gather(*[_run_crypto(s) for s in symbols])
     stock_results=[_run_stock(s) for s in stocks]
     signals=[s for s in [*crypto_results,*stock_results] if s is not None]
@@ -60,9 +60,9 @@ async def daily_scan(context: ContextTypes.DEFAULT_TYPE):
             published.append((signal, signal_id))
         else: duplicates.append(signal.symbol)
     if published:
-        body="📊 AURELIS DAILY TRADE SETUPS\n\n"+"\n\n".join(format_signal(s) + f"\nSignal ID: {sid}\nStatus: OPEN | PAPER TRADE ACTIVE" for s, sid in published)
+        body="📊 AURELIS DAILY SIGNAL\n\n🟢 ACTIONABLE TRADE\n\n"+"\n\n".join(format_signal(s) + f"\nSignal ID: {sid}\nStatus: OPEN | PAPER TRADE ACTIVE" for s, sid in published)
     else:
-        body="📊 AURELIS DAILY TRADE SETUPS\n\nNo new high-confidence live setup met the configured threshold. No duplicate or low-confidence trade signal published."
+        body="📊 AURELIS DAILY SIGNAL\n\n🟡 WATCH / WAIT\n\nNo crypto or stock setup passed the complete quality gate today.\nNo trade published."
     if duplicates: body += "\n\n🔁 Duplicate protection: " + ", ".join(duplicates) + " already-open/recent setup(s) suppressed."
     trending=discover_gems(limit=int(os.getenv("GEM_DISCOVERY_LIMIT","5")))
     small_caps=discover_small_caps(limit=int(os.getenv("SMALL_CAP_DISCOVERY_LIMIT","5")),max_market_cap=int(os.getenv("SMALL_CAP_MAX_MARKET_CAP","1000000000")))
