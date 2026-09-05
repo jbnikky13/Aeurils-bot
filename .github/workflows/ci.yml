@@ -9,12 +9,15 @@ on:
   schedule:
     - cron: '15 8 * * *'
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
       - run: pip install -r trade_bot/requirements.txt
@@ -34,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
       - run: pip install -r trade_bot/requirements.txt
@@ -53,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
       - run: pip install -r trade_bot/requirements.txt
@@ -65,10 +68,11 @@ jobs:
           STOCK_API_KEY: ${{ secrets.STOCK_API_KEY }}
           WHALE_API_KEY: ${{ secrets.WHALE_API_KEY }}
           COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
-          WATCHLIST_CRYPTO: ${{ vars.WATCHLIST_CRYPTO }}
-          WATCHLIST_STOCKS: ${{ vars.WATCHLIST_STOCKS }}
+          WATCHLIST_CRYPTO: ${{ vars.WATCHLIST_CRYPTO || 'BTCUSDT,ETHUSDT,SOLUSDT' }}
+          WATCHLIST_STOCKS: ${{ vars.WATCHLIST_STOCKS || 'NVDA,TSLA,AAPL,MSFT,AMZN' }}
           TOKEN_CONTRACTS: ${{ vars.TOKEN_CONTRACTS }}
           WHALE_WALLETS: ${{ vars.WHALE_WALLETS }}
           EXCHANGE_WALLETS: ${{ vars.EXCHANGE_WALLETS }}
-          MIN_SIGNAL_SCORE: ${{ vars.MIN_SIGNAL_SCORE }}
+          MIN_SIGNAL_SCORE: ${{ vars.MIN_SIGNAL_SCORE || '70' }}
+          WALLET_MIN_CONFIDENCE: ${{ vars.WALLET_MIN_CONFIDENCE || '0.85' }}
         run: python -m trade_bot.run_daily
