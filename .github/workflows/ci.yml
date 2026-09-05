@@ -19,3 +19,11 @@ jobs:
         run: pip install -r trade_bot/requirements.txt
       - name: Compile Python modules
         run: python -m compileall -q trade_bot
+      - name: Smoke-test imports
+        run: python - <<'PY'
+from trade_bot.whale_engine import classify_flow
+from trade_bot.signal_engine import combine_scores
+assert classify_flow('exchange','whale') == 'ACCUMULATION'
+assert combine_scores(100, 100, 100) == 100
+print('Aeurils core smoke test passed')
+PY
