@@ -4,6 +4,7 @@ from telegram.ext import ContextTypes
 from .live_setup import crypto_setup, stock_setup
 from .formatter import format_signal
 from .signal_lifecycle import record_open
+from .paper_trader import open_paper_trade
 from .gem_finder import discover_gems, discover_small_caps
 from .gem_score import scan_candidates
 
@@ -28,7 +29,8 @@ def _format_validated_gems(items):
     if not items: return "💎 VALIDATED GEM WATCHLIST\nNo candidates passed deeper validation."
     lines=["💎 VALIDATED GEM WATCHLIST"]
     for x in items:
-        lines.append(f"• {x.symbol} — {x.name} | {x.status} | Gem {x.final_score:.1f}/100 | " + "; ".join(x.reasons[:3]))
+        reasons="; ".join(str(r) for r in (x.reasons or [])[:3])
+        lines.append(f"• {x.symbol} — {x.name} | {x.status} | Gem {x.final_score:.1f}/100 | {reasons}")
     lines.append("⚠️ WATCH is research/watchlist status, not an automatic buy signal.")
     return "\n".join(lines)
 
@@ -40,16 +42,17 @@ async def daily_scan(context: ContextTypes.DEFAULT_TYPE):
     stock_results=[_run_stock(s) for s in stocks]
     signals=[s for s in [*crypto_results,*stock_results] if s is not None]
     threshold=int(os.getenv("MIN_SIGNAL_SCORE","70"))
-    published=[]
-    duplicates=[]
+    published=[]; duplicates=[]
     for signal in signals:
-        if signal.direction == "WAIT" or signal.score < threshold:
-            continue
+        if signal.direction == "WAIT" or signal.score < threshold: continue
         signal_id, created = record_open(signal)
-        if created: published.append((signal, signal_id))
+        if created:
+            try: open_paper_trade(signal_id, signal)
+            except Exception as exc: raise RuntimeError(f"Paper-trade ledger failed for {signal.symbol}: {exc}") from exc
+            published.append((signal, signal_id))
         else: duplicates.append(signal.symbol)
     if published:
-        body="📊 AURELIS DAILY TRADE SETUPS\n\n"+"\n\n".join(format_signal(s) + f"\nSignal ID: {sid}\nStatus: OPEN" for s, sid in published)
+        body="📊 AURELIS DAILY TRADE SETUPS\n\n"+"\n\n".join(format_signal(s) + f"\nSignal ID: {sid}\nStatus: OPEN | PAPER TRADE ACTIVE" for s, sid in published)
     else:
         body="📊 AURELIS DAILY TRADE SETUPS\n\nNo new high-confidence live setup met the configured threshold. No duplicate or low-confidence trade signal published."
     if duplicates: body += "\n\n🔁 Duplicate protection: " + ", ".join(duplicates) + " already-open/recent setup(s) suppressed."
