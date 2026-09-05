@@ -1,0 +1,23 @@
+name: Aeurils Robustness Validation
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * 1'
+permissions:
+  contents: read
+jobs:
+  robustness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install -r trade_bot/requirements.txt
+      - name: Run robustness and out-of-sample validation
+        env:
+          DATABASE_PATH: trade_bot.db
+          ROBUSTNESS_MIN_SAMPLE: '40'
+          ROBUSTNESS_MIN_SPLIT: '10'
+        run: python -m trade_bot.robustness_validation
