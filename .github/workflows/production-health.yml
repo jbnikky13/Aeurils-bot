@@ -1,0 +1,21 @@
+name: Aeurils Production Health
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'
+permissions:
+  contents: read
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install -r trade_bot/requirements.txt
+      - name: Run production health checks
+        env:
+          DATABASE_PATH: trade_bot.db
+        run: python -m trade_bot.production_health
