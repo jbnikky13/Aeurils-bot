@@ -1,5 +1,8 @@
-"""Daily operational monitor for Aeurils. Read-only health checks; no orders."""
+"""Daily operational monitor with verified Telegram delivery.
+Read-only health checks; no orders or strategy mutation.
+"""
 import os, sqlite3
+from .telegram_delivery import send
 DB=os.getenv('DATABASE_PATH','trade_bot.db')
 
 def run():
@@ -19,4 +22,13 @@ def report(signal='WATCH / WAIT'):
     lines += [f'• {k}: {v}' for k,v in checks]
     lines += ['',f"Today's signal state: {signal}",'','Crypto coverage: ENABLED','🔒 Paper-trading / signal monitoring only. Real-money execution is disabled.']
     return '\n'.join(lines)
-if __name__=='__main__': print(report())
+
+def send_verified_report(signal='WATCH / WAIT'):
+    result=send(report(signal))
+    return result
+
+if __name__=='__main__':
+    result=send_verified_report(os.getenv('DAILY_SIGNAL_STATE','WATCH / WAIT'))
+    print(report(os.getenv('DAILY_SIGNAL_STATE','WATCH / WAIT')))
+    print(f"Telegram delivery: {'VERIFIED' if result.get('ok') else 'FAILED'}")
+    if not result.get('ok'): raise SystemExit(1)
