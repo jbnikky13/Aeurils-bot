@@ -36,11 +36,13 @@ def direction_from_components(technical_bias: float, whale_bias: float) -> Direc
     if bias <= -0.20: return "SHORT"
     return "WAIT"
 
-def build_setup(symbol: str, asset_type: str, price: float, technical_score: int, whale_score: int, sentiment_score: int, technical_bias: float, whale_bias: float, atr: float, market_regime: str = "UNKNOWN") -> Signal:
+def build_setup(symbol: str, asset_type: str, price: float, technical_score: int, whale_score: int, sentiment_score: float, technical_bias: float, whale_bias: float, atr: float, market_regime: str = "UNKNOWN") -> Signal:
     direction = direction_from_components(technical_bias, whale_bias)
     score = combine_scores(technical_score, whale_score, sentiment_score)
-    if direction == "WAIT" or score < 70:
-        return Signal(symbol, asset_type, "WAIT", score, None, None, None, None, None, None, technical_score, whale_score, sentiment_score, ["No sufficiently strong multi-factor setup."], "Wait for confirmation.", market_regime, whale_bias=whale_bias)
+    # Keep the setup engine permissive enough to produce candidates. The
+    # authoritative six-confluence decision is made later by confluence_gate.
+    if direction == "WAIT" or score < 60 or atr <= 0:
+        return Signal(symbol, asset_type, "WAIT", score, None, None, None, None, None, None, technical_score, whale_score, sentiment_score, ["No sufficiently strong directional setup."], "Wait for confirmation.", market_regime, whale_bias=whale_bias)
     entry_low, entry_high = price * 0.997, price * 1.003
     if direction == "LONG": stop, tp1, tp2 = price - 1.5 * atr, price + 2.0 * atr, price + 3.0 * atr
     else: stop, tp1, tp2 = price + 1.5 * atr, price - 2.0 * atr, price - 3.0 * atr
