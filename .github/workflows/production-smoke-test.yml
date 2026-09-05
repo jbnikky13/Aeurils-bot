@@ -22,10 +22,11 @@ jobs:
           WHALE_API_KEY: ${{ secrets.WHALE_API_KEY }}
           STOCK_API_KEY: ${{ secrets.STOCK_API_KEY }}
           COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
-          WATCHLIST_CRYPTO: ${{ vars.WATCHLIST_CRYPTO }}
-          WATCHLIST_STOCKS: ${{ vars.WATCHLIST_STOCKS }}
+          WATCHLIST_CRYPTO: ${{ vars.WATCHLIST_CRYPTO || 'BTCUSDT,ETHUSDT,SOLUSDT' }}
+          WATCHLIST_STOCKS: ${{ vars.WATCHLIST_STOCKS || 'NVDA,TSLA,AAPL,MSFT,AMZN' }}
           TOKEN_CONTRACTS: ${{ vars.TOKEN_CONTRACTS }}
           WHALE_WALLETS: ${{ vars.WHALE_WALLETS }}
           EXCHANGE_WALLETS: ${{ vars.EXCHANGE_WALLETS }}
-          SMOKE_TEST_SYMBOL: ${{ vars.SMOKE_TEST_SYMBOL }}
+          SMOKE_TEST_SYMBOL: ${{ vars.SMOKE_TEST_SYMBOL || 'BTCUSDT' }}
+          WALLET_MIN_CONFIDENCE: ${{ vars.WALLET_MIN_CONFIDENCE || '0.85' }}
         run: python -m trade_bot.production_smoke_test
