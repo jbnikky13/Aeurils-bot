@@ -29,17 +29,19 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
     except Exception:base_crypto=[x.strip().upper() for x in (os.getenv('WATCHLIST_CRYPTO') or 'BTCUSDT,ETHUSDT,SOLUSDT').split(',') if x.strip()]
     if MAX_UNIVERSE_SCAN>0:base_crypto=base_crypto[:MAX_UNIVERSE_SCAN]
     stocks=[x.strip().upper() for x in (os.getenv('WATCHLIST_STOCKS') or 'NVDA,TSLA,AAPL,MSFT,AMZN').split(',') if x.strip()]
-    crypto_results=await asyncio.gather(*[_run_crypto(s) for s in base_crypto])
-    stock_results=await asyncio.gather(*[_run_stock_async(s) for s in stocks])
-    signals=[s for s in [*crypto_results,*stock_results] if s is not None]
-    async def gated(s):
-        is_crypto=s.symbol.upper().endswith('USDT')
-        evidence=await crypto_evidence(s.symbol) if is_crypto else await asyncio.to_thread(stock_evidence,s)
-        return s,evaluate(s,onchain=evidence if is_crypto else {},offchain=evidence if not is_crypto else {})
-    evaluated=await asyncio.gather(*[gated(s) for s in signals])
+    pairs=[('crypto',s) for s in base_crypto]+[('stock',s) for s in stocks]
+    raw=await asyncio.gather(*[_run_crypto(s) if kind=='crypto' else _run_stock_async(s) for kind,s in pairs])
+    signals=[]
+    for (kind,symbol),signal in zip(pairs,raw):
+        if signal is not None: signals.append((kind,symbol,signal))
+    async def gated(item):
+        kind,symbol,s=item
+        evidence=await crypto_evidence(symbol) if kind=='crypto' else await asyncio.to_thread(stock_evidence,s)
+        return kind,symbol,s,evaluate(s,onchain=evidence if kind=='crypto' else {},offchain=evidence if kind=='stock' else {})
+    evaluated=await asyncio.gather(*[gated(x) for x in signals])
     minimum=int(os.getenv('MIN_CONFLUENCES','6'))
-    audit=[classify(sym,s,g,minimum) for sym,(s,g) in zip([x for x in base_crypto+stocks],evaluated)]
-    candidates=rank(evaluated,minimum,MAX_DAILY_ACTIONABLE_SIGNALS)
+    audit=[classify(symbol,s,g,minimum) for kind,symbol,s,g in evaluated]
+    candidates=rank([(s,g) for kind,symbol,s,g in evaluated],minimum,MAX_DAILY_ACTIONABLE_SIGNALS)
     published=[];duplicates=[]
     for signal,gate in candidates:
         sid,created=record_open(signal)
