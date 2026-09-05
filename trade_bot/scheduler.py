@@ -8,6 +8,7 @@ from .paper_trader import open_paper_trade
 from .gem_finder import discover_gems, discover_small_caps
 from .gem_score import scan_candidates
 from .confluence_gate import evaluate
+from .confluence_providers import crypto_evidence, stock_evidence
 
 CHAT_ID=os.getenv("TELEGRAM_CHAT_ID")
 MAX_DAILY_ACTIONABLE_SIGNALS=int(os.getenv("MAX_DAILY_ACTIONABLE_SIGNALS","3"))
@@ -21,25 +22,26 @@ async def _run_crypto(symbol):
 def _run_stock(symbol):
     try:return stock_setup(symbol)
     except Exception:return None
+
 def _format_candidates(title,items):
     if not items:return f"{title}\nNo candidates met the filters."
     return "\n".join([title]+[f"• {x['symbol'].upper()} — {x['name']} | score {x['score']} | mcap ${x['market_cap']:,.0f} | 24h ${x['volume_24h']:,.0f} | 24h {x['price_change_24h']:.2f}% | 7d {x['price_change_7d']:.2f}%" for x in items])
 def _format_validated_gems(items):
     if not items:return "💎 VALIDATED GEM WATCHLIST\nNo candidates passed deeper validation."
     return "\n".join(["💎 VALIDATED GEM WATCHLIST"]+[f"• {x.symbol} — {x.name} | {x.status} | Gem {x.final_score:.1f}/100 | {'; '.join(str(r) for r in (x.reasons or [])[:3])}" for x in items])+"\n⚠️ WATCH is research/watchlist status, not an automatic buy signal."
-
-def _gate_text(g):
-    return f"Confluence: {g['passed']}/{g['minimum']} required\n"+"\n".join(f"✓ {x}" for x in g['confluences'])
+def _gate_text(g):return f"Confluence: {g['passed']}/{g['minimum']} required\n"+"\n".join(f"✓ {x}" for x in g['confluences'])
 
 async def daily_scan(context: ContextTypes.DEFAULT_TYPE):
     if not CHAT_ID:raise RuntimeError("TELEGRAM_CHAT_ID is not configured")
     symbols=[x.strip().upper() for x in (os.getenv("WATCHLIST_CRYPTO") or "BTCUSDT,ETHUSDT,SOLUSDT").split(",") if x.strip()]
     stocks=[x.strip().upper() for x in (os.getenv("WATCHLIST_STOCKS") or "NVDA,TSLA,AAPL,MSFT,AMZN").split(",") if x.strip()]
-    signals=[s for s in [*await asyncio.gather(*[_run_crypto(s) for s in symbols]),*[_run_stock(s) for s in stocks]] if s is not None]
-    threshold=int(os.getenv("MIN_SIGNAL_SCORE","70")); candidates=[]
-    for s in signals:
-        gate=evaluate(s)
-        if s.direction!="WAIT" and s.score>=threshold and gate['actionable']:candidates.append((s,gate))
+    crypto_results=await asyncio.gather(*[_run_crypto(s) for s in symbols]); stock_results=[await _run_stock(s) for s in stocks]
+    signals=[s for s in [*crypto_results,*stock_results] if s is not None]
+    async def gated(s):
+        evidence=await crypto_evidence(s.symbol) if s.symbol.upper().endswith('USDT') else stock_evidence(s)
+        return s,evaluate(s,onchain=evidence if s.symbol.upper().endswith('USDT') else {},offchain=evidence if not s.symbol.upper().endswith('USDT') else {})
+    evaluated=await asyncio.gather(*[gated(s) for s in signals])
+    threshold=int(os.getenv("MIN_SIGNAL_SCORE","70")); candidates=[(s,g) for s,g in evaluated if s.direction!="WAIT" and s.score>=threshold and g['actionable']]
     candidates.sort(key=lambda x:(x[1]['passed'],float(x[0].score)),reverse=True)
     published=[];duplicates=[]
     for signal,gate in candidates[:MAX_DAILY_ACTIONABLE_SIGNALS]:
@@ -49,8 +51,7 @@ async def daily_scan(context: ContextTypes.DEFAULT_TYPE):
             except Exception as exc:raise RuntimeError(f"Paper-trade ledger failed for {signal.symbol}: {exc}") from exc
             published.append((signal,sid,gate))
         else:duplicates.append(signal.symbol)
-    if published:
-        body="📊 AURELIS DAILY SIGNAL\n\n🟢 ACTIONABLE TRADE\n\n"+"\n\n".join(format_signal(s)+f"\nSignal ID: {sid}\nStatus: OPEN | PAPER TRADE ACTIVE\n{_gate_text(gate)}" for s,sid,gate in published)+f"\n\nDaily cap: {MAX_DAILY_ACTIONABLE_SIGNALS}"
+    if published:body="📊 AURELIS DAILY SIGNAL\n\n🟢 ACTIONABLE TRADE\n\n"+"\n\n".join(format_signal(s)+f"\nSignal ID: {sid}\nStatus: OPEN | PAPER TRADE ACTIVE\n{_gate_text(gate)}" for s,sid,gate in published)+f"\n\nDaily cap: {MAX_DAILY_ACTIONABLE_SIGNALS}"
     else:body="📊 AURELIS DAILY SIGNAL\n\n🟡 WATCH / WAIT\n\nNo crypto or stock setup passed the complete quality gate AND minimum 6-confluence requirement today.\nNo trade published."
     if duplicates:body+="\n\n🔁 Duplicate protection: "+", ".join(duplicates)+" suppressed."
     trending=discover_gems(limit=int(os.getenv("GEM_DISCOVERY_LIMIT","5")));small_caps=discover_small_caps(limit=int(os.getenv("SMALL_CAP_DISCOVERY_LIMIT","5")),max_market_cap=int(os.getenv("SMALL_CAP_MAX_MARKET_CAP","1000000000")))
