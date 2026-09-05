@@ -1,0 +1,24 @@
+name: Aeurils Calibration Approval Gate
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 11 * * 1'
+permissions:
+  contents: read
+jobs:
+  approval-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install -r trade_bot/requirements.txt
+      - name: Evaluate calibration approval gate
+        env:
+          DATABASE_PATH: trade_bot.db
+          APPROVAL_MIN_SAMPLE: '30'
+          APPROVAL_MIN_CANDIDATE: '10'
+          APPROVAL_MIN_EXPECTANCY_DELTA: '0.10'
+        run: python -m trade_bot.calibration_approval
