@@ -5,13 +5,13 @@ from .live_setup import crypto_setup, stock_setup
 from .formatter import format_signal
 from .signal_lifecycle import record_open
 from .paper_trader import open_paper_trade
-from .gem_finder import discover_gems, discover_small_caps
-from .gem_score import scan_candidates
+from .discovery_pipeline import discovered_symbols
 from .confluence_gate import evaluate
 from .confluence_providers import crypto_evidence, stock_evidence
-from .discovery_pipeline import discovered_symbols
+
 CHAT_ID=os.getenv("TELEGRAM_CHAT_ID")
 MAX_DAILY_ACTIONABLE_SIGNALS=int(os.getenv("MAX_DAILY_ACTIONABLE_SIGNALS","3"))
+
 def _entry(signal):
     if signal.entry_low is None or signal.entry_high is None: raise ValueError(f"{signal.symbol}: actionable signal has no entry range")
     return (float(signal.entry_low)+float(signal.entry_high))/2
@@ -25,15 +25,16 @@ async def _run_stock_async(symbol):return await asyncio.to_thread(_run_stock,sym
 def _format_candidates(title,items):
     if not items:return f"{title}\nNo candidates met the filters."
     return "\n".join([title]+[f"• {x['symbol'].upper()} — {x['name']} | score {x['score']} | mcap ${x['market_cap']:,.0f} | 24h ${x['volume_24h']:,.0f} | 24h {x['price_change_24h']:.2f}% | 7d {x['price_change_7d']:.2f}%" for x in items])
-def _format_validated_gems(items):
-    if not items:return "💎 VALIDATED GEM WATCHLIST\nNo candidates passed deeper validation."
-    return "\n".join(["💎 VALIDATED GEM WATCHLIST"]+[f"• {x.symbol} — {x.name} | {x.status} | Gem {x.final_score:.1f}/100 | {'; '.join(str(r) for r in (x.reasons or [])[:3])}" for x in items])+"\n⚠️ WATCH is research/watchlist status, not an automatic buy signal."
+def _format_rejected(items):
+    if not items:return ""
+    return "\n".join(["⚠️ DISCOVERY ELIGIBILITY"]+[f"• {x['symbol']}: {x['reason']}" for x in items[:5]])
 def _gate_text(g):return f"Confluence: {g['passed']}/{g['minimum']} required\n"+"\n".join(f"✓ {x}" for x in g['confluences'])
+
 async def daily_scan(context: ContextTypes.DEFAULT_TYPE):
     if not CHAT_ID:raise RuntimeError("TELEGRAM_CHAT_ID is not configured")
     base_crypto=[x.strip().upper() for x in (os.getenv("WATCHLIST_CRYPTO") or "BTCUSDT,ETHUSDT,SOLUSDT").split(",") if x.strip()]
     stocks=[x.strip().upper() for x in (os.getenv("WATCHLIST_STOCKS") or "NVDA,TSLA,AAPL,MSFT,AMZN").split(",") if x.strip()]
-    discovered,trending,small_caps=await discovered_symbols(base_crypto)
+    discovered,trending,small_caps,rejected=await discovered_symbols(base_crypto)
     crypto_results=await asyncio.gather(*[_run_crypto(s) for s in [*base_crypto,*discovered]])
     stock_results=await asyncio.gather(*[_run_stock_async(s) for s in stocks])
     signals=[s for s in [*crypto_results,*stock_results] if s is not None]
@@ -56,7 +57,8 @@ async def daily_scan(context: ContextTypes.DEFAULT_TYPE):
     if published:body="📊 AURELIS DAILY SIGNAL\n\n🟢 ACTIONABLE TRADE\n\n"+"\n\n".join(format_signal(s)+f"\nSignal ID: {sid}\nStatus: OPEN | PAPER TRADE ACTIVE\n{_gate_text(gate)}" for s,sid,gate in published)+f"\n\nDaily cap: {MAX_DAILY_ACTIONABLE_SIGNALS}"
     else:body="📊 AURELIS DAILY SIGNAL\n\n🟡 WATCH / WAIT\n\nNo crypto or stock setup passed the complete quality gate AND minimum 6-confluence requirement today.\nNo trade published."
     if duplicates:body+="\n\n🔁 Duplicate protection: "+", ".join(duplicates)+" suppressed."
-    try:validated=await scan_candidates(limit=int(os.getenv("GEM_VALIDATION_LIMIT","5")))
-    except Exception:validated=[]
-    body+="\n\n"+_format_candidates("🔥 TRENDING WATCHLIST",trending)+"\n\n"+_format_candidates("💎 SMALL-CAP DISCOVERY",small_caps)+"\n\n"+_format_validated_gems([x for x in validated if x.status=="WATCH"][:int(os.getenv("GEM_VALIDATED_OUTPUT_LIMIT","5"))])
+    body+="\n\n"+_format_candidates("🔥 TRENDING WATCHLIST",trending)+"\n\n"+_format_candidates("💎 SMALL-CAP DISCOVERY",small_caps)
+    rejected_text=_format_rejected(rejected)
+    if rejected_text:body+="\n\n"+rejected_text
+    body+="\n\nℹ️ Discovered assets enter the actionable engine only when live OHLC data and a configured token contract are available. Otherwise they remain discovery-only WATCH candidates."
     for i in range(0,len(body),4000):await context.bot.send_message(chat_id=CHAT_ID,text=body[i:i+4000])
