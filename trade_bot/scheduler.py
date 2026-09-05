@@ -3,7 +3,7 @@ import asyncio
 from telegram.ext import ContextTypes
 from .live_setup import crypto_setup, stock_setup
 from .formatter import format_signal
-from .journal import record_setup
+from .signal_lifecycle import record_open
 from .gem_finder import discover_gems, discover_small_caps
 from .gem_score import scan_candidates
 
@@ -40,18 +40,23 @@ async def daily_scan(context: ContextTypes.DEFAULT_TYPE):
     stock_results=[_run_stock(s) for s in stocks]
     signals=[s for s in [*crypto_results,*stock_results] if s is not None]
     threshold=int(os.getenv("MIN_SIGNAL_SCORE","70"))
-    publish=[s for s in signals if s.direction != "WAIT" and s.score >= threshold]
-    for signal in publish: record_setup(signal)
+    published=[]
+    duplicates=[]
+    for signal in signals:
+        if signal.direction == "WAIT" or signal.score < threshold:
+            continue
+        signal_id, created = record_open(signal)
+        if created: published.append((signal, signal_id))
+        else: duplicates.append(signal.symbol)
+    if published:
+        body="📊 AURELIS DAILY TRADE SETUPS\n\n"+"\n\n".join(format_signal(s) + f"\nSignal ID: {sid}\nStatus: OPEN" for s, sid in published)
+    else:
+        body="📊 AURELIS DAILY TRADE SETUPS\n\nNo new high-confidence live setup met the configured threshold. No duplicate or low-confidence trade signal published."
+    if duplicates: body += "\n\n🔁 Duplicate protection: " + ", ".join(duplicates) + " already-open/recent setup(s) suppressed."
     trending=discover_gems(limit=int(os.getenv("GEM_DISCOVERY_LIMIT","5")))
     small_caps=discover_small_caps(limit=int(os.getenv("SMALL_CAP_DISCOVERY_LIMIT","5")),max_market_cap=int(os.getenv("SMALL_CAP_MAX_MARKET_CAP","1000000000")))
-    try:
-        validated=await scan_candidates(limit=int(os.getenv("GEM_VALIDATION_LIMIT","5")))
-    except Exception:
-        validated=[]
-    if publish:
-        body="📊 AURELIS DAILY TRADE SETUPS\n\n"+"\n\n".join(format_signal(s) for s in publish)
-    else:
-        body="📊 AURELIS DAILY TRADE SETUPS\n\nNo high-confidence live setup met the configured threshold. No trade signal published."
+    try: validated=await scan_candidates(limit=int(os.getenv("GEM_VALIDATION_LIMIT","5")))
+    except Exception: validated=[]
     body += "\n\n" + _format_candidates("🔥 TRENDING WATCHLIST", trending)
     body += "\n\n" + _format_candidates("💎 SMALL-CAP DISCOVERY", small_caps)
     body += "\n\n" + _format_validated_gems([x for x in validated if x.status == "WATCH"][:int(os.getenv("GEM_VALIDATED_OUTPUT_LIMIT","5"))])
