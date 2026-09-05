@@ -1,0 +1,23 @@
+name: Aeurils Calibration Decision
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 10 * * 1'
+permissions:
+  contents: read
+jobs:
+  calibration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install -r trade_bot/requirements.txt
+      - name: Generate calibration recommendations
+        env:
+          DATABASE_PATH: trade_bot.db
+          CALIBRATION_MIN_SAMPLE: '30'
+          CALIBRATION_MIN_GROUP_SAMPLE: '10'
+        run: python -m trade_bot.calibration_decision
