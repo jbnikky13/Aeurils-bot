@@ -5,10 +5,8 @@ from .signal_engine import build_setup
 from .stock_sentiment import score as stock_sentiment
 from .whale_provider import fetch_erc20_transfers, summarize_labeled_events
 from .gemini_signal import confirm
+from .wallet_registry import verified_addresses
 
-
-def _csv_set(name: str) -> set[str]:
-    return {x.strip().lower() for x in os.getenv(name, "").split(",") if x.strip()}
 
 def _contract_for(symbol: str) -> str:
     for item in os.getenv("TOKEN_CONTRACTS", "").split(","):
@@ -20,8 +18,9 @@ def _contract_for(symbol: str) -> str:
 async def crypto_setup(symbol: str):
     df = crypto_klines(symbol)
     tech, tbias, atr, reasons = technical_score(df)
-    whales, exchanges = _csv_set("WHALE_WALLETS"), _csv_set("EXCHANGE_WALLETS")
-    if not whales or not exchanges: raise RuntimeError("Verified whale/exchange wallets are required")
+    whales, exchanges = verified_addresses()
+    if not whales or not exchanges:
+        raise RuntimeError("Verified whale/exchange registry is empty; run intelligence refresh first")
     events=[]
     for address in whales: events.extend(await fetch_erc20_transfers(address, _contract_for(symbol)))
     summary=summarize_labeled_events(events, exchanges, whales)
