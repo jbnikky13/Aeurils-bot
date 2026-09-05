@@ -10,6 +10,12 @@ from .gem_score import scan_candidates
 
 CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
+def _entry(signal):
+    """Return the canonical entry price used by the paper ledger."""
+    if signal.entry_low is None or signal.entry_high is None:
+        raise ValueError(f"{signal.symbol}: actionable signal has no entry range")
+    return (float(signal.entry_low) + float(signal.entry_high)) / 2.0
+
 async def _run_crypto(symbol):
     try: return await crypto_setup(symbol)
     except Exception: return None
@@ -48,7 +54,7 @@ async def daily_scan(context: ContextTypes.DEFAULT_TYPE):
         signal_id, created = record_open(signal)
         if created:
             try:
-                open_paper_trade(signal_id, signal.symbol, signal.direction, signal.entry, signal.stop_loss, signal.take_profit_1, signal.take_profit_2)
+                open_paper_trade(signal_id, signal.symbol, signal.direction, _entry(signal), signal.stop_loss, signal.take_profit_1, signal.take_profit_2)
             except Exception as exc:
                 raise RuntimeError(f"Paper-trade ledger failed for {signal.symbol}: {exc}") from exc
             published.append((signal, signal_id))
