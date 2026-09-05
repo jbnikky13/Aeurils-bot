@@ -39,27 +39,21 @@ def _validate_setup(setup):
 
 
 async def main():
-    symbol = os.getenv("SMOKE_TEST_SYMBOL", "BTCUSDT").strip().upper()
+    symbol = os.getenv("SMOKE_TEST_SYMBOL", "ETHUSDT").strip().upper()
     refresh_result = await refresh()
     whales, exchanges = verified_addresses()
     if not whales or not exchanges:
-        raise RuntimeError(
-            f"Intelligence bootstrap produced insufficient verified wallets: whales={len(whales)}, exchanges={len(exchanges)}"
-        )
+        raise RuntimeError(f"Intelligence bootstrap produced insufficient verified wallets: whales={len(whales)}, exchanges={len(exchanges)}")
     setup = await crypto_setup(symbol)
     _validate_setup(setup)
     journal_id = record_setup(setup)
-    message = (
-        "🧪 AURELIS PRODUCTION TEST\n\n" + format_signal(setup)
+    message = ("🧪 AURELIS PRODUCTION TEST\n\n" + format_signal(setup)
         + f"\n\nJournal ID: {journal_id}"
         + f"\nVerified whales: {len(whales)} | exchanges: {len(exchanges)}"
         + f"\nIntelligence candidates: {refresh_result['candidates']} | accepted: {refresh_result['accepted']}"
         + "\n" + datetime.now(timezone.utc).strftime("UTC: %Y-%m-%d %H:%M")
-        + "\n\nTEST ONLY — not a trade recommendation."
-    )
+        + "\n\nTEST ONLY — not a trade recommendation.")
     result = _telegram(message)
     print(json.dumps({"status":"PASS", "telegram_ok":result.get("ok"), "message_id":result.get("result",{}).get("message_id"), "journal_id":journal_id, "symbol":symbol, "verified_whales":len(whales), "verified_exchanges":len(exchanges)}))
 
-
-if __name__ == "__main__":
-    asyncio.run(main())
+if __name__ == "__main__": asyncio.run(main())

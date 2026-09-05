@@ -7,13 +7,18 @@ from .whale_provider import fetch_erc20_transfers, summarize_labeled_events
 from .gemini_signal import confirm
 from .wallet_registry import verified_addresses
 
+# Canonical Ethereum mainnet wrapped ETH contract. ETH itself is native and has no ERC-20 tokentx stream.
+DEFAULT_TOKEN_CONTRACTS = {"ETHUSDT": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"}
+
 
 def _contract_for(symbol: str) -> str:
+    requested = symbol.strip().upper()
     for item in os.getenv("TOKEN_CONTRACTS", "").split(","):
         if ":" in item:
             name, address = item.split(":", 1)
-            if name.strip().upper() == symbol.upper(): return address.strip()
-    raise RuntimeError(f"No token contract configured for {symbol}")
+            if name.strip().upper() in {requested, requested.replace("USDT", "")}: return address.strip()
+    if requested in DEFAULT_TOKEN_CONTRACTS: return DEFAULT_TOKEN_CONTRACTS[requested]
+    raise RuntimeError(f"No token contract configured for {symbol}; configure TOKEN_CONTRACTS for this asset")
 
 async def crypto_setup(symbol: str):
     df = crypto_klines(symbol)
@@ -21,8 +26,9 @@ async def crypto_setup(symbol: str):
     whales, exchanges = verified_addresses()
     if not whales or not exchanges:
         raise RuntimeError("Verified whale/exchange registry is empty; run intelligence refresh first")
+    contract = _contract_for(symbol)
     events=[]
-    for address in whales: events.extend(await fetch_erc20_transfers(address, _contract_for(symbol)))
+    for address in whales: events.extend(await fetch_erc20_transfers(address, contract))
     summary=summarize_labeled_events(events, exchanges, whales)
     preliminary=build_setup(symbol,"crypto",float(df.iloc[-1].close),tech,summary.score,50,tbias,summary.bias,atr)
     ai=confirm(symbol,tech,tbias,summary.score,summary.bias,float(df.iloc[-1].close),atr)
