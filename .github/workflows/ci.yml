@@ -1,4 +1,4 @@
-name: Aeurils Bot CI
+name: Aeurils Bot
 
 on:
   push:
@@ -15,20 +15,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Install dependencies
-        run: pip install -r trade_bot/requirements.txt
-      - name: Compile Python modules
-        run: python -m compileall -q trade_bot
-      - name: Smoke-test imports
-        run: |
+        with: {python-version: '3.12'}
+      - run: pip install -r trade_bot/requirements.txt
+      - run: python -m compileall -q trade_bot
+      - run: |
           python - <<'PY'
           from trade_bot.whale_engine import classify_flow
           from trade_bot.signal_engine import combine_scores
           assert classify_flow('exchange','whale') == 'ACCUMULATION'
           assert classify_flow('whale','exchange') == 'DISTRIBUTION'
-          assert combine_scores(100, 100, 100) == 100
+          assert combine_scores(100,100,100) == 100
           print('Aeurils core smoke test passed')
           PY
 
@@ -38,22 +34,34 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Install dependencies
-        run: pip install -r trade_bot/requirements.txt
-      - name: Validate required configuration
+        with: {python-version: '3.12'}
+      - run: pip install -r trade_bot/requirements.txt
+      - name: Validate configuration
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           STOCK_API_KEY: ${{ secrets.STOCK_API_KEY }}
           WHALE_API_KEY: ${{ secrets.WHALE_API_KEY }}
-        run: |
-          python - <<'PY'
-          import os
-          required = ['TELEGRAM_BOT_TOKEN','GEMINI_API_KEY','STOCK_API_KEY','WHALE_API_KEY']
-          missing = [x for x in required if not os.getenv(x)]
-          if missing:
-              raise SystemExit('Missing GitHub secrets: ' + ', '.join(missing))
-          print('Required provider secrets are configured')
-          PY
+        run: python -m trade_bot.healthcheck
+
+  daily-telegram:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' }}
+    needs: provider-health
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -r trade_bot/requirements.txt
+      - name: Send daily report
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          STOCK_API_KEY: ${{ secrets.STOCK_API_KEY }}
+          WHALE_API_KEY: ${{ secrets.WHALE_API_KEY }}
+          COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
+          WATCHLIST_CRYPTO: ${{ vars.WATCHLIST_CRYPTO }}
+          WATCHLIST_STOCKS: ${{ vars.WATCHLIST_STOCKS }}
+          MIN_SIGNAL_SCORE: ${{ vars.MIN_SIGNAL_SCORE }}
+        run: python -m trade_bot.run_daily
