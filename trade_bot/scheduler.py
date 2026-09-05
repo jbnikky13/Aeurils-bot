@@ -47,8 +47,10 @@ async def daily_scan(context: ContextTypes.DEFAULT_TYPE):
         if signal.direction == "WAIT" or signal.score < threshold: continue
         signal_id, created = record_open(signal)
         if created:
-            try: open_paper_trade(signal_id, signal)
-            except Exception as exc: raise RuntimeError(f"Paper-trade ledger failed for {signal.symbol}: {exc}") from exc
+            try:
+                open_paper_trade(signal_id, signal.symbol, signal.direction, signal.entry, signal.stop_loss, signal.take_profit_1, signal.take_profit_2)
+            except Exception as exc:
+                raise RuntimeError(f"Paper-trade ledger failed for {signal.symbol}: {exc}") from exc
             published.append((signal, signal_id))
         else: duplicates.append(signal.symbol)
     if published:
