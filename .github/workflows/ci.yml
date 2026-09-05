@@ -16,7 +16,7 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
@@ -36,7 +36,7 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
@@ -55,12 +55,12 @@ jobs:
     needs: provider-health
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
       - run: pip install -r trade_bot/requirements.txt
-      - name: Send daily report
+      - name: Send daily production signal service
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -75,4 +75,8 @@ jobs:
           EXCHANGE_WALLETS: ${{ vars.EXCHANGE_WALLETS }}
           MIN_SIGNAL_SCORE: ${{ vars.MIN_SIGNAL_SCORE || '70' }}
           WALLET_MIN_CONFIDENCE: ${{ vars.WALLET_MIN_CONFIDENCE || '0.85' }}
+          GEM_DISCOVERY_LIMIT: ${{ vars.GEM_DISCOVERY_LIMIT || '5' }}
+          SMALL_CAP_DISCOVERY_LIMIT: ${{ vars.SMALL_CAP_DISCOVERY_LIMIT || '5' }}
+          GEM_VALIDATION_LIMIT: ${{ vars.GEM_VALIDATION_LIMIT || '5' }}
+          GEM_VALIDATED_OUTPUT_LIMIT: ${{ vars.GEM_VALIDATED_OUTPUT_LIMIT || '5' }}
         run: python -m trade_bot.run_daily
