@@ -15,10 +15,11 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r trade_bot/requirements.txt
-      - name: Run daily operations monitor
+      - name: Run verified daily operations monitor
         env:
           DATABASE_PATH: trade_bot.db
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DAILY_SIGNAL_STATE: WATCH / WAIT
         run: python -m trade_bot.daily_ops
