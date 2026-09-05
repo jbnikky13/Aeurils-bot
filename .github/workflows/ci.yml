@@ -15,7 +15,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: {python-version: '3.12'}
+        with:
+          python-version: '3.12'
       - run: pip install -r trade_bot/requirements.txt
       - run: python -m compileall -q trade_bot
       - run: |
@@ -34,11 +35,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: {python-version: '3.12'}
+        with:
+          python-version: '3.12'
       - run: pip install -r trade_bot/requirements.txt
       - name: Validate configuration
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           STOCK_API_KEY: ${{ secrets.STOCK_API_KEY }}
           WHALE_API_KEY: ${{ secrets.WHALE_API_KEY }}
@@ -51,7 +54,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: {python-version: '3.12'}
+        with:
+          python-version: '3.12'
       - run: pip install -r trade_bot/requirements.txt
       - name: Send daily report
         env:
@@ -63,5 +67,8 @@ jobs:
           COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
           WATCHLIST_CRYPTO: ${{ vars.WATCHLIST_CRYPTO }}
           WATCHLIST_STOCKS: ${{ vars.WATCHLIST_STOCKS }}
+          TOKEN_CONTRACTS: ${{ vars.TOKEN_CONTRACTS }}
+          WHALE_WALLETS: ${{ vars.WHALE_WALLETS }}
+          EXCHANGE_WALLETS: ${{ vars.EXCHANGE_WALLETS }}
           MIN_SIGNAL_SCORE: ${{ vars.MIN_SIGNAL_SCORE }}
         run: python -m trade_bot.run_daily
