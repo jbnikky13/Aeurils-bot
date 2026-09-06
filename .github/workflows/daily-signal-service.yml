@@ -1,12 +1,12 @@
 name: Aeurils Daily Signal Service
 
 on:
-  workflow_dispatch:
   schedule:
     - cron: '17 8 * * *'
+  workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: aurelis-daily-signal-service
@@ -22,7 +22,11 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r trade_bot/requirements.txt
-      - name: Run daily signal and paper-trade evaluation
+      - name: Restore persistent paper ledger
+        env:
+          PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
+        run: python -m trade_bot.paper_persistence restore
+      - name: Run daily signal
         env:
           DATABASE_PATH: trade_bot.db
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -38,4 +42,17 @@ jobs:
           GEM_DISCOVERY_LIMIT: '5'
           SMALL_CAP_DISCOVERY_LIMIT: '5'
           GEM_VALIDATION_LIMIT: '5'
+          PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
         run: python -m trade_bot.daily_service
+      - name: Persist paper ledger
+        env:
+          DATABASE_PATH: trade_bot.db
+          PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
+        run: python -m trade_bot.paper_persistence
+      - name: Commit paper ledger
+        run: |
+          git config user.name 'aurelis-bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/aurelis_paper_ledger.json
+          git diff --cached --quiet || git commit -m 'chore: persist AURELIS paper ledger'
+          git push
