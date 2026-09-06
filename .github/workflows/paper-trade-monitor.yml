@@ -1,13 +1,12 @@
 name: AURELIS Paper Trade Monitor
 
 on:
-  workflow_dispatch:
   schedule:
-    # Run after the daily signal so open positions are evaluated every day.
     - cron: '30 8 * * *'
+  workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: aurelis-paper-trade-monitor
@@ -23,8 +22,24 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r trade_bot/requirements.txt
+      - name: Restore persistent paper ledger
+        env:
+          PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
+        run: python -m trade_bot.paper_persistence restore
       - name: Evaluate open paper trades
         env:
           DATABASE_PATH: trade_bot.db
           STOCK_API_KEY: ${{ secrets.STOCK_API_KEY }}
         run: python -m trade_bot.paper_monitor
+      - name: Persist updated paper ledger
+        env:
+          DATABASE_PATH: trade_bot.db
+          PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
+        run: python -m trade_bot.paper_persistence
+      - name: Commit paper-trade results
+        run: |
+          git config user.name 'aurelis-bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/aurelis_paper_ledger.json
+          git diff --cached --quiet || git commit -m 'chore: update AURELIS paper-trade results'
+          git push
