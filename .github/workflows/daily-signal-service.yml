@@ -3,7 +3,6 @@ name: Aeurils Daily Signal Service
 on:
   workflow_dispatch:
   schedule:
-    # Daily at 08:17 UTC / 09:17 Africa/Lagos. Offset from :00 reduces peak-load scheduling contention.
     - cron: '17 8 * * *'
 
 permissions:
@@ -16,20 +15,24 @@ concurrency:
 jobs:
   daily-signal:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
       - run: pip install -r trade_bot/requirements.txt
-      - name: Run daily signal service
+      - name: Run daily signal and paper-trade evaluation
         env:
           DATABASE_PATH: trade_bot.db
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           MIN_SIGNAL_SCORE: '70'
+          MIN_CONFLUENCES: '6'
+          DAILY_FALLBACK_MIN_CONFLUENCES: '4'
+          MAX_DAILY_ACTIONABLE_SIGNALS: '1'
+          MARKET_DATA_CONCURRENCY: '12'
           WATCHLIST_CRYPTO: ${{ vars.WATCHLIST_CRYPTO }}
           WATCHLIST_STOCKS: ${{ vars.WATCHLIST_STOCKS }}
           GEM_DISCOVERY_LIMIT: '5'
