@@ -1,0 +1,30 @@
+name: AURELIS Paper Trade Monitor
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Run after the daily signal so open positions are evaluated every day.
+    - cron: '30 8 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aurelis-paper-trade-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install -r trade_bot/requirements.txt
+      - name: Evaluate open paper trades
+        env:
+          DATABASE_PATH: trade_bot.db
+          STOCK_API_KEY: ${{ secrets.STOCK_API_KEY }}
+        run: python -m trade_bot.paper_monitor
