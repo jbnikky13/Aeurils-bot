@@ -7,7 +7,7 @@ from .paper_trader import open_paper_trade
 from .confluence_gate import evaluate
 from .confluence_providers import crypto_evidence,stock_evidence
 from .binance_universe import all_binance_usdt_spot_symbols
-from .binance_signal_audit import classify,summary,rank
+from .binance_signal_audit import classify,summary,rank,near_misses
 CHAT_ID=os.getenv('TELEGRAM_CHAT_ID')
 MAX_DAILY_ACTIONABLE_SIGNALS=int(os.getenv('MAX_DAILY_ACTIONABLE_SIGNALS','1'))
 MAX_UNIVERSE_SCAN=int(os.getenv('MAX_UNIVERSE_SCAN','0'))
@@ -25,12 +25,11 @@ def _run_stock(symbol):
     try:return stock_setup(symbol)
     except Exception:return None
 async def _run_stock_async(symbol,sem):
-    async with sem:
-        return await asyncio.to_thread(_run_stock,symbol)
+    async with sem:return await asyncio.to_thread(_run_stock,symbol)
 def _gate_text(g):return f"Confluence: {g['passed']}/{g['minimum']} required\n"+'\n'.join(f"✓ {x}" for x in g['confluences'])
 def _fallback_candidates(evaluated,minimum):
     candidates=[(s,g) for kind,symbol,s,g in evaluated if s is not None and getattr(s,'direction','WAIT')!='WAIT' and g.get('passed',0)>=minimum]
-    candidates.sort(key=lambda x:(int(x[1].get('passed',0)),float(getattr(x[0],'score',0) or 0)),reverse=True)
+    candidates.sort(key=lambda x:(int(x[1].get('passed',0)),float(getattr(x[0],'score',0) or 0),float(getattr(x[0],'risk_reward',0) or 0)),reverse=True)
     return candidates
 async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
     if not CHAT_ID:raise RuntimeError('TELEGRAM_CHAT_ID is not configured')
@@ -46,7 +45,8 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
         if signal is None:return kind,symbol,None,{'passed':0,'minimum':minimum,'actionable':False,'confluences':[],'checks':[],'failed':['Setup generation failed'],'unknown':['Setup data unavailable']}
         try:
             evidence=await crypto_evidence(symbol) if kind=='crypto' else await asyncio.to_thread(stock_evidence,signal)
-            return kind,symbol,signal,evaluate(signal,onchain=evidence if kind=='crypto' else {},offchain=evidence if kind=='stock' else {})
+            gate=evaluate(signal,onchain=evidence if kind=='crypto' else {},offchain=evidence if kind=='stock' else {})
+            return kind,symbol,signal,gate
         except Exception as exc:
             return kind,symbol,signal,{'passed':0,'minimum':minimum,'actionable':False,'confluences':[],'checks':[],'failed':[f'Confluence provider error: {type(exc).__name__}'],'unknown':['Evidence unavailable']}
     evaluated=await asyncio.gather(*[gated(kind,symbol,signal) for (kind,symbol),signal in zip(pairs,raw)])
@@ -65,12 +65,14 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
             published.append((signal,sid,gate))
         else:duplicates.append(signal.symbol)
     counts=summary(audit)
+    misses=near_misses([(s,g) for kind,symbol,s,g in evaluated if s is not None],minimum,5)
     if published and mode=='QUALIFIED':
         body='📊 AURELIS DAILY SIGNAL\n\n🟢 ACTIONABLE TRADE SETUP\n\n'+'\n\n'.join(format_signal(s)+f'\nSignal ID: {sid}\nStatus: OPEN | PAPER TRADE ACTIVE\n{_gate_text(gate)}' for s,sid,gate in published)
     elif published:
         body='📊 AURELIS DAILY SIGNAL\n\n🟠 BEST AVAILABLE DAILY SETUP\n\n'+'\n\n'.join(format_signal(s)+f'\nSignal ID: {sid}\nStatus: OPEN | PAPER TRADE ACTIVE\n⚠️ Fallback signal — did not reach the strict {minimum}-confluence quality gate.\n{_gate_text(gate)}' for s,sid,gate in published)
-    else:
-        body=f"📊 AURELIS DAILY SIGNAL\n\n🔴 NO TRADE DATA\n\nThe scanner could not produce a valid directional setup today. This is a data/engine condition, not a fabricated trade."
+    else:body='📊 AURELIS DAILY SIGNAL\n\n🔴 NO TRADE DATA\n\nThe scanner could not produce a valid directional setup today. This is a data/engine condition, not a fabricated trade.'
+    if misses:
+        body+='\n\n🎯 TOP NEAR-MISSES\n'+'\n'.join(f'{i}. {s.symbol} — {s.direction} — {g.get("passed",0)}/{minimum} confluence — {getattr(s,"score",0)}/100' for i,(s,g) in enumerate(misses,1))
     if duplicates:body+='\n\n🔁 Duplicate protection: '+', '.join(duplicates)+' suppressed.'
     body+=f'\n\n📋 SCAN AUDIT\n✓ Qualified: {counts["QUALIFIED"]}\n✕ Rejected: {counts["REJECTED"]}\n? Insufficient data: {counts["INSUFFICIENT_DATA"]}\n\n🎯 CORE UNIVERSE: {len(base_crypto)} Binance USDT spot pairs + {len(stocks)} configured stocks.\nDiscovery feature: DISABLED.\nDaily fallback minimum: {DAILY_FALLBACK_MIN_CONFLUENCES} confluences.\nMarket-data concurrency: {MARKET_DATA_CONCURRENCY}.'
     for i in range(0,len(body),4000):await context.bot.send_message(chat_id=CHAT_ID,text=body[i:i+4000])
