@@ -15,6 +15,11 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r trade_bot/requirements.txt
+      - name: Restore persistent paper ledger
+        env:
+          PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
+          DATABASE_PATH: trade_bot.db
+        run: python -m trade_bot.paper_persistence restore
       - name: Send calibration report
         env:
           DATABASE_PATH: trade_bot.db
