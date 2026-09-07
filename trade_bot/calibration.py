@@ -1,14 +1,13 @@
 """Evidence-based paper-signal calibration metrics. No automatic strategy changes."""
-import os, sqlite3
+import sqlite3
 from collections import defaultdict
+from . import journal
 from .paper_trader import init_paper_db
-
-DB=os.getenv("DATABASE_PATH","trade_bot.db")
 
 
 def _rows():
     init_paper_db()
-    with sqlite3.connect(DB) as con:
+    with sqlite3.connect(journal.DB) as con:
         con.row_factory=sqlite3.Row
         return con.execute("SELECT * FROM paper_trades").fetchall()
 
@@ -35,8 +34,7 @@ def calibration():
     def out(prefix):
         result=[]
         for (kind,key),v in sorted(groups.items()):
-            if kind==prefix:
-                result.append([key,v[0],100*v[1]/v[0] if v[0] else 0,v[2]])
+            if kind==prefix: result.append([key,v[0],100*v[1]/v[0] if v[0] else 0,v[2]])
         return result
     return {"closed":len(closed),"by_regime":out("REGIME"),"by_score":out("SCORE")}
 
