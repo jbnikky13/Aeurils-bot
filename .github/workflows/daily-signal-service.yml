@@ -2,7 +2,10 @@ name: Aeurils Daily Signal Service
 
 on:
   schedule:
-    - cron: '17 8 * * *'
+    # Lagos/WAT (UTC+1): 09:30, 14:30 and 18:30
+    - cron: '30 8 * * *'
+    - cron: '30 13 * * *'
+    - cron: '30 17 * * *'
   workflow_dispatch:
 
 permissions:
@@ -35,7 +38,7 @@ jobs:
           MIN_SIGNAL_SCORE: '70'
           MIN_CONFLUENCES: '6'
           DAILY_FALLBACK_MIN_CONFLUENCES: '4'
-          MAX_DAILY_ACTIONABLE_SIGNALS: '3'
+          MAX_DAILY_ACTIONABLE_SIGNALS: '1'
           MARKET_DATA_CONCURRENCY: '12'
           PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
         run: python -m trade_bot.daily_service
