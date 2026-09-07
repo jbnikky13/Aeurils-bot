@@ -22,9 +22,7 @@
       "gemini_confidence",
       "gemini_decision",
       "gemini_rationale",
-      "whale_bias",
-      "signal_key",
-      "updated_at"
+      "whale_bias"
     ],
     "rows": [
       {
@@ -49,9 +47,7 @@
         "gemini_confidence": 0.0,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTPStatusError",
-        "whale_bias": 0.0,
-        "signal_key": null,
-        "updated_at": null
+        "whale_bias": 0.0
       },
       {
         "id": 2,
@@ -75,9 +71,7 @@
         "gemini_confidence": null,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTP 429",
-        "whale_bias": 0.0,
-        "signal_key": null,
-        "updated_at": null
+        "whale_bias": 0.0
       },
       {
         "id": 3,
@@ -101,9 +95,7 @@
         "gemini_confidence": null,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTP 429",
-        "whale_bias": 0.0,
-        "signal_key": "f04eadf3ea197a268a1bbea391a6c47f7bf02748cf9172fa9387c1d142f917c5",
-        "updated_at": "2026-09-07T20:48:26.784918+00:00"
+        "whale_bias": 0.0
       }
     ]
   },
@@ -127,7 +119,15 @@
       "market_regime",
       "gemini_decision",
       "gemini_confidence",
-      "gemini_available"
+      "gemini_available",
+      "tp1_hit_at",
+      "tp2_hit_at",
+      "sl_hit_at",
+      "exit_reason",
+      "last_price",
+      "last_checked_at",
+      "max_favorable_pct",
+      "max_adverse_pct"
     ],
     "rows": [
       {
@@ -149,7 +149,15 @@
         "market_regime": "UNKNOWN",
         "gemini_decision": null,
         "gemini_confidence": null,
-        "gemini_available": null
+        "gemini_available": null,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 338.0,
+        "last_checked_at": "2026-09-07T23:10:11.315073+00:00",
+        "max_favorable_pct": 0.438893634569504,
+        "max_adverse_pct": 0.0
       },
       {
         "id": 2,
@@ -170,7 +178,15 @@
         "market_regime": "HIGH_VOLATILITY",
         "gemini_decision": "UNAVAILABLE",
         "gemini_confidence": null,
-        "gemini_available": 0
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 0.6127,
+        "last_checked_at": "2026-09-07T23:10:11.795902+00:00",
+        "max_favorable_pct": 4.914383561643846,
+        "max_adverse_pct": 0.0
       },
       {
         "id": 3,
@@ -191,7 +207,15 @@
         "market_regime": "HIGH_VOLATILITY",
         "gemini_decision": "UNAVAILABLE",
         "gemini_confidence": null,
-        "gemini_available": 0
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 0.10749,
+        "last_checked_at": "2026-09-07T23:10:12.295717+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 1.1131554737810385
       }
     ]
   }
