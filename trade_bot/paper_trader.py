@@ -32,15 +32,11 @@ def init_paper_db():
         )""")
         cols = {r[1] for r in con.execute(f"PRAGMA table_info({PAPER_TABLE})")}
         additions = {
-            "final_score": "REAL",
-            "market_regime": "TEXT DEFAULT 'UNKNOWN'",
-            "gemini_decision": "TEXT",
-            "gemini_confidence": "REAL",
-            "gemini_available": "INTEGER",
+            "final_score": "REAL", "market_regime": "TEXT DEFAULT 'UNKNOWN'",
+            "gemini_decision": "TEXT", "gemini_confidence": "REAL", "gemini_available": "INTEGER",
         }
         for col, typ in additions.items():
-            if col not in cols:
-                con.execute(f"ALTER TABLE {PAPER_TABLE} ADD COLUMN {col} {typ}")
+            if col not in cols: con.execute(f"ALTER TABLE {PAPER_TABLE} ADD COLUMN {col} {typ}")
         con.commit()
 
 
@@ -51,13 +47,11 @@ def open_paper_trade(signal_id, symbol, direction, entry, stop_loss=None, tp1=No
     with sqlite3.connect(DB) as con:
         cur = con.execute(
             f"""INSERT OR IGNORE INTO {PAPER_TABLE}
-            (signal_id,symbol,direction,entry,stop_loss,tp1,tp2,opened_at,
-             final_score,market_regime,gemini_decision,gemini_confidence,gemini_available)
+            (signal_id,symbol,direction,entry,stop_loss,tp1,tp2,opened_at,final_score,market_regime,gemini_decision,gemini_confidence,gemini_available)
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""",
             (signal_id, symbol, direction, float(entry), stop_loss, tp1, tp2,
              datetime.now(timezone.utc).isoformat(), final_score, market_regime,
-             gemini_decision, gemini_confidence, gemini_available),
-        )
+             gemini_decision, gemini_confidence, gemini_available))
         con.commit()
         return cur.rowcount == 1
 
@@ -79,39 +73,33 @@ def _touch_outcome(direction, price, stop, tp1, tp2):
     return None
 
 
-def _sync_setup(signal_id, outcome, exit_price, pnl):
-    """Keep the authoritative setup journal synchronized with the paper ledger."""
+def _sync_setup(signal_id, outcome):
     with sqlite3.connect(DB) as con:
-        con.execute(
-            "UPDATE setups SET outcome=?, closed_at=? WHERE id=? AND outcome='OPEN'",
-            (outcome, datetime.now(timezone.utc).isoformat(), signal_id),
-        )
-        # pnl_pct is optional on older databases; paper_trades remains the
-        # performance source of truth.
+        con.execute("UPDATE setups SET outcome=?, closed_at=? WHERE id=? AND outcome='OPEN'",
+                    (outcome, datetime.now(timezone.utc).isoformat(), signal_id))
         con.commit()
 
 
 def mark_price(symbol, current_price):
-    """Evaluate all open trades for a symbol against stop/target levels."""
-    init_paper_db(); closed = 0
+    """Evaluate open paper trades and synchronize closed outcomes to setups."""
+    init_paper_db(); closed_ids = []
+    price = float(current_price)
     with sqlite3.connect(DB) as con:
         rows = con.execute(
             f"SELECT signal_id,direction,entry,stop_loss,tp1,tp2 FROM {PAPER_TABLE} WHERE status='OPEN' AND symbol=?",
-            (symbol,),
-        ).fetchall()
+            (symbol,)).fetchall()
         for sid, direction, entry, stop, tp1, tp2 in rows:
-            price = float(current_price)
             outcome = _touch_outcome(direction, price, stop, tp1, tp2)
             if outcome:
                 pnl = _pnl(direction, float(entry), price)
                 con.execute(
                     f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome=?,pnl_pct=?,closed_at=? WHERE signal_id=?",
-                    (price, outcome, pnl, datetime.now(timezone.utc).isoformat(), sid),
-                )
-                _sync_setup(sid, outcome, price, pnl)
-                closed += 1
+                    (price, outcome, pnl, datetime.now(timezone.utc).isoformat(), sid))
+                closed_ids.append((sid, outcome))
         con.commit()
-    return closed
+    for sid, outcome in closed_ids:
+        _sync_setup(sid, outcome)
+    return len(closed_ids)
 
 
 def close_paper_trade(signal_id, outcome, exit_price):
@@ -119,17 +107,14 @@ def close_paper_trade(signal_id, outcome, exit_price):
         raise ValueError("Invalid paper-trade outcome")
     init_paper_db()
     with sqlite3.connect(DB) as con:
-        row = con.execute(
-            f"SELECT direction,entry FROM {PAPER_TABLE} WHERE signal_id=? AND status='OPEN'", (signal_id,)
-        ).fetchone()
+        row = con.execute(f"SELECT direction,entry FROM {PAPER_TABLE} WHERE signal_id=? AND status='OPEN'",
+                          (signal_id,)).fetchone()
         if not row: return False
         pnl = _pnl(row[0], float(row[1]), float(exit_price))
-        con.execute(
-            f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome=?,pnl_pct=?,closed_at=? WHERE signal_id=?",
-            (exit_price, outcome, pnl, datetime.now(timezone.utc).isoformat(), signal_id),
-        )
+        con.execute(f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome=?,pnl_pct=?,closed_at=? WHERE signal_id=?",
+                     (exit_price, outcome, pnl, datetime.now(timezone.utc).isoformat(), signal_id))
         con.commit()
-    _sync_setup(signal_id, outcome, float(exit_price), pnl)
+    _sync_setup(signal_id, outcome)
     return True
 
 
@@ -142,9 +127,6 @@ def paper_summary():
         pnl = con.execute(f"SELECT COALESCE(SUM(pnl_pct),0) FROM {PAPER_TABLE} WHERE status='CLOSED'").fetchone()[0]
         wins = con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome IN ('WIN_TP1','WIN_TP2')").fetchone()[0]
         losses = con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='LOSS_SL'").fetchone()[0]
-    return {
-        'total': total, 'open': opened, 'closed': closed, 'wins': wins, 'losses': losses,
-        'win_rate_pct': round(wins / closed * 100, 2) if closed else 0.0,
-        'pnl_pct': round(float(pnl), 4),
-        'avg_pnl_pct': round(float(pnl) / closed, 4) if closed else 0.0,
-    }
+    return {'total': total, 'open': opened, 'closed': closed, 'wins': wins, 'losses': losses,
+            'win_rate_pct': round(wins / closed * 100, 2) if closed else 0.0,
+            'pnl_pct': round(float(pnl), 4), 'avg_pnl_pct': round(float(pnl) / closed, 4) if closed else 0.0}
