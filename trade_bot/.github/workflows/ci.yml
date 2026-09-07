@@ -18,3 +18,5 @@ jobs:
         run: pip install -r trade_bot/requirements.txt
       - name: Compile Python modules
         run: python -m compileall -q trade_bot
+      - name: Run regression tests
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
