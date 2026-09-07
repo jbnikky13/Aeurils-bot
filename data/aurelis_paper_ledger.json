@@ -22,9 +22,7 @@
       "gemini_confidence",
       "gemini_decision",
       "gemini_rationale",
-      "whale_bias",
-      "signal_key",
-      "updated_at"
+      "whale_bias"
     ],
     "rows": [
       {
@@ -49,9 +47,7 @@
         "gemini_confidence": 0.0,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTPStatusError",
-        "whale_bias": 0.0,
-        "signal_key": "36c504eabbc78b7dd6c620b7e17fa05caf0f64f00f534c4db6ed4f1ee94d3d59",
-        "updated_at": "2026-09-06T12:15:01.000145+00:00"
+        "whale_bias": 0.0
       }
     ]
   },
@@ -70,7 +66,12 @@
       "outcome",
       "pnl_pct",
       "opened_at",
-      "closed_at"
+      "closed_at",
+      "final_score",
+      "market_regime",
+      "gemini_decision",
+      "gemini_confidence",
+      "gemini_available"
     ],
     "rows": [
       {
@@ -87,7 +88,12 @@
         "outcome": null,
         "pnl_pct": null,
         "opened_at": "2026-09-06T12:15:01.003914+00:00",
-        "closed_at": null
+        "closed_at": null,
+        "final_score": null,
+        "market_regime": "UNKNOWN",
+        "gemini_decision": null,
+        "gemini_confidence": null,
+        "gemini_available": null
       }
     ]
   }
