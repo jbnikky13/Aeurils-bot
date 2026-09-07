@@ -35,13 +35,8 @@ jobs:
           MIN_SIGNAL_SCORE: '70'
           MIN_CONFLUENCES: '6'
           DAILY_FALLBACK_MIN_CONFLUENCES: '4'
-          MAX_DAILY_ACTIONABLE_SIGNALS: '1'
+          MAX_DAILY_ACTIONABLE_SIGNALS: '3'
           MARKET_DATA_CONCURRENCY: '12'
-          WATCHLIST_CRYPTO: ${{ vars.WATCHLIST_CRYPTO }}
-          WATCHLIST_STOCKS: ${{ vars.WATCHLIST_STOCKS }}
-          GEM_DISCOVERY_LIMIT: '5'
-          SMALL_CAP_DISCOVERY_LIMIT: '5'
-          GEM_VALIDATION_LIMIT: '5'
           PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
         run: python -m trade_bot.daily_service
       - name: Persist paper ledger
