@@ -61,7 +61,15 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
     for signal,gate in candidates:
         sid,created=record_open(signal)
         if created:
-            open_paper_trade(sid,signal.symbol,signal.direction,_entry(signal),signal.stop_loss,signal.take_profit_1,signal.take_profit_2)
+            open_paper_trade(
+                sid, signal.symbol, signal.direction, _entry(signal), signal.stop_loss,
+                signal.take_profit_1, signal.take_profit_2,
+                final_score=signal.score,
+                market_regime=getattr(signal,'market_regime','UNKNOWN'),
+                gemini_decision=getattr(signal,'gemini_decision',None),
+                gemini_confidence=getattr(signal,'gemini_confidence',None),
+                gemini_available=1 if getattr(signal,'gemini_decision',None) not in (None,'UNAVAILABLE') else 0,
+            )
             published.append((signal,sid,gate))
         else:duplicates.append(signal.symbol)
     counts=summary(audit)

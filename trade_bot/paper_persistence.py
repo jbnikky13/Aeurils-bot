@@ -1,10 +1,13 @@
 """Persist the paper ledger between ephemeral GitHub Actions runners."""
 import json, os, sqlite3
 from .journal import DB, init_db
+from .paper_trader import init_paper_db
+
 STORE=os.getenv('PAPER_LEDGER_PATH','data/aurelis_paper_ledger.json')
 
 def _tables():
-    init_db(); out={}
+    init_paper_db()
+    out={}
     with sqlite3.connect(DB) as con:
         for table in ('setups','paper_trades'):
             cols=[r[1] for r in con.execute(f'PRAGMA table_info({table})').fetchall()]
@@ -19,14 +22,19 @@ def export_ledger():
     os.replace(tmp,STORE)
 
 def restore_ledger():
-    if not os.path.exists(STORE): init_db(); return
-    init_db()
+    init_paper_db()
+    if not os.path.exists(STORE): return
     with open(STORE,encoding='utf-8') as f: data=json.load(f)
     with sqlite3.connect(DB) as con:
         for table,payload in data.items():
-            cols=payload.get('columns',[])
+            if table not in {'setups','paper_trades'}: continue
+            source_cols=payload.get('columns',[])
+            if not source_cols: continue
+            target_cols={r[1] for r in con.execute(f'PRAGMA table_info({table})').fetchall()}
+            cols=[c for c in source_cols if c in target_cols]
             if not cols: continue
-            placeholders=','.join('?' for _ in cols); col_sql=','.join(cols)
+            placeholders=','.join('?' for _ in cols)
+            col_sql=','.join(cols)
             for row in payload.get('rows',[]):
                 values=[row.get(c) for c in cols]
                 con.execute(f'INSERT OR REPLACE INTO {table} ({col_sql}) VALUES ({placeholders})',values)

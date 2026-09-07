@@ -21,7 +21,9 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r trade_bot/requirements.txt
-      - run: python -m compileall -q trade_bot
+      - run: python -m compileall -q trade_bot tests
+      - name: Unit tests
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
       - run: |
           python - <<'PY'
           from trade_bot.whale_engine import classify_flow
@@ -29,7 +31,7 @@ jobs:
           assert classify_flow('exchange','whale') == 'ACCUMULATION'
           assert classify_flow('whale','exchange') == 'DISTRIBUTION'
           assert combine_scores(100,100,100) == 100
-          print('Aeurils core smoke test passed')
+          print('Aurelis core smoke test passed')
           PY
 
   provider-health:
