@@ -7,13 +7,11 @@ from .paper_trader import open_paper_trade
 from .confluence_gate import evaluate
 from .confluence_providers import crypto_evidence
 from .binance_universe import all_binance_usdt_spot_symbols
-from .binance_signal_audit import classify,summary,rank,near_misses
 CHAT_ID=os.getenv('TELEGRAM_CHAT_ID')
 MAX_DAILY_ACTIONABLE_SIGNALS=int(os.getenv('MAX_DAILY_ACTIONABLE_SIGNALS','1'))
 MAX_UNIVERSE_SCAN=int(os.getenv('MAX_UNIVERSE_SCAN','0'))
 DAILY_FALLBACK_MIN_CONFLUENCES=int(os.getenv('DAILY_FALLBACK_MIN_CONFLUENCES','4'))
 MARKET_DATA_CONCURRENCY=int(os.getenv('MARKET_DATA_CONCURRENCY','12'))
-
 
 def _entry(signal):
     if signal.entry_low is None or signal.entry_high is None: raise ValueError(f'{signal.symbol}: actionable signal has no entry range')
@@ -31,9 +29,8 @@ def _fallback_candidates(evaluated,minimum):
 
 async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
     if not CHAT_ID:raise RuntimeError('TELEGRAM_CHAT_ID is not configured')
-    # Only Binance-listed USDT spot assets are scanned. No external stock watchlist.
-    try:
-        base_crypto=all_binance_usdt_spot_symbols()
+    # Binance is the sole production universe. No external stock watchlist/fallback.
+    try:base_crypto=all_binance_usdt_spot_symbols()
     except Exception:
         await context.bot.send_message(chat_id=CHAT_ID,text='NO TRADE SETUP TODAY.\n\nAURELIS could not validate the Binance market universe.')
         return
@@ -54,10 +51,10 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
 
     evaluated=await asyncio.gather(*[gated(kind,symbol,signal) for (kind,symbol),signal in zip(pairs,raw)])
     minimum=int(os.getenv('MIN_CONFLUENCES','6'))
-    audit=[classify(symbol,s,g,minimum) for kind,symbol,s,g in evaluated]
-    candidates=rank([(s,g) for kind,symbol,s,g in evaluated if s is not None],minimum,MAX_DAILY_ACTIONABLE_SIGNALS)
-    if not candidates:
-        candidates=_fallback_candidates(evaluated,DAILY_FALLBACK_MIN_CONFLUENCES)[:MAX_DAILY_ACTIONABLE_SIGNALS]
+    candidates=[(s,g) for kind,symbol,s,g in evaluated if s is not None and g.get('actionable') and g.get('passed',0)>=minimum]
+    candidates.sort(key=lambda x:(float(getattr(x[0],'score',0) or 0),int(x[1].get('passed',0)),float(getattr(x[0],'risk_reward',0) or 0)),reverse=True)
+    candidates=candidates[:MAX_DAILY_ACTIONABLE_SIGNALS]
+    if not candidates:candidates=_fallback_candidates(evaluated,DAILY_FALLBACK_MIN_CONFLUENCES)[:MAX_DAILY_ACTIONABLE_SIGNALS]
 
     published=[]
     for signal,gate in candidates:
@@ -69,8 +66,6 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
                               gemini_available=1 if getattr(signal,'gemini_decision',None) not in (None,'UNAVAILABLE') else 0)
             published.append(signal)
 
-    if published:
-        body='\n\n'.join(format_signal(s) for s in published)
-    else:
-        body='NO TRADE SETUP TODAY.\n\nAURELIS found no valid Binance-listed setup.'
+    # Telegram stays intentionally minimal; audit/calibration remain internal.
+    body='\n\n'.join(format_signal(s) for s in published) if published else 'NO TRADE SETUP TODAY.\n\nAURELIS found no valid Binance-listed setup.'
     await context.bot.send_message(chat_id=CHAT_ID,text=body)
