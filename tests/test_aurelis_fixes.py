@@ -32,7 +32,7 @@ class AurelisFixTests(unittest.TestCase):
         class Signal:
             direction = "LONG"
             score = 70
-            technical_score = 70
+            technical_score = 0
             entry_low = 100
             entry_high = 101
             stop_loss = 98
