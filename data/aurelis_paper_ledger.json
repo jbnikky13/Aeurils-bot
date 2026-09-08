@@ -22,9 +22,7 @@
       "gemini_confidence",
       "gemini_decision",
       "gemini_rationale",
-      "whale_bias",
-      "signal_key",
-      "updated_at"
+      "whale_bias"
     ],
     "rows": [
       {
@@ -49,9 +47,7 @@
         "gemini_confidence": 0.0,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTPStatusError",
-        "whale_bias": 0.0,
-        "signal_key": null,
-        "updated_at": null
+        "whale_bias": 0.0
       },
       {
         "id": 2,
@@ -75,9 +71,7 @@
         "gemini_confidence": null,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTP 429",
-        "whale_bias": 0.0,
-        "signal_key": null,
-        "updated_at": null
+        "whale_bias": 0.0
       },
       {
         "id": 3,
@@ -101,9 +95,7 @@
         "gemini_confidence": null,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTP 429",
-        "whale_bias": 0.0,
-        "signal_key": null,
-        "updated_at": null
+        "whale_bias": 0.0
       },
       {
         "id": 4,
@@ -127,9 +119,7 @@
         "gemini_confidence": null,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTP 429",
-        "whale_bias": 0.0,
-        "signal_key": "d01faa190198e1628326a4109a305496dfe4f501fedb298d65d318d067865dc8",
-        "updated_at": "2026-09-08T10:17:16.176191+00:00"
+        "whale_bias": 0.0
       }
     ]
   },
@@ -188,8 +178,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 337.51,
-        "last_checked_at": "2026-09-08T05:56:00.961594+00:00",
+        "last_price": 337.6,
+        "last_checked_at": "2026-09-08T10:21:09.409094+00:00",
         "max_favorable_pct": 0.583227782850752,
         "max_adverse_pct": 0.0
       },
@@ -217,8 +207,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.6385,
-        "last_checked_at": "2026-09-08T05:56:01.418912+00:00",
+        "last_price": 0.637,
+        "last_checked_at": "2026-09-08T10:21:10.056737+00:00",
         "max_favorable_pct": 9.743150684931518,
         "max_adverse_pct": 0.0
       },
@@ -246,10 +236,10 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.10486,
-        "last_checked_at": "2026-09-08T05:56:01.875174+00:00",
+        "last_price": 0.1041,
+        "last_checked_at": "2026-09-08T10:21:10.738692+00:00",
         "max_favorable_pct": 0.0,
-        "max_adverse_pct": 3.5326586936522504
+        "max_adverse_pct": 4.231830726770923
       },
       {
         "id": 4,
@@ -275,9 +265,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 164.57999999999998,
-        "last_checked_at": "2026-09-08T10:17:16.177607+00:00",
-        "max_favorable_pct": 0.0,
+        "last_price": 164.77,
+        "last_checked_at": "2026-09-08T10:21:11.381286+00:00",
+        "max_favorable_pct": 0.11544537610889913,
         "max_adverse_pct": 0.0
       }
     ]
