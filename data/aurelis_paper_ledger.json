@@ -22,7 +22,9 @@
       "gemini_confidence",
       "gemini_decision",
       "gemini_rationale",
-      "whale_bias"
+      "whale_bias",
+      "signal_key",
+      "updated_at"
     ],
     "rows": [
       {
@@ -47,7 +49,9 @@
         "gemini_confidence": 0.0,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTPStatusError",
-        "whale_bias": 0.0
+        "whale_bias": 0.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 2,
@@ -71,7 +75,9 @@
         "gemini_confidence": null,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTP 429",
-        "whale_bias": 0.0
+        "whale_bias": 0.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 3,
@@ -95,7 +101,9 @@
         "gemini_confidence": null,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTP 429",
-        "whale_bias": 0.0
+        "whale_bias": 0.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 4,
@@ -119,7 +127,35 @@
         "gemini_confidence": null,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTP 429",
-        "whale_bias": 0.0
+        "whale_bias": 0.0,
+        "signal_key": null,
+        "updated_at": null
+      },
+      {
+        "id": 5,
+        "created_at": "2026-09-08T13:02:55.391400+00:00",
+        "symbol": "KAITOUSDT",
+        "asset_type": "crypto",
+        "direction": "SHORT",
+        "score": 72,
+        "entry_low": 0.3340947,
+        "entry_high": 0.3361053,
+        "stop_loss": 0.36,
+        "tp1": 0.3019,
+        "tp2": 0.2853,
+        "risk_reward": 2.000000000000002,
+        "technical_score": 90,
+        "whale_score": 50,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "HIGH_VOLATILITY",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.0,
+        "signal_key": "137a4e794b8569c0e7e35fc7cf17befe4e3dcbff61d72d54c29bd0e467bcf97d",
+        "updated_at": "2026-09-08T13:02:55.392570+00:00"
       }
     ]
   },
@@ -268,6 +304,35 @@
         "last_price": 164.77,
         "last_checked_at": "2026-09-08T10:21:11.381286+00:00",
         "max_favorable_pct": 0.11544537610889913,
+        "max_adverse_pct": 0.0
+      },
+      {
+        "id": 5,
+        "signal_id": 5,
+        "symbol": "KAITOUSDT",
+        "direction": "SHORT",
+        "entry": 0.3351,
+        "stop_loss": 0.36,
+        "tp1": 0.3019,
+        "tp2": 0.2853,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-08T13:02:55.394169+00:00",
+        "closed_at": null,
+        "final_score": 72.0,
+        "market_regime": "HIGH_VOLATILITY",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 0.3351,
+        "last_checked_at": "2026-09-08T13:02:55.394179+00:00",
+        "max_favorable_pct": 0.0,
         "max_adverse_pct": 0.0
       }
     ]
