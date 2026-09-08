@@ -22,7 +22,9 @@
       "gemini_confidence",
       "gemini_decision",
       "gemini_rationale",
-      "whale_bias"
+      "whale_bias",
+      "signal_key",
+      "updated_at"
     ],
     "rows": [
       {
@@ -47,7 +49,9 @@
         "gemini_confidence": 0.0,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTPStatusError",
-        "whale_bias": 0.0
+        "whale_bias": 0.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 2,
@@ -71,7 +75,9 @@
         "gemini_confidence": null,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTP 429",
-        "whale_bias": 0.0
+        "whale_bias": 0.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 3,
@@ -95,7 +101,35 @@
         "gemini_confidence": null,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTP 429",
-        "whale_bias": 0.0
+        "whale_bias": 0.0,
+        "signal_key": null,
+        "updated_at": null
+      },
+      {
+        "id": 4,
+        "created_at": "2026-09-08T10:17:16.175288+00:00",
+        "symbol": "ORCLBUSDT",
+        "asset_type": "crypto",
+        "direction": "LONG",
+        "score": 72,
+        "entry_low": 164.08626,
+        "entry_high": 165.07374,
+        "stop_loss": 156.94178571428574,
+        "tp1": 174.76428571428573,
+        "tp2": 179.85642857142858,
+        "risk_reward": 2.0000000000000036,
+        "technical_score": 90,
+        "whale_score": 50,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "BULLISH",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.0,
+        "signal_key": "d01faa190198e1628326a4109a305496dfe4f501fedb298d65d318d067865dc8",
+        "updated_at": "2026-09-08T10:17:16.176191+00:00"
       }
     ]
   },
@@ -216,6 +250,35 @@
         "last_checked_at": "2026-09-08T05:56:01.875174+00:00",
         "max_favorable_pct": 0.0,
         "max_adverse_pct": 3.5326586936522504
+      },
+      {
+        "id": 4,
+        "signal_id": 4,
+        "symbol": "ORCLBUSDT",
+        "direction": "LONG",
+        "entry": 164.57999999999998,
+        "stop_loss": 156.94178571428574,
+        "tp1": 174.76428571428573,
+        "tp2": 179.85642857142858,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-08T10:17:16.177599+00:00",
+        "closed_at": null,
+        "final_score": 72.0,
+        "market_regime": "BULLISH",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 164.57999999999998,
+        "last_checked_at": "2026-09-08T10:17:16.177607+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 0.0
       }
     ]
   }
