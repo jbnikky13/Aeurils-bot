@@ -154,9 +154,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 337.83,
-        "last_checked_at": "2026-09-08T01:10:07.597182+00:00",
-        "max_favorable_pct": 0.4889687472385122,
+        "last_price": 337.51,
+        "last_checked_at": "2026-09-08T05:56:00.961594+00:00",
+        "max_favorable_pct": 0.583227782850752,
         "max_adverse_pct": 0.0
       },
       {
@@ -183,8 +183,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.6409,
-        "last_checked_at": "2026-09-08T01:10:08.253706+00:00",
+        "last_price": 0.6385,
+        "last_checked_at": "2026-09-08T05:56:01.418912+00:00",
         "max_favorable_pct": 9.743150684931518,
         "max_adverse_pct": 0.0
       },
@@ -212,10 +212,10 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.10632,
-        "last_checked_at": "2026-09-08T01:10:08.909001+00:00",
+        "last_price": 0.10486,
+        "last_checked_at": "2026-09-08T05:56:01.875174+00:00",
         "max_favorable_pct": 0.0,
-        "max_adverse_pct": 2.1895124195032136
+        "max_adverse_pct": 3.5326586936522504
       }
     ]
   }
