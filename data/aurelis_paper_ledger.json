@@ -22,9 +22,7 @@
       "gemini_confidence",
       "gemini_decision",
       "gemini_rationale",
-      "whale_bias",
-      "signal_key",
-      "updated_at"
+      "whale_bias"
     ],
     "rows": [
       {
@@ -49,9 +47,7 @@
         "gemini_confidence": 0.0,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTPStatusError",
-        "whale_bias": 0.0,
-        "signal_key": null,
-        "updated_at": null
+        "whale_bias": 0.0
       },
       {
         "id": 2,
@@ -75,9 +71,7 @@
         "gemini_confidence": null,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTP 429",
-        "whale_bias": 0.0,
-        "signal_key": null,
-        "updated_at": null
+        "whale_bias": 0.0
       },
       {
         "id": 3,
@@ -101,9 +95,7 @@
         "gemini_confidence": null,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTP 429",
-        "whale_bias": 0.0,
-        "signal_key": null,
-        "updated_at": null
+        "whale_bias": 0.0
       },
       {
         "id": 4,
@@ -127,9 +119,7 @@
         "gemini_confidence": null,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTP 429",
-        "whale_bias": 0.0,
-        "signal_key": null,
-        "updated_at": null
+        "whale_bias": 0.0
       },
       {
         "id": 5,
@@ -153,9 +143,7 @@
         "gemini_confidence": null,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTP 429",
-        "whale_bias": 0.0,
-        "signal_key": null,
-        "updated_at": null
+        "whale_bias": 0.0
       },
       {
         "id": 6,
@@ -179,9 +167,7 @@
         "gemini_confidence": null,
         "gemini_decision": "UNAVAILABLE",
         "gemini_rationale": "Gemini unavailable: HTTP 429",
-        "whale_bias": 0.0,
-        "signal_key": "492ffb1750c3cdd92f28b69025730087546e55c0a4c5f686bd64a33a5bd2face",
-        "updated_at": "2026-09-08T17:28:21.101825+00:00"
+        "whale_bias": 0.0
       }
     ]
   },
@@ -240,8 +226,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 334.79,
-        "last_checked_at": "2026-09-08T14:40:04.413723+00:00",
+        "last_price": 338.45,
+        "last_checked_at": "2026-09-08T18:04:50.066964+00:00",
         "max_favorable_pct": 1.3844295855547994,
         "max_adverse_pct": 0.0
       },
@@ -269,8 +255,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.6243,
-        "last_checked_at": "2026-09-08T14:40:05.015193+00:00",
+        "last_price": 0.6148,
+        "last_checked_at": "2026-09-08T18:04:51.093873+00:00",
         "max_favorable_pct": 9.743150684931518,
         "max_adverse_pct": 0.0
       },
@@ -298,8 +284,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.10903,
-        "last_checked_at": "2026-09-08T14:40:05.616246+00:00",
+        "last_price": 0.10491,
+        "last_checked_at": "2026-09-08T18:04:51.914197+00:00",
         "max_favorable_pct": 0.30358785648575054,
         "max_adverse_pct": 4.231830726770923
       },
@@ -327,10 +313,10 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 162.85,
-        "last_checked_at": "2026-09-08T14:40:06.220277+00:00",
+        "last_price": 162.48,
+        "last_checked_at": "2026-09-08T18:04:52.770540+00:00",
         "max_favorable_pct": 0.11544537610889913,
-        "max_adverse_pct": 1.0511605298335094
+        "max_adverse_pct": 1.2759752096244954
       },
       {
         "id": 5,
@@ -356,9 +342,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.3406,
-        "last_checked_at": "2026-09-08T14:40:06.800138+00:00",
-        "max_favorable_pct": 0.0,
+        "last_price": 0.3336,
+        "last_checked_at": "2026-09-08T18:04:53.467478+00:00",
+        "max_favorable_pct": 0.4476275738585501,
         "max_adverse_pct": 1.6413011041480168
       },
       {
@@ -385,9 +371,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 162.13,
-        "last_checked_at": "2026-09-08T17:28:21.103661+00:00",
-        "max_favorable_pct": 0.0,
+        "last_price": 162.48,
+        "last_checked_at": "2026-09-08T18:04:52.770540+00:00",
+        "max_favorable_pct": 0.21587614876950245,
         "max_adverse_pct": 0.0
       }
     ]
