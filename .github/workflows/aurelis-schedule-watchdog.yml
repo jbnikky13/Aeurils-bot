@@ -1,0 +1,53 @@
+name: Aeurils Schedule Watchdog
+
+on:
+  schedule:
+    # Run 5 minutes after each intended WAT schedule.
+    - cron: '35 8 * * *'
+    - cron: '35 13 * * *'
+    - cron: '35 17 * * *'
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check and recover missed scheduled scan
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          now_epoch=$(date -u +%s)
+          # Look back 20 minutes so GitHub's normal schedule jitter is covered.
+          runs=$(gh api "repos/${REPO}/actions/workflows/daily-signal-service.yml/runs?event=schedule&per_page=20")
+          recent=$(echo "$runs" | jq -r --argjson now "$now_epoch" '
+            [.workflow_runs[] | select((.created_at | fromdateiso8601) >= ($now - 1200))] |
+            sort_by(.created_at) | reverse | .[0] // empty
+          ')
+
+          if [ -n "$recent" ]; then
+            status=$(echo "$recent" | jq -r '.status')
+            conclusion=$(echo "$recent" | jq -r '.conclusion // ""')
+            created=$(echo "$recent" | jq -r '.created_at')
+            echo "Recent daily signal run exists: status=$status conclusion=$conclusion created=$created"
+            if [ "$status" = "queued" ] || [ "$status" = "in_progress" ]; then
+              echo "Primary scheduled scan is already running/queued; no recovery needed."
+              exit 0
+            fi
+            if [ "$conclusion" = "success" ]; then
+              echo "Primary scheduled scan completed successfully; no recovery needed."
+              exit 0
+            fi
+            echo "Recent run exists but did not complete successfully; dispatching a recovery run."
+          else
+            echo "No recent scheduled daily-signal run found; dispatching recovery run."
+          fi
+
+          gh workflow run daily-signal-service.yml --ref main
+          echo "Recovery dispatch submitted."
