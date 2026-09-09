@@ -3,6 +3,8 @@ from typing import Literal
 
 Direction = Literal["LONG", "SHORT", "WAIT"]
 
+MAX_HOLD_HOURS = 24.0
+
 @dataclass
 class Signal:
     symbol: str
@@ -25,10 +27,15 @@ class Signal:
     gemini_decision: str | None = None
     gemini_rationale: str | None = None
     whale_bias: float | None = None
+    tp1_eta_hours: float | None = None
+    tp2_eta_hours: float | None = None
+    horizon_status: str = "UNKNOWN"
+    max_hold_hours: float = MAX_HOLD_HOURS
 
 
 def combine_scores(technical: float, whale: float, sentiment: float) -> int:
     return max(0, min(100, round(0.55 * technical + 0.30 * whale + 0.15 * sentiment)))
+
 
 def direction_from_components(technical_bias: float, whale_bias: float) -> Direction:
     bias = 0.65 * technical_bias + 0.35 * whale_bias
@@ -36,15 +43,39 @@ def direction_from_components(technical_bias: float, whale_bias: float) -> Direc
     if bias <= -0.20: return "SHORT"
     return "WAIT"
 
+
+def _eta_hours(distance: float, atr: float, asset_type: str) -> float | None:
+    """ATR travel-time estimate, deliberately conservative for stocks."""
+    if distance <= 0 or atr <= 0:
+        return None
+    # Crypto uses 1h candles; one ATR is treated as roughly one hourly
+    # movement unit. Daily stock candles imply one trading-day unit.
+    return distance / atr if asset_type == "crypto" else (distance / atr) * 24.0
+
+
 def build_setup(symbol: str, asset_type: str, price: float, technical_score: int, whale_score: int, sentiment_score: float, technical_bias: float, whale_bias: float, atr: float, market_regime: str = "UNKNOWN") -> Signal:
     direction = direction_from_components(technical_bias, whale_bias)
     score = combine_scores(technical_score, whale_score, sentiment_score)
-    # Keep the setup engine permissive enough to produce candidates. The
-    # authoritative six-confluence decision is made later by confluence_gate.
     if direction == "WAIT" or score < 60 or atr <= 0:
         return Signal(symbol, asset_type, "WAIT", score, None, None, None, None, None, None, technical_score, whale_score, sentiment_score, ["No sufficiently strong directional setup."], "Wait for confirmation.", market_regime, whale_bias=whale_bias)
+
     entry_low, entry_high = price * 0.997, price * 1.003
-    if direction == "LONG": stop, tp1, tp2 = price - 1.5 * atr, price + 2.0 * atr, price + 3.0 * atr
-    else: stop, tp1, tp2 = price + 1.5 * atr, price - 2.0 * atr, price - 3.0 * atr
+    if direction == "LONG":
+        stop, tp1, tp2 = price - 1.5 * atr, price + 2.0 * atr, price + 3.0 * atr
+    else:
+        stop, tp1, tp2 = price + 1.5 * atr, price - 2.0 * atr, price - 3.0 * atr
+
     risk, reward = abs(price - stop), abs(tp2 - price)
-    return Signal(symbol, asset_type, direction, score, entry_low, entry_high, stop, tp1, tp2, reward / risk if risk else None, technical_score, whale_score, sentiment_score, [f"Technical score: {technical_score}/100", f"Whale-flow score: {whale_score}/100", f"Sentiment score: {sentiment_score}/100", f"Market regime: {market_regime}"], f"Invalid if price breaks the {direction.lower()} stop-loss level.", market_regime, whale_bias=whale_bias)
+    tp1_eta = _eta_hours(abs(tp1 - price), atr, asset_type)
+    tp2_eta = _eta_hours(abs(tp2 - price), atr, asset_type)
+    horizon_status = "WITHIN_24H" if tp1_eta is not None and tp1_eta <= MAX_HOLD_HOURS else "OVER_24H"
+    reasons = [
+        f"Technical score: {technical_score}/100",
+        f"Whale-flow score: {whale_score}/100",
+        f"Sentiment score: {sentiment_score}/100",
+        f"Market regime: {market_regime}",
+        f"Estimated TP1: {tp1_eta:.1f}h" if tp1_eta is not None else "Estimated TP1: unavailable",
+        f"Estimated TP2: {tp2_eta:.1f}h" if tp2_eta is not None else "Estimated TP2: unavailable",
+        "TP1 horizon: within 24h" if horizon_status == "WITHIN_24H" else "⚠️ TP1 horizon exceeds 24h — extended setup",
+    ]
+    return Signal(symbol, asset_type, direction, score, entry_low, entry_high, stop, tp1, tp2, reward / risk if risk else None, technical_score, whale_score, sentiment_score, reasons, f"Invalid if price breaks the {direction.lower()} stop-loss level.", market_regime, whale_bias=whale_bias, tp1_eta_hours=tp1_eta, tp2_eta_hours=tp2_eta, horizon_status=horizon_status)
