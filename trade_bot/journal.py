@@ -8,14 +8,26 @@ def init_db():
     with sqlite3.connect(DB) as con:
         con.execute("""CREATE TABLE IF NOT EXISTS setups (id INTEGER PRIMARY KEY, created_at TEXT NOT NULL, symbol TEXT NOT NULL, asset_type TEXT NOT NULL, direction TEXT NOT NULL, score INTEGER NOT NULL, entry_low REAL, entry_high REAL, stop_loss REAL, tp1 REAL, tp2 REAL, risk_reward REAL, technical_score INTEGER, whale_score INTEGER, sentiment_score INTEGER, outcome TEXT DEFAULT 'OPEN', closed_at TEXT)""")
         cols={r[1] for r in con.execute("PRAGMA table_info(setups)")}
-        additions={"closed_at":"TEXT","market_regime":"TEXT DEFAULT 'UNKNOWN'","gemini_confidence":"REAL","gemini_decision":"TEXT","gemini_rationale":"TEXT","whale_bias":"REAL"}
+        additions={
+            "closed_at":"TEXT",
+            "market_regime":"TEXT DEFAULT 'UNKNOWN'",
+            "gemini_confidence":"REAL",
+            "gemini_decision":"TEXT",
+            "gemini_rationale":"TEXT",
+            "whale_bias":"REAL",
+            "tp1_eta_hours":"REAL",
+            "tp2_eta_hours":"REAL",
+            "horizon_status":"TEXT DEFAULT 'UNKNOWN'",
+            "max_hold_hours":"REAL DEFAULT 24",
+        }
         for col,typ in additions.items():
             if col not in cols: con.execute(f"ALTER TABLE setups ADD COLUMN {col} {typ}")
 
 def record_setup(s):
     init_db()
     with sqlite3.connect(DB) as con:
-        cur=con.execute("INSERT INTO setups(created_at,symbol,asset_type,direction,score,entry_low,entry_high,stop_loss,tp1,tp2,risk_reward,technical_score,whale_score,sentiment_score,market_regime,gemini_confidence,gemini_decision,gemini_rationale,whale_bias) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(datetime.now(timezone.utc).isoformat(),s.symbol,s.asset_type,s.direction,s.score,s.entry_low,s.entry_high,s.stop_loss,s.take_profit_1,s.take_profit_2,s.risk_reward,s.technical_score,s.whale_score,s.sentiment_score,getattr(s,"market_regime","UNKNOWN"),getattr(s,"gemini_confidence",None),getattr(s,"gemini_decision",None),getattr(s,"gemini_rationale",None),getattr(s,"whale_bias",None)))
+        cur=con.execute("INSERT INTO setups(created_at,symbol,asset_type,direction,score,entry_low,entry_high,stop_loss,tp1,tp2,risk_reward,technical_score,whale_score,sentiment_score,market_regime,gemini_confidence,gemini_decision,gemini_rationale,whale_bias,tp1_eta_hours,tp2_eta_hours,horizon_status,max_hold_hours) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(
+            datetime.now(timezone.utc).isoformat(),s.symbol,s.asset_type,s.direction,s.score,s.entry_low,s.entry_high,s.stop_loss,s.take_profit_1,s.take_profit_2,s.risk_reward,s.technical_score,s.whale_score,s.sentiment_score,getattr(s,"market_regime","UNKNOWN"),getattr(s,"gemini_confidence",None),getattr(s,"gemini_decision",None),getattr(s,"gemini_rationale",None),getattr(s,"whale_bias",None),getattr(s,"tp1_eta_hours",None),getattr(s,"tp2_eta_hours",None),getattr(s,"horizon_status","UNKNOWN"),getattr(s,"max_hold_hours",24.0)))
         return cur.lastrowid
 
 def performance():
