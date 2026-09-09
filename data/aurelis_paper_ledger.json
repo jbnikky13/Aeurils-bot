@@ -26,7 +26,9 @@
       "tp1_eta_hours",
       "tp2_eta_hours",
       "horizon_status",
-      "max_hold_hours"
+      "max_hold_hours",
+      "signal_key",
+      "updated_at"
     ],
     "rows": [
       {
@@ -55,7 +57,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 2,
@@ -83,7 +87,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 3,
@@ -111,7 +117,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 4,
@@ -139,7 +147,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 5,
@@ -167,7 +177,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 6,
@@ -195,7 +207,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 7,
@@ -223,7 +237,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 8,
@@ -251,7 +267,9 @@
         "tp1_eta_hours": 2.0000000000000075,
         "tp2_eta_hours": 3.0000000000000115,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 9,
@@ -279,7 +297,9 @@
         "tp1_eta_hours": 2.000000000000003,
         "tp2_eta_hours": 3.0000000000000044,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 10,
@@ -307,7 +327,39 @@
         "tp1_eta_hours": 1.9999999999999947,
         "tp2_eta_hours": 3.000000000000004,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
+      },
+      {
+        "id": 11,
+        "created_at": "2026-09-09T20:02:55.227745+00:00",
+        "symbol": "MSFTBUSDT",
+        "asset_type": "crypto",
+        "direction": "SHORT",
+        "score": 72,
+        "entry_low": 490.18502,
+        "entry_high": 493.13498,
+        "stop_loss": 493.96464285714285,
+        "tp1": 488.5871428571429,
+        "tp2": 487.0507142857143,
+        "risk_reward": 2.000000000000025,
+        "technical_score": 90,
+        "whale_score": 50,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "BEARISH",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.0,
+        "tp1_eta_hours": 1.9999999999999893,
+        "tp2_eta_hours": 3.0000000000000027,
+        "horizon_status": "WITHIN_24H",
+        "max_hold_hours": 24.0,
+        "signal_key": "ccd85de603f59b639bf970780635f7730f0420cccc2c28cfa2b1dc37d018a0b6",
+        "updated_at": "2026-09-09T20:02:55.229400+00:00"
       }
     ]
   },
@@ -630,6 +682,35 @@
         "last_price": 0.019911,
         "last_checked_at": "2026-09-09T18:35:36.257461+00:00",
         "max_favorable_pct": 0.40516206482590184,
+        "max_adverse_pct": 0.0
+      },
+      {
+        "id": 11,
+        "signal_id": 11,
+        "symbol": "MSFTBUSDT",
+        "direction": "SHORT",
+        "entry": 491.65999999999997,
+        "stop_loss": 493.96464285714285,
+        "tp1": 488.5871428571429,
+        "tp2": 487.0507142857143,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-09T20:02:55.232452+00:00",
+        "closed_at": null,
+        "final_score": 72.0,
+        "market_regime": "BEARISH",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 491.65999999999997,
+        "last_checked_at": "2026-09-09T20:02:55.232489+00:00",
+        "max_favorable_pct": 0.0,
         "max_adverse_pct": 0.0
       }
     ]
