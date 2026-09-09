@@ -16,6 +16,9 @@ concurrency:
   group: aurelis-daily-signal-service
   cancel-in-progress: false
 
+env:
+  MAX_HOLD_HOURS: '24'
+
 jobs:
   daily-signal:
     runs-on: ubuntu-latest
@@ -60,7 +63,8 @@ jobs:
           print('Telegram scheduled-run heartbeat delivered successfully.')
           PY
 
-      - run: pip install -r trade_bot/requirements.txt
+      - name: Install dependencies
+        run: pip install -r trade_bot/requirements.txt
       - name: Restore persistent paper ledger
         env:
           PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
@@ -76,6 +80,7 @@ jobs:
           DAILY_FALLBACK_MIN_CONFLUENCES: '4'
           MAX_DAILY_ACTIONABLE_SIGNALS: '1'
           MARKET_DATA_CONCURRENCY: '12'
+          MAX_HOLD_HOURS: '24'
           PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
         run: python -m trade_bot.daily_service
       - name: Persist paper ledger
