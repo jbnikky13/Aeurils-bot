@@ -28,8 +28,11 @@ async def safe_setup(symbol, asset_type):
     try:return await crypto_setup(symbol) if asset_type=="crypto" else await stock_setup(symbol)
     except Exception as exc:return f"⚠️ {symbol}: live analysis unavailable — {exc}"
 
+def _is_actionable(result, threshold):
+    return (not isinstance(result,str) and result.direction!="WAIT" and result.score>=threshold and result.horizon_status=="WITHIN_24H")
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("📊 Aeurils Trade Bot\n\n/today — daily market scan\n/crypto — crypto setups\n/stocks — stock setups\n/trending — trending crypto\n/gems — validated small-cap candidates\n/setup BTCUSDT — one asset\n/performance — journal\n/help — commands\n\nOnly signals that pass the complete quality gate are actionable. Everything else is WATCH/WAIT. Research only; manage risk.")
+    await update.message.reply_text("📊 Aeurils Trade Bot\n\n/today — daily market scan\n/crypto — crypto setups\n/stocks — stock setups\n/trending — trending crypto\n/gems — validated small-cap candidates\n/setup BTCUSDT — one asset\n/performance — journal\n/help — commands\n\nActionable signals must pass the quality gate AND have estimated TP1 within 24h. Extended setups are marked WATCH and are not published as trades. Research only; manage risk.")
 async def help_command(update,context): await start(update,context)
 async def setup(update,context):
     if not context.args:return await update.message.reply_text("Usage: /setup BTCUSDT")
@@ -37,19 +40,25 @@ async def setup(update,context):
     if isinstance(result,str):return await update.message.reply_text(result+"\n\nStatus: WATCH/WAIT — not actionable.")
     threshold=int(os.getenv("MIN_SIGNAL_SCORE","70"))
     if result.direction=="WAIT" or result.score<threshold:return await update.message.reply_text(format_signal(result)+"\n\nStatus: WATCH/WAIT — quality gate not passed. No trade published.")
+    if result.horizon_status!="WITHIN_24H":return await update.message.reply_text(format_signal(result)+"\n\nStatus: ⚠️ WATCH — TP1 is estimated beyond 24h. No trade published.")
     sid,created=record_open(result); await update.message.reply_text(format_signal(result)+f"\nSignal ID: {sid}\nStatus: {'OPEN' if created else 'DUPLICATE — suppressed'}")
 async def today(update,context):
     results=[await safe_setup(s,"crypto") for s in CRYPTO]+[await safe_setup(s,"stock") for s in STOCKS]
-    passing=[]
-    for x in results:
-        if not isinstance(x,str) and x.direction!="WAIT" and x.score>=int(os.getenv("MIN_SIGNAL_SCORE","70")): passing.append(x)
+    threshold=int(os.getenv("MIN_SIGNAL_SCORE","70"))
+    passing=[x for x in results if _is_actionable(x,threshold)]
+    extended=[x for x in results if not isinstance(x,str) and x.direction!="WAIT" and x.score>=threshold and x.horizon_status=="OVER_24H"]
     if passing:
         blocks=[]
         for x in passing:
             sid,created=record_open(x); blocks.append(format_signal(x)+f"\nSignal ID: {sid}\nStatus: {'OPEN' if created else 'DUPLICATE — suppressed'}")
         text="📅 DAILY ACTIONABLE SIGNALS\n"+datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")+"\n\n"+"\n\n".join(blocks)
     else:
-        text="🟡 AURELIS DAILY SIGNAL\n"+datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")+"\n\nWATCH / WAIT\nNo crypto or stock setup passed the complete quality gate today.\n\nNo trade published."
+        text="🟡 AURELIS DAILY SIGNAL\n"+datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")+"\n\nWATCH / WAIT\nNo setup passed the complete quality gate and 24h TP1 horizon.\n\nNo trade published."
+    if extended:
+        text += "\n\n⚠️ EXTENDED SETUPS (NOT PUBLISHED)"
+        for x in extended:
+            eta=f"~{x.tp1_eta_hours:.1f}h" if x.tp1_eta_hours is not None else ">24h"
+            text += f"\n• {x.symbol}: TP1 ETA {eta} — exceeds 24h swing horizon"
     await update.message.reply_text(text[:3900])
 async def crypto(update,context):
     results=[await safe_setup(s,"crypto") for s in CRYPTO]; await update.message.reply_text("\n\n".join(format_signal(x) if not isinstance(x,str) else x for x in results)[:3900])
