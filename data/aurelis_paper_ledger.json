@@ -26,7 +26,9 @@
       "tp1_eta_hours",
       "tp2_eta_hours",
       "horizon_status",
-      "max_hold_hours"
+      "max_hold_hours",
+      "signal_key",
+      "updated_at"
     ],
     "rows": [
       {
@@ -55,7 +57,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 2,
@@ -83,7 +87,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 3,
@@ -111,7 +117,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 4,
@@ -139,7 +147,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 5,
@@ -167,7 +177,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 6,
@@ -195,7 +207,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 7,
@@ -223,7 +237,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 8,
@@ -251,7 +267,9 @@
         "tp1_eta_hours": 2.0000000000000075,
         "tp2_eta_hours": 3.0000000000000115,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 9,
@@ -279,7 +297,39 @@
         "tp1_eta_hours": 2.000000000000003,
         "tp2_eta_hours": 3.0000000000000044,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
+      },
+      {
+        "id": 10,
+        "created_at": "2026-09-09T17:21:26.071603+00:00",
+        "symbol": "SPKUSDT",
+        "asset_type": "crypto",
+        "direction": "SHORT",
+        "score": 72,
+        "entry_low": 0.019932024,
+        "entry_high": 0.020051975999999996,
+        "stop_loss": 0.02042442857142857,
+        "tp1": 0.019415428571428573,
+        "tp2": 0.019127142857142856,
+        "risk_reward": 2.000000000000008,
+        "technical_score": 90,
+        "whale_score": 50,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "BEARISH",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.0,
+        "tp1_eta_hours": 1.9999999999999947,
+        "tp2_eta_hours": 3.000000000000004,
+        "horizon_status": "WITHIN_24H",
+        "max_hold_hours": 24.0,
+        "signal_key": "478257923ff453b3d639741f1e989e0547feec50213af2bd4f5eccea72d7a931",
+        "updated_at": "2026-09-09T17:21:26.072716+00:00"
       }
     ]
   },
@@ -574,6 +624,35 @@
         "last_checked_at": "2026-09-09T15:12:46.426420+00:00",
         "max_favorable_pct": 0.0,
         "max_adverse_pct": 2.543671467974236
+      },
+      {
+        "id": 10,
+        "signal_id": 10,
+        "symbol": "SPKUSDT",
+        "direction": "SHORT",
+        "entry": 0.019991999999999996,
+        "stop_loss": 0.02042442857142857,
+        "tp1": 0.019415428571428573,
+        "tp2": 0.019127142857142856,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-09T17:21:26.074149+00:00",
+        "closed_at": null,
+        "final_score": 72.0,
+        "market_regime": "BEARISH",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 0.019991999999999996,
+        "last_checked_at": "2026-09-09T17:21:26.074158+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 0.0
       }
     ]
   }
