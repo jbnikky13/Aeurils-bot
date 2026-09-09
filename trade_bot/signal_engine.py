@@ -45,11 +45,9 @@ def direction_from_components(technical_bias: float, whale_bias: float) -> Direc
 
 
 def _eta_hours(distance: float, atr: float, asset_type: str) -> float | None:
-    """ATR travel-time estimate, deliberately conservative for stocks."""
+    """Estimate travel time without suppressing extended setups."""
     if distance <= 0 or atr <= 0:
         return None
-    # Crypto uses 1h candles; one ATR is treated as roughly one hourly
-    # movement unit. Daily stock candles imply one trading-day unit.
     return distance / atr if asset_type == "crypto" else (distance / atr) * 24.0
 
 
