@@ -19,9 +19,13 @@ def _entry(signal):
     if signal.entry_low is None or signal.entry_high is None: raise ValueError(f'{signal.symbol}: actionable signal has no entry range')
     return (float(signal.entry_low)+float(signal.entry_high))/2
 
+def _horizon_status(signal):
+    eta=getattr(signal,'tp1_eta_hours',None)
+    if eta is None:return 'UNKNOWN'
+    return 'WITHIN_24H' if float(eta)<=MAX_HOLD_HOURS else 'OVER_24H'
+
 def _within_horizon(signal):
-    """Only publish trades whose estimated TP1 is inside the swing horizon."""
-    return getattr(signal,'horizon_status','UNKNOWN') == 'WITHIN_24H' and float(getattr(signal,'tp1_eta_hours',999999) or 999999) <= MAX_HOLD_HOURS
+    return _horizon_status(signal)=='WITHIN_24H'
 
 async def _run_crypto(symbol,sem):
     async with sem:
@@ -47,8 +51,6 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
     async def gated(kind,symbol,signal):
         minimum=int(os.getenv('MIN_CONFLUENCES','6'))
         if signal is None:return kind,symbol,None,{'passed':0,'minimum':minimum,'actionable':False,'confluences':[],'checks':[],'failed':['Setup generation failed'],'unknown':['Setup data unavailable']}
-        if not _within_horizon(signal):
-            return kind,symbol,signal,{'passed':0,'minimum':minimum,'actionable':False,'confluences':[],'checks':[],'failed':['TP1 estimated beyond 24h swing horizon'],'unknown':[],'horizon_rejected':True}
         try:
             evidence=await crypto_evidence(symbol)
             gate=evaluate(signal,onchain=evidence,offchain={})
@@ -58,7 +60,7 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
 
     evaluated=await asyncio.gather(*[gated(kind,symbol,signal) for (kind,symbol),signal in zip(pairs,raw)])
     minimum=int(os.getenv('MIN_CONFLUENCES','6'))
-    candidates=[(s,g) for kind,symbol,s,g in evaluated if s is not None and _within_horizon(s) and g.get('actionable') and g.get('passed',0)>=minimum]
+    candidates=[(s,g) for kind,symbol,s,g in evaluated if s is not None and getattr(s,'direction','WAIT')!='WAIT' and g.get('actionable') and g.get('passed',0)>=minimum]
     candidates.sort(key=lambda x:(float(getattr(x[0],'score',0) or 0),int(x[1].get('passed',0)),float(getattr(x[0],'risk_reward',0) or 0)),reverse=True)
     candidates=candidates[:MAX_DAILY_ACTIONABLE_SIGNALS]
     if not candidates:candidates=_fallback_candidates(evaluated,DAILY_FALLBACK_MIN_CONFLUENCES)[:MAX_DAILY_ACTIONABLE_SIGNALS]
@@ -75,11 +77,11 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
 
     extended=[]
     for kind,symbol,signal,gate in evaluated:
-        if signal is not None and getattr(signal,'direction','WAIT')!='WAIT' and not _within_horizon(signal):
+        if signal is not None and getattr(signal,'direction','WAIT')!='WAIT' and _horizon_status(signal)=='OVER_24H':
             eta=getattr(signal,'tp1_eta_hours',None)
-            extended.append(f"• {symbol}: TP1 ETA ~{eta:.1f}h — exceeds {MAX_HOLD_HOURS:.0f}h swing horizon" if eta is not None else f"• {symbol}: TP1 ETA >{MAX_HOLD_HOURS:.0f}h — extended setup")
+            extended.append(f"• {symbol}: TP1 estimated ~{eta:.1f}h — requires more than 24h" if eta is not None else f"• {symbol}: TP1 estimated >{MAX_HOLD_HOURS:.0f}h — requires more than 24h")
 
-    body='\n\n'.join(format_signal(s) for s in published) if published else 'NO TRADE SETUP TODAY.\n\nAURELIS found no valid Binance-listed setup inside the 24h swing horizon.'
+    body='\n\n'.join(format_signal(s) for s in published) if published else 'NO TRADE SETUP TODAY.\n\nAURELIS found no valid Binance-listed setup.'
     if extended:
-        body += '\n\n⚠️ EXTENDED SETUPS (WATCH ONLY)\n' + '\n'.join(extended[:10])
+        body += '\n\n⚠️ EXTENDED SWING SETUPS\n' + '\n'.join(extended[:10])
     await context.bot.send_message(chat_id=CHAT_ID,text=body[:3900])
