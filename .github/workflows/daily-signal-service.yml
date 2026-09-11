@@ -2,11 +2,11 @@ name: Aeurils Daily Signal Service
 
 on:
   schedule:
-    # Africa/Lagos (WAT, UTC+1): 09:30, 14:30 and 18:30.
-    # GitHub Actions cron is UTC, so these are 08:30, 13:30 and 17:30 UTC.
-    - cron: '30 8 * * *'
-    - cron: '30 13 * * *'
-    - cron: '30 17 * * *'
+    # Africa/Lagos (WAT, UTC+1): 01:30, 08:30 and 19:30.
+    # GitHub Actions cron is UTC, so these are 00:30, 07:30 and 18:30 UTC.
+    - cron: '30 0 * * *'
+    - cron: '30 7 * * *'
+    - cron: '30 18 * * *'
   workflow_dispatch:
 
 permissions:
@@ -35,31 +35,16 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           python - <<'PY'
-          import json
-          import os
-          import urllib.parse
-          import urllib.request
+          import json, os, urllib.parse, urllib.request
           from datetime import datetime, timezone
-          token = os.environ.get('TELEGRAM_BOT_TOKEN')
-          chat = os.environ.get('TELEGRAM_CHAT_ID')
-          if not token or not chat:
-              raise SystemExit('Telegram secrets are missing')
-          now = datetime.now(timezone.utc)
-          text = (
-              '🟢 AURELIS SCHEDULED SCAN STARTED\n\n'
-              f'UTC: {now:%Y-%m-%d %H:%M:%S}\n'
-              'WAT: scheduled scan is now running.'
-          )
-          data = urllib.parse.urlencode({'chat_id': chat, 'text': text}).encode()
-          req = urllib.request.Request(
-              f'https://api.telegram.org/bot{token}/sendMessage',
-              data=data,
-              method='POST',
-          )
-          with urllib.request.urlopen(req, timeout=15) as response:
-              payload = json.loads(response.read().decode())
-          if not payload.get('ok'):
-              raise SystemExit(f"Telegram heartbeat failed: {payload}")
+          token=os.environ.get('TELEGRAM_BOT_TOKEN'); chat=os.environ.get('TELEGRAM_CHAT_ID')
+          if not token or not chat: raise SystemExit('Telegram secrets are missing')
+          now=datetime.now(timezone.utc)
+          text=f'🟢 AURELIS SCHEDULED SCAN STARTED\n\nUTC: {now:%Y-%m-%d %H:%M:%S}\nWAT: scheduled scan is now running.'
+          data=urllib.parse.urlencode({'chat_id':chat,'text':text}).encode()
+          req=urllib.request.Request(f'https://api.telegram.org/bot{token}/sendMessage',data=data,method='POST')
+          with urllib.request.urlopen(req,timeout=15) as response: payload=json.loads(response.read().decode())
+          if not payload.get('ok'): raise SystemExit(f'Telegram heartbeat failed: {payload}')
           print('Telegram scheduled-run heartbeat delivered successfully.')
           PY
 
@@ -77,7 +62,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           MIN_SIGNAL_SCORE: '70'
           MIN_CONFLUENCES: '6'
-          DAILY_FALLBACK_MIN_CONFLUENCES: '4'
+          DAILY_FALLBACK_MIN_CONFLUENCES: '6'
           MAX_DAILY_ACTIONABLE_SIGNALS: '1'
           MARKET_DATA_CONCURRENCY: '12'
           MAX_HOLD_HOURS: '24'
