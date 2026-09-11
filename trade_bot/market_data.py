@@ -5,18 +5,12 @@ import pandas as pd
 CRYPTO_API_URL = os.getenv("CRYPTO_API_URL", "https://data-api.binance.vision").rstrip("/")
 
 
-def crypto_klines(symbol: str, interval: str = "1h", limit: int = 240) -> pd.DataFrame:
-    """Fetch Binance candles for the signal engine.
-
-    The execution timeframe is 1h so actionable setups are designed around a
-    short swing horizon rather than daily candles.  Callers can still request
-    another interval explicitly for higher-timeframe context.
-    """
-    r = httpx.get(
-        f"{CRYPTO_API_URL}/api/v3/klines",
-        params={"symbol": symbol.upper(), "interval": interval, "limit": limit},
-        timeout=15,
-    )
+def crypto_klines(symbol: str, interval: str = "1h", limit: int = 240, start_time: int | None = None, end_time: int | None = None) -> pd.DataFrame:
+    """Fetch Binance candles. Supports intraday replay with start/end timestamps."""
+    params = {"symbol": symbol.upper(), "interval": interval, "limit": min(int(limit), 1000)}
+    if start_time is not None: params["startTime"] = int(start_time)
+    if end_time is not None: params["endTime"] = int(end_time)
+    r = httpx.get(f"{CRYPTO_API_URL}/api/v3/klines", params=params, timeout=15)
     r.raise_for_status()
     rows = r.json()
     if not rows:
