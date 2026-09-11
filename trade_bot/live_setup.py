@@ -20,16 +20,24 @@ def _entry_context(df):
 
 
 async def crypto_setup(symbol: str):
-    """Build a crypto setup with trend-aware entry validation.
+    """Build a crypto setup from closed 4-hour market structure.
 
-    Gemini is advisory. A strong signal that is already overextended from its
-    EMA20 is rejected rather than published as a chase entry.
+    The 4h timeframe is used for signal direction, regime and entry quality so
+    AURELIS does not generate noisy lower-timeframe chase entries. Paper-trade
+    resolution remains intraday and independent of this signal timeframe.
     """
-    df = crypto_klines(symbol)
-    tech, tbias, atr, reasons = technical_score(df)
-    regime = _regime(df)
-    price = float(df.iloc[-1].close)
-    ema20, recent_high, recent_low, rsi = _entry_context(df)
+    df = crypto_klines(symbol, interval="4h", limit=240)
+    # Use the latest completed 4h candle for indicators. The current 4h candle
+    # can still move substantially before it closes and should not drive a new signal.
+    if len(df) >= 3:
+        signal_df = df.iloc[:-1].copy()
+    else:
+        signal_df = df.copy()
+
+    tech, tbias, atr, reasons = technical_score(signal_df)
+    regime = _regime(signal_df)
+    price = float(signal_df.iloc[-1].close)
+    ema20, recent_high, recent_low, rsi = _entry_context(signal_df)
     preliminary = build_setup(symbol, "crypto", price, tech, 50, 50, tbias, 0.0, atr, regime,
                               ema20=ema20, recent_high=recent_high, recent_low=recent_low, rsi=rsi)
 
@@ -40,6 +48,7 @@ async def crypto_setup(symbol: str):
     ai_state = "AVAILABLE" if ai.get("available") else "UNAVAILABLE"
     ai_conf = f"{float(ai['confidence']):.0f}/100" if ai.get("confidence") is not None else "not scored"
     preliminary.reasons = reasons + [
+        "Signal timeframe: 4h closed candle",
         f"Market regime: {regime}",
         f"Entry status: {preliminary.entry_status} ({preliminary.entry_quality:.0f}/100)" if preliminary.entry_quality is not None else f"Entry status: {preliminary.entry_status}",
         f"Gemini confirmation: {ai.get('decision', 'UNAVAILABLE')} ({ai_conf}; {ai_state})",
