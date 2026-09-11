@@ -2,10 +2,10 @@ name: Aeurils Daily Signal Service
 
 on:
   schedule:
-    # Africa/Lagos (WAT, UTC+1): 01:30, 08:30 and 19:30.
-    # GitHub Actions cron is UTC, so these are 00:30, 07:30 and 18:30 UTC.
-    - cron: '30 0 * * *'
+    # Africa/Lagos (WAT, UTC+1): 08:30, 13:30 and 19:30.
+    # GitHub Actions cron is UTC, so these are 07:30, 12:30 and 18:30 UTC.
     - cron: '30 7 * * *'
+    - cron: '30 12 * * *'
     - cron: '30 18 * * *'
   workflow_dispatch:
 
@@ -40,12 +40,11 @@ jobs:
           token=os.environ.get('TELEGRAM_BOT_TOKEN'); chat=os.environ.get('TELEGRAM_CHAT_ID')
           if not token or not chat: raise SystemExit('Telegram secrets are missing')
           now=datetime.now(timezone.utc)
-          text=f'🟢 AURELIS SCHEDULED SCAN STARTED\n\nUTC: {now:%Y-%m-%d %H:%M:%S}\nWAT: scheduled scan is now running.'
+          text=f'🟢 AURELIS SCHEDULED SCAN STARTED\n\nUTC: {now:%Y-%m-%d %H:%M:%S}\nWAT: {now:%H:%M} + 1h\n\nStrategy scan is running.'
           data=urllib.parse.urlencode({'chat_id':chat,'text':text}).encode()
           req=urllib.request.Request(f'https://api.telegram.org/bot{token}/sendMessage',data=data,method='POST')
           with urllib.request.urlopen(req,timeout=15) as response: payload=json.loads(response.read().decode())
           if not payload.get('ok'): raise SystemExit(f'Telegram heartbeat failed: {payload}')
-          print('Telegram scheduled-run heartbeat delivered successfully.')
           PY
 
       - name: Install dependencies
