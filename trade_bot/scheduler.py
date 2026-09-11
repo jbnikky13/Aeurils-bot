@@ -9,7 +9,7 @@ from .confluence_providers import crypto_evidence
 from .binance_universe import all_binance_usdt_spot_symbols
 
 CHAT_ID=os.getenv('TELEGRAM_CHAT_ID')
-MAX_DAILY_ACTIONABLE_SIGNALS=int(os.getenv('MAX_DAILY_ACTIONABLE_SIGNALS','1'))
+MAX_DAILY_ACTIONABLE_SIGNALS=int(os.getenv('MAX_DAILY_ACTIONABLE_SIGNALS','5'))
 MAX_UNIVERSE_SCAN=int(os.getenv('MAX_UNIVERSE_SCAN','0'))
 DAILY_FALLBACK_MIN_CONFLUENCES=int(os.getenv('DAILY_FALLBACK_MIN_CONFLUENCES','4'))
 MARKET_DATA_CONCURRENCY=int(os.getenv('MARKET_DATA_CONCURRENCY','12'))
@@ -80,8 +80,21 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
     gated_candidates=[(s,g) for s,g in technical_candidates if g.get('actionable') and g.get('passed',0)>=minimum]
     candidates=[x for x in gated_candidates if _within_horizon(x[0])]
     candidates.sort(key=lambda x:(float(getattr(x[0],'score',0) or 0),int(x[1].get('passed',0)),float(getattr(x[0],'risk_reward',0) or 0)),reverse=True)
-    candidates=candidates[:MAX_DAILY_ACTIONABLE_SIGNALS]
-    if not candidates:candidates=_fallback_candidates(evaluated,DAILY_FALLBACK_MIN_CONFLUENCES)[:MAX_DAILY_ACTIONABLE_SIGNALS]
+
+    # Publish the strongest setups up to the configured daily target. If the
+    # primary gate leaves fewer than the target, fill from the softer fallback
+    # pool rather than allowing a single arbitrary setup to be published.
+    target=max(1,MAX_DAILY_ACTIONABLE_SIGNALS)
+    selected=candidates[:target]
+    if len(selected)<target:
+        seen={getattr(s,'symbol',None) for s,_ in selected}
+        for item in _fallback_candidates(evaluated,DAILY_FALLBACK_MIN_CONFLUENCES):
+            symbol=getattr(item[0],'symbol',None)
+            if symbol in seen:continue
+            selected.append(item)
+            seen.add(symbol)
+            if len(selected)>=target:break
+    candidates=selected
 
     published=[]
     for signal,gate in candidates:
