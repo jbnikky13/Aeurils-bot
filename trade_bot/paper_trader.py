@@ -1,9 +1,10 @@
-"""Deterministic paper-trading ledger with intrabar-aware resolution."""
+"""Deterministic paper-trading ledger with 1h candle resolution."""
 import sqlite3
 from datetime import datetime, timezone, timedelta
 from .journal import DB, init_db
 
 PAPER_TABLE = "paper_trades"
+RESOLUTION_INTERVAL = "1h"
 
 
 def _now():
@@ -97,11 +98,11 @@ def _sync_setup(signal_id, outcome):
 
 
 def _resolve_candle(direction, high, low, stop, tp1, tp2):
-    """Resolve a candle using its actual range.
+    """Resolve using a completed 1h candle range, not a 1m/noise print.
 
-    If both a target and stop are inside the same 1-minute candle, the stop is
-    conservatively treated as first. This avoids look-ahead optimism when the
-    exact tick sequence is unavailable.
+    If both a target and stop are inside the same hourly candle, the result is
+    marked AMBIGUOUS instead of inventing the order of events. Such trades are
+    excluded from WIN/LOSS statistics until a higher-resolution audit is run.
     """
     if direction == "LONG":
         stop_hit = stop is not None and low <= stop
@@ -111,6 +112,9 @@ def _resolve_candle(direction, high, low, stop, tp1, tp2):
         stop_hit = stop is not None and high >= stop
         tp2_hit = tp2 is not None and low <= tp2
         tp1_hit = tp1 is not None and low <= tp1
+
+    if stop_hit and (tp1_hit or tp2_hit):
+        return "AMBIGUOUS"
     if stop_hit:
         return "LOSS_SL"
     if tp2_hit:
@@ -121,7 +125,7 @@ def _resolve_candle(direction, high, low, stop, tp1, tp2):
 
 
 def mark_candle(symbol, candle):
-    """Resolve all open trades for one completed OHLC candle."""
+    """Resolve open trades from one completed 1h OHLC candle."""
     init_paper_db()
     high, low, close = float(candle["high"]), float(candle["low"]), float(candle["close"])
     candle_time = candle.get("time") or _now()
@@ -141,14 +145,12 @@ def mark_candle(symbol, candle):
             fav = max(float(old_fav or 0), _favorable(direction, float(entry), fav_price))
             adv = max(float(old_adv or 0), _adverse(direction, float(entry), adv_price))
             outcome = _resolve_candle(direction, high, low, stop, tp1, tp2)
-            if outcome:
-                if outcome == "WIN_TP2": exit_price = float(tp2)
-                elif outcome == "WIN_TP1": exit_price = float(tp1)
-                else: exit_price = float(stop)
+            if outcome in {"WIN_TP1", "WIN_TP2", "LOSS_SL"}:
+                exit_price = float(tp2 if outcome == "WIN_TP2" else tp1 if outcome == "WIN_TP1" else stop)
                 reason = "TP2" if outcome == "WIN_TP2" else "TP1" if outcome == "WIN_TP1" else "SL"
                 con.execute(
                     f"""UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome=?,pnl_pct=?,closed_at=?,exit_reason=?,last_price=?,last_checked_at=?,
-                        max_favorable_pct=?,max_adverse_pct=?,resolution_source='1m_ohlc',
+                        max_favorable_pct=?,max_adverse_pct=?,resolution_source='1h_ohlc',
                         tp1_hit_at=CASE WHEN ? IN ('WIN_TP1','WIN_TP2') THEN COALESCE(tp1_hit_at,?) ELSE tp1_hit_at END,
                         tp2_hit_at=CASE WHEN ?='WIN_TP2' THEN COALESCE(tp2_hit_at,?) ELSE tp2_hit_at END,
                         sl_hit_at=CASE WHEN ?='LOSS_SL' THEN COALESCE(sl_hit_at,?) ELSE sl_hit_at END
@@ -157,9 +159,14 @@ def mark_candle(symbol, candle):
                      close, candle_time, fav, adv, outcome, candle_time, outcome, candle_time, outcome, candle_time, sid)
                 )
                 closed_ids.append((sid, outcome))
+            elif outcome == "AMBIGUOUS":
+                con.execute(
+                    f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='1h_ohlc_ambiguous' WHERE signal_id=?",
+                    (close, candle_time, fav, adv, sid)
+                )
             else:
                 con.execute(
-                    f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='1m_ohlc' WHERE signal_id=?",
+                    f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='1h_ohlc' WHERE signal_id=?",
                     (close, candle_time, fav, adv, sid)
                 )
         con.commit()
@@ -179,31 +186,29 @@ def expire_old_trades(now=None):
             if opened and now >= opened + timedelta(hours=24):
                 price = float(last_price)
                 row = con.execute(f"SELECT direction,entry FROM {PAPER_TABLE} WHERE signal_id=?", (sid,)).fetchone()
-                if not row: continue
+                if not row:
+                    continue
                 pnl = _pnl(row[0], float(row[1]), price)
                 con.execute(f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome='EXPIRED',pnl_pct=?,closed_at=?,exit_reason='EXPIRED',resolution_source='24h_timeout' WHERE signal_id=?",
                              (price, pnl, now.isoformat(), sid))
                 expired += 1
         con.commit()
-    if expired:
-        with sqlite3.connect(DB) as con:
-            rows = con.execute(f"SELECT signal_id FROM {PAPER_TABLE} WHERE outcome='EXPIRED' AND closed_at=?", (now.isoformat(),)).fetchall()
-        for (sid,) in rows: _sync_setup(sid, "EXPIRED")
     return expired
 
 
 def mark_price(symbol, current_price):
-    """Compatibility path for callers that only have a spot price."""
+    """Compatibility path; callers should prefer completed 1h candles."""
     return mark_candle(symbol, {"high": current_price, "low": current_price, "close": current_price, "time": _now()})
 
 
 def close_paper_trade(signal_id, outcome, exit_price):
-    if outcome not in {"WIN_TP1", "WIN_TP2", "LOSS_SL", "CANCELLED", "EXPIRED"}:
+    if outcome not in {"WIN_TP1", "WIN_TP2", "LOSS_SL", "CANCELLED", "EXPIRED", "AMBIGUOUS"}:
         raise ValueError("Invalid paper-trade outcome")
     init_paper_db()
     with sqlite3.connect(DB) as con:
         row = con.execute(f"SELECT direction,entry FROM {PAPER_TABLE} WHERE signal_id=? AND status='OPEN'", (signal_id,)).fetchone()
-        if not row: return False
+        if not row:
+            return False
         pnl = _pnl(row[0], float(row[1]), float(exit_price))
         now = _now()
         con.execute(f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome=?,pnl_pct=?,closed_at=?,exit_reason=? WHERE signal_id=?",
@@ -219,14 +224,16 @@ def paper_summary():
         total = con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE}").fetchone()[0]
         opened = con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE status='OPEN'").fetchone()[0]
         closed = con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE status='CLOSED'").fetchone()[0]
-        pnl = con.execute(f"SELECT COALESCE(SUM(pnl_pct),0) FROM {PAPER_TABLE} WHERE status='CLOSED'").fetchone()[0]
+        pnl = con.execute(f"SELECT COALESCE(SUM(pnl_pct),0) FROM {PAPER_TABLE} WHERE status='CLOSED' AND outcome!='AMBIGUOUS'").fetchone()[0]
         wins = con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome IN ('WIN_TP1','WIN_TP2')").fetchone()[0]
         losses = con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='LOSS_SL'").fetchone()[0]
         tp1 = con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='WIN_TP1'").fetchone()[0]
         tp2 = con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='WIN_TP2'").fetchone()[0]
         expired = con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='EXPIRED'").fetchone()[0]
+        ambiguous = con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='AMBIGUOUS'").fetchone()[0]
+    resolved = wins + losses
     return {'total': total, 'open': opened, 'closed': closed, 'wins': wins, 'losses': losses,
-            'tp1': tp1, 'tp2': tp2, 'expired': expired,
-            'win_rate_pct': round(wins / closed * 100, 2) if closed else 0.0,
-            'sl_rate_pct': round(losses / closed * 100, 2) if closed else 0.0,
-            'pnl_pct': round(float(pnl), 4), 'avg_pnl_pct': round(float(pnl) / closed, 4) if closed else 0.0}
+            'tp1': tp1, 'tp2': tp2, 'expired': expired, 'ambiguous': ambiguous,
+            'win_rate_pct': round(wins / resolved * 100, 2) if resolved else 0.0,
+            'sl_rate_pct': round(losses / resolved * 100, 2) if resolved else 0.0,
+            'pnl_pct': round(float(pnl), 4), 'avg_pnl_pct': round(float(pnl) / resolved, 4) if resolved else 0.0}
