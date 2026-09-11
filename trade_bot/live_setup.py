@@ -19,58 +19,57 @@ def _entry_context(df):
 
 
 def _confirm_1h(symbol, direction):
-    """Confirm a 4H direction with completed 1H structure before publishing."""
+    """Use 1H as confirmation, not a rigid all-indicators veto."""
     try:
         df=crypto_klines(symbol,interval='1h',limit=240)
         if len(df)>=3: df=df.iloc[:-1].copy()
         score,bias,_,reasons=technical_score(df); ctx=strategy_context(df)
         adx=ctx.get('adx',0); plus=ctx.get('plus_di',0); minus=ctx.get('minus_di',0); rsi=ctx.get('rsi',50)
         if direction=='LONG':
-            aligned=bias>=0.20 and plus>=minus
-            healthy=adx>=18 and rsi<70
+            aligned=bias>=0.10 and plus>=minus-0.05
+            healthy=adx>=14 and rsi<75
         elif direction=='SHORT':
-            aligned=bias<=-0.20 and minus>=plus
-            healthy=adx>=18 and rsi>30
+            aligned=bias<=-0.10 and minus>=plus-0.05
+            healthy=adx>=14 and rsi>25
         else: return False, score, bias, ['No directional setup']
+        # 1H disagreement is a soft warning; only clearly broken structure vetoes the setup.
         return bool(aligned and healthy),score,bias,reasons+[f'1H ADX {adx:.1f}',f'1H RSI {rsi:.1f}']
     except Exception as exc:
+        # Don't create a trade solely because confirmation failed, but make the failure explicit.
         return False,0,0,[f'1H confirmation unavailable: {type(exc).__name__}']
 
 
 def _flow_ok(direction, flow):
-    """Use Binance derivatives/spot flow as confirmation, never as a standalone signal."""
+    """Binance flow is supporting evidence; only severe conflict vetoes a setup."""
     if not flow.get('available'):
         return True
     score=float(flow.get('score',50)); bias=float(flow.get('bias',0))
-    # Do not force a trade against clearly conflicting market flow.
     if direction=='LONG':
-        return score >= 52 and bias >= -0.20
+        return not (score < 40 and bias < -0.45)
     if direction=='SHORT':
-        return score >= 52 and bias <= 0.20
+        return not (score < 40 and bias > 0.45)
     return False
 
 
 async def crypto_setup(symbol: str):
-    """Generate from a completed 4H candle, then validate 1H structure and Binance flow."""
+    """Generate from a completed 4H candle, then use 1H structure and Binance flow as confirmation."""
     df=crypto_klines(symbol,interval='4h',limit=240)
     signal_df=df.iloc[:-1].copy() if len(df)>=3 else df.copy()
     tech,tbias,atr,reasons=technical_score(signal_df); regime=_regime(signal_df); price=float(signal_df.iloc[-1].close)
     ema20,recent_high,recent_low,rsi=_entry_context(signal_df)
 
-    # First pass: cheap technical screening. Only candidates query derivatives/depth data.
     preliminary=build_setup(symbol,'crypto',price,tech,50,50,tbias,0.0,atr,regime,ema20=ema20,recent_high=recent_high,recent_low=recent_low,rsi=rsi)
     flow={'available':False,'score':50,'bias':0,'reasons':['Flow not queried because technical screen produced no trade candidate.']}
     if preliminary.direction in ('LONG','SHORT'):
         flow=binance_flow(symbol,preliminary.direction)
-        # Replace the old neutral whale placeholder with actual Binance market-flow intelligence.
         flow_score=float(flow.get('score',50)); flow_bias=float(flow.get('bias',0))
         preliminary=build_setup(symbol,'crypto',price,tech,round(flow_score),50,tbias,flow_bias,atr,regime,ema20=ema20,recent_high=recent_high,recent_low=recent_low,rsi=rsi)
         preliminary.reasons += ['Binance market-flow confirmation:',*flow.get('reasons',[]),f'Flow score: {flow_score:.0f}/100',f'Flow bias: {flow_bias:+.2f}']
         if not _flow_ok(preliminary.direction,flow):
             preliminary.direction='WAIT'; preliminary.entry_status='FLOW_CONFLICT'; preliminary.entry_quality=None
             preliminary.entry_low=preliminary.entry_high=preliminary.stop_loss=preliminary.take_profit_1=preliminary.take_profit_2=preliminary.risk_reward=None
-            preliminary.reasons.append('Trade rejected: Binance order-book/derivatives flow conflicts with the setup.')
-            preliminary.invalidation='Wait for market flow to align with the 4H/1H direction.'
+            preliminary.reasons.append('Trade rejected: Binance flow shows a severe conflict with the 4H setup.')
+            preliminary.invalidation='Wait for market flow to align with the 4H direction.'
 
     if preliminary.direction in ('LONG','SHORT'):
         ok,one_h_score,one_h_bias,one_h_reasons=_confirm_1h(symbol,preliminary.direction)
@@ -78,7 +77,7 @@ async def crypto_setup(symbol: str):
         if not ok:
             preliminary.direction='WAIT'; preliminary.entry_status='NO_1H_CONFIRMATION'; preliminary.entry_quality=None
             preliminary.entry_low=preliminary.entry_high=preliminary.stop_loss=preliminary.take_profit_1=preliminary.take_profit_2=preliminary.risk_reward=None
-            preliminary.reasons.append('Trade rejected: 1H structure does not confirm the 4H direction.')
+            preliminary.reasons.append('Trade rejected: 1H structure did not provide enough confirmation.')
             preliminary.invalidation='Wait for 1H trend/momentum alignment or a clean retest.'
 
     ai=confirm(symbol,tech,tbias,50,0.0,price,atr)
