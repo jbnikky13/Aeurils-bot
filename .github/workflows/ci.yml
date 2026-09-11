@@ -6,8 +6,6 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
-  schedule:
-    - cron: '15 8 * * *'
 
 permissions:
   contents: read
@@ -35,7 +33,7 @@ jobs:
           PY
 
   provider-health:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' }}
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -51,34 +49,3 @@ jobs:
           STOCK_API_KEY: ${{ secrets.STOCK_API_KEY }}
           WHALE_API_KEY: ${{ secrets.WHALE_API_KEY }}
         run: python -m trade_bot.healthcheck
-
-  daily-telegram:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' }}
-    needs: provider-health
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-python@v6
-        with:
-          python-version: '3.12'
-      - run: pip install -r trade_bot/requirements.txt
-      - name: Send daily production signal service
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          STOCK_API_KEY: ${{ secrets.STOCK_API_KEY }}
-          WHALE_API_KEY: ${{ secrets.WHALE_API_KEY }}
-          COINGECKO_API_KEY: ${{ secrets.COINGECKO_API_KEY }}
-          WATCHLIST_CRYPTO: ${{ vars.WATCHLIST_CRYPTO || 'BTCUSDT,ETHUSDT,SOLUSDT' }}
-          WATCHLIST_STOCKS: ${{ vars.WATCHLIST_STOCKS || 'NVDA,TSLA,AAPL,MSFT,AMZN' }}
-          TOKEN_CONTRACTS: ${{ vars.TOKEN_CONTRACTS }}
-          WHALE_WALLETS: ${{ vars.WHALE_WALLETS }}
-          EXCHANGE_WALLETS: ${{ vars.EXCHANGE_WALLETS }}
-          MIN_SIGNAL_SCORE: ${{ vars.MIN_SIGNAL_SCORE || '70' }}
-          WALLET_MIN_CONFIDENCE: ${{ vars.WALLET_MIN_CONFIDENCE || '0.85' }}
-          GEM_DISCOVERY_LIMIT: ${{ vars.GEM_DISCOVERY_LIMIT || '5' }}
-          SMALL_CAP_DISCOVERY_LIMIT: ${{ vars.SMALL_CAP_DISCOVERY_LIMIT || '5' }}
-          GEM_VALIDATION_LIMIT: ${{ vars.GEM_VALIDATION_LIMIT || '5' }}
-          GEM_VALIDATED_OUTPUT_LIMIT: ${{ vars.GEM_VALIDATED_OUTPUT_LIMIT || '5' }}
-        run: python -m trade_bot.run_daily
