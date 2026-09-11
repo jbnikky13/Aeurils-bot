@@ -3,7 +3,9 @@ from typing import Literal
 
 Direction = Literal["LONG", "SHORT", "WAIT"]
 MAX_HOLD_HOURS = 24.0
-MAX_ENTRY_EXTENSION_ATR = 0.85
+MAX_ENTRY_EXTENSION_ATR = 0.65
+OVERBOUGHT_RSI = 68.0
+OVERSOLD_RSI = 32.0
 
 @dataclass
 class Signal:
@@ -19,7 +21,7 @@ class Signal:
     risk_reward: float | None
     technical_score: int
     whale_score: int
-    sentiment_score: int
+    sentiment_score: float
     reasons: list[str]
     invalidation: str
     market_regime: str = "UNKNOWN"
@@ -63,21 +65,38 @@ def build_setup(symbol: str, asset_type: str, price: float, technical_score: int
                       technical_score, whale_score, sentiment_score, ["No sufficiently strong directional setup."],
                       "Wait for confirmation.", market_regime, whale_bias=whale_bias)
 
-    # Do not chase candles that have already moved too far from the trend anchor.
-    # The signal becomes WAIT instead of publishing an entry that is likely to be missed.
     entry_anchor = float(ema20) if ema20 is not None else float(price)
     extension_atr = abs(price - entry_anchor) / atr if atr > 0 else 999.0
     entry_quality = max(0.0, 100.0 - (extension_atr / MAX_ENTRY_EXTENSION_ATR) * 100.0)
+
+    # Do not publish late entries. The tighter 0.65 ATR limit is deliberately
+    # conservative: AURELIS should prefer a pullback/retest over chasing a move.
     if ema20 is not None and extension_atr > MAX_ENTRY_EXTENSION_ATR:
         return Signal(symbol, asset_type, "WAIT", score, None, None, None, None, None, None,
                       technical_score, whale_score, sentiment_score,
                       [f"Entry rejected: price is {extension_atr:.2f} ATR from EMA20; avoid chasing."],
-                      "Wait for a pullback/retest toward the entry zone.", market_regime,
+                      "Wait for a pullback/retest toward the EMA20 entry area.", market_regime,
                       whale_bias=whale_bias, entry_status="EXTENDED", entry_quality=entry_quality)
 
-    # Entry zone is centered on the current tradable price but narrowed by ATR.
-    # This gives the signal a realistic fill zone instead of a stale exact price.
-    zone = min(0.003, max(0.001, 0.20 * atr / price))
+    # Avoid publishing a fresh entry when momentum is already at an extreme.
+    if rsi is not None:
+        if direction == "LONG" and rsi > OVERBOUGHT_RSI:
+            return Signal(symbol, asset_type, "WAIT", score, None, None, None, None, None, None,
+                          technical_score, whale_score, sentiment_score,
+                          [f"Entry rejected: RSI {rsi:.1f} is overbought for a new long."],
+                          "Wait for RSI to cool and price to retest support.", market_regime,
+                          whale_bias=whale_bias, entry_status="OVEREXTENDED_MOMENTUM", entry_quality=entry_quality)
+        if direction == "SHORT" and rsi < OVERSOLD_RSI:
+            return Signal(symbol, asset_type, "WAIT", score, None, None, None, None, None, None,
+                          technical_score, whale_score, sentiment_score,
+                          [f"Entry rejected: RSI {rsi:.1f} is oversold for a new short."],
+                          "Wait for RSI to recover and price to retest resistance.", market_regime,
+                          whale_bias=whale_bias, entry_status="OVEREXTENDED_MOMENTUM", entry_quality=entry_quality)
+
+    # Entry zone is narrow enough to be actionable but leaves room for normal
+    # 4h volatility. The engine rejects the setup rather than pretending an
+    # exact current-price fill is guaranteed.
+    zone = min(0.0025, max(0.00075, 0.15 * atr / price))
     entry_low, entry_high = price * (1 - zone), price * (1 + zone)
 
     if direction == "LONG":
