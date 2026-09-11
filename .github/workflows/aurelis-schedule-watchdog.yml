@@ -3,9 +3,10 @@ name: Aeurils Schedule Watchdog
 on:
   schedule:
     # Run 5 minutes after each intended WAT schedule.
-    - cron: '35 8 * * *'
-    - cron: '35 13 * * *'
-    - cron: '35 17 * * *'
+    # 08:30, 13:30 and 19:30 WAT = 07:30, 12:30 and 18:30 UTC.
+    - cron: '35 7 * * *'
+    - cron: '35 12 * * *'
+    - cron: '35 18 * * *'
   workflow_dispatch:
 
 permissions:
@@ -24,7 +25,7 @@ jobs:
         run: |
           set -euo pipefail
           now_epoch=$(date -u +%s)
-          # Look back 20 minutes so GitHub's normal schedule jitter is covered.
+          # Look back 20 minutes so normal GitHub schedule jitter is covered.
           runs=$(gh api "repos/${REPO}/actions/workflows/daily-signal-service.yml/runs?event=schedule&per_page=20")
           recent=$(echo "$runs" | jq -r --argjson now "$now_epoch" '
             [.workflow_runs[] | select((.created_at | fromdateiso8601) >= ($now - 1200))] |
@@ -49,5 +50,7 @@ jobs:
             echo "No recent scheduled daily-signal run found; dispatching recovery run."
           fi
 
-          gh workflow run daily-signal-service.yml --ref main
+          # Use the Actions REST endpoint directly. `gh workflow run` expects
+          # a local git repository, but this watchdog intentionally has no checkout.
+          gh api --method POST "repos/${REPO}/actions/workflows/daily-signal-service.yml/dispatches" -f ref=main
           echo "Recovery dispatch submitted."
