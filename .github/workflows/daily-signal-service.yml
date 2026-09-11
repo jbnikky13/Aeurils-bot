@@ -61,8 +61,8 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           MIN_SIGNAL_SCORE: '70'
           MIN_CONFLUENCES: '6'
-          DAILY_FALLBACK_MIN_CONFLUENCES: '6'
-          MAX_DAILY_ACTIONABLE_SIGNALS: '1'
+          DAILY_FALLBACK_MIN_CONFLUENCES: '4'
+          MAX_DAILY_ACTIONABLE_SIGNALS: '5'
           MARKET_DATA_CONCURRENCY: '12'
           MAX_HOLD_HOURS: '24'
           PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
