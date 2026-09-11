@@ -5,6 +5,7 @@ from .signal_engine import build_setup
 from .stock_sentiment import score as stock_sentiment
 from .gemini_signal import confirm
 from .market_regime import classify_regime
+from .binance_flow import snapshot as binance_flow
 
 
 def _regime(df):
@@ -13,7 +14,7 @@ def _regime(df):
 
 
 def _entry_context(df):
-    x=enrich(df).dropna(subset=['ema20','atr']); r=x.iloc[-1]; recent=x.tail(5)
+    x=enrich(df).dropna(subset=['ema20','atr']); r=x.iloc[-1]; recent=x.tail(20)
     return float(r.ema20),float(recent.high.max()),float(recent.low.min()),float(r.rsi)
 
 
@@ -36,13 +37,41 @@ def _confirm_1h(symbol, direction):
         return False,0,0,[f'1H confirmation unavailable: {type(exc).__name__}']
 
 
+def _flow_ok(direction, flow):
+    """Use Binance derivatives/spot flow as confirmation, never as a standalone signal."""
+    if not flow.get('available'):
+        return True
+    score=float(flow.get('score',50)); bias=float(flow.get('bias',0))
+    # Do not force a trade against clearly conflicting market flow.
+    if direction=='LONG':
+        return score >= 52 and bias >= -0.20
+    if direction=='SHORT':
+        return score >= 52 and bias <= 0.20
+    return False
+
+
 async def crypto_setup(symbol: str):
-    """Generate from a completed 4H candle and validate with completed 1H structure."""
+    """Generate from a completed 4H candle, then validate 1H structure and Binance flow."""
     df=crypto_klines(symbol,interval='4h',limit=240)
     signal_df=df.iloc[:-1].copy() if len(df)>=3 else df.copy()
     tech,tbias,atr,reasons=technical_score(signal_df); regime=_regime(signal_df); price=float(signal_df.iloc[-1].close)
     ema20,recent_high,recent_low,rsi=_entry_context(signal_df)
+
+    # First pass: cheap technical screening. Only candidates query derivatives/depth data.
     preliminary=build_setup(symbol,'crypto',price,tech,50,50,tbias,0.0,atr,regime,ema20=ema20,recent_high=recent_high,recent_low=recent_low,rsi=rsi)
+    flow={'available':False,'score':50,'bias':0,'reasons':['Flow not queried because technical screen produced no trade candidate.']}
+    if preliminary.direction in ('LONG','SHORT'):
+        flow=binance_flow(symbol,preliminary.direction)
+        # Replace the old neutral whale placeholder with actual Binance market-flow intelligence.
+        flow_score=float(flow.get('score',50)); flow_bias=float(flow.get('bias',0))
+        preliminary=build_setup(symbol,'crypto',price,tech,round(flow_score),50,tbias,flow_bias,atr,regime,ema20=ema20,recent_high=recent_high,recent_low=recent_low,rsi=rsi)
+        preliminary.reasons += ['Binance market-flow confirmation:',*flow.get('reasons',[]),f'Flow score: {flow_score:.0f}/100',f'Flow bias: {flow_bias:+.2f}']
+        if not _flow_ok(preliminary.direction,flow):
+            preliminary.direction='WAIT'; preliminary.entry_status='FLOW_CONFLICT'; preliminary.entry_quality=None
+            preliminary.entry_low=preliminary.entry_high=preliminary.stop_loss=preliminary.take_profit_1=preliminary.take_profit_2=preliminary.risk_reward=None
+            preliminary.reasons.append('Trade rejected: Binance order-book/derivatives flow conflicts with the setup.')
+            preliminary.invalidation='Wait for market flow to align with the 4H/1H direction.'
+
     if preliminary.direction in ('LONG','SHORT'):
         ok,one_h_score,one_h_bias,one_h_reasons=_confirm_1h(symbol,preliminary.direction)
         preliminary.reasons += [f'1H confirmation score: {one_h_score}/100',*one_h_reasons]
@@ -51,10 +80,11 @@ async def crypto_setup(symbol: str):
             preliminary.entry_low=preliminary.entry_high=preliminary.stop_loss=preliminary.take_profit_1=preliminary.take_profit_2=preliminary.risk_reward=None
             preliminary.reasons.append('Trade rejected: 1H structure does not confirm the 4H direction.')
             preliminary.invalidation='Wait for 1H trend/momentum alignment or a clean retest.'
+
     ai=confirm(symbol,tech,tbias,50,0.0,price,atr)
     preliminary.gemini_confidence=ai.get('confidence'); preliminary.gemini_decision=ai.get('decision'); preliminary.gemini_rationale=ai.get('rationale','')
     ai_state='AVAILABLE' if ai.get('available') else 'UNAVAILABLE'; ai_conf=f"{float(ai['confidence']):.0f}/100" if ai.get('confidence') is not None else 'not scored'
-    preliminary.reasons += ['Signal timeframe: 4h closed candle',f'Market regime: {regime}',f'Entry status: {preliminary.entry_status}'+(f' ({preliminary.entry_quality:.0f}/100)' if preliminary.entry_quality is not None else ''),f'Gemini confirmation: {ai.get("decision","UNAVAILABLE")} ({ai_conf}; {ai_state})',ai.get('rationale','')]
+    preliminary.reasons += ['Signal timeframe: 4h closed candle','Execution/validation timeframe: 1h completed candles',f'Market regime: {regime}',f'Entry status: {preliminary.entry_status}'+(f' ({preliminary.entry_quality:.0f}/100)' if preliminary.entry_quality is not None else ''),f'Gemini confirmation: {ai.get("decision","UNAVAILABLE")} ({ai_conf}; {ai_state})',ai.get('rationale','')]
     return preliminary
 
 
