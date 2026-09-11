@@ -14,8 +14,7 @@ def _rows():
 
 def _bucket(score):
     try:
-        s=float(score)
-        lo=int(s//10)*10
+        s=float(score); lo=int(s//10)*10
         return f"{lo}-{lo+9}"
     except (TypeError,ValueError): return "UNKNOWN"
 
@@ -36,30 +35,29 @@ def calibration():
     tp1=sum(str(r["outcome"] or "").upper()=="WIN_TP1" for r in closed)
     tp2=sum(str(r["outcome"] or "").upper()=="WIN_TP2" for r in closed)
     sl=sum(str(r["outcome"] or "").upper()=="LOSS_SL" for r in closed)
+    expired=sum(str(r["outcome"] or "").upper()=="EXPIRED" for r in closed)
     pnl=sum(float(r["pnl_pct"] or 0) for r in closed)
-    return {
-        "closed":len(closed), "wins":wins, "tp1":tp1, "tp2":tp2, "sl":sl,
-        "win_rate_pct":100*wins/len(closed) if closed else 0.0,
-        "tp1_rate_pct":100*tp1/len(closed) if closed else 0.0,
-        "tp2_rate_pct":100*tp2/len(closed) if closed else 0.0,
-        "sl_rate_pct":100*sl/len(closed) if closed else 0.0,
-        "pnl_pct":pnl, "avg_pnl_pct":pnl/len(closed) if closed else 0.0,
-        "by_regime":_group(closed,lambda r:r["market_regime"] or "UNKNOWN"),
-        "by_score":_group(closed,lambda r:_bucket(r["final_score"])),
-    }
+    return {"closed":len(closed),"wins":wins,"tp1":tp1,"tp2":tp2,"sl":sl,"expired":expired,
+            "win_rate_pct":100*wins/len(closed) if closed else 0.0,
+            "tp1_rate_pct":100*tp1/len(closed) if closed else 0.0,
+            "tp2_rate_pct":100*tp2/len(closed) if closed else 0.0,
+            "sl_rate_pct":100*sl/len(closed) if closed else 0.0,
+            "expiry_rate_pct":100*expired/len(closed) if closed else 0.0,
+            "pnl_pct":pnl,"avg_pnl_pct":pnl/len(closed) if closed else 0.0,
+            "by_regime":_group(closed,lambda r:r["market_regime"] or "UNKNOWN"),
+            "by_score":_group(closed,lambda r:_bucket(r["final_score"]))}
 
 
 def format_report():
     a=calibration(); n=a['closed']
     lines=["🧪 AURELIS CALIBRATION REPORT","",f"Closed paper trades: {n}"]
     if n:
-        lines += [f"Win rate: {a['win_rate_pct']:.1f}%",f"TP1 exits: {a['tp1_rate_pct']:.1f}%",f"TP2 exits: {a['tp2_rate_pct']:.1f}%",f"SL exits: {a['sl_rate_pct']:.1f}%",f"Total paper P&L: {a['pnl_pct']:.2f}%",f"Average trade: {a['avg_pnl_pct']:.2f}%"]
-    lines += ["", "By market regime:"]
+        lines += [f"Win rate: {a['win_rate_pct']:.1f}%",f"TP1 exits: {a['tp1_rate_pct']:.1f}%",f"TP2 exits: {a['tp2_rate_pct']:.1f}%",f"SL exits: {a['sl_rate_pct']:.1f}%",f"24h expiries: {a['expiry_rate_pct']:.1f}%",f"Total paper P&L: {a['pnl_pct']:.2f}%",f"Average trade: {a['avg_pnl_pct']:.2f}%"]
+    lines += ["","By market regime:"]
     lines += [f"• {k}: {n} trades | {w:.1f}% wins | {p:.2f}% P&L" for k,n,w,p in a["by_regime"]] or ["• No closed observations yet."]
-    lines += ["", "By signal score:"]
+    lines += ["","By signal score:"]
     lines += [f"• {k}: {n} trades | {w:.1f}% wins | {p:.2f}% P&L" for k,n,w,p in a["by_score"]] or ["• No closed observations yet."]
-    lines += ["", "📌 Calibration status: OBSERVATIONAL", "🔒 No thresholds, weights, or execution settings are changed automatically."]
+    lines += ["","📌 Calibration status: OBSERVATIONAL","🔒 No thresholds, weights, or execution settings are changed automatically."]
     return "\n".join(lines)
-
 
 if __name__ == "__main__": print(format_report())
