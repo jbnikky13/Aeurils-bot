@@ -37,12 +37,28 @@ def _fallback_candidates(evaluated,minimum):
     candidates.sort(key=lambda x:(int(x[1].get('passed',0)),float(getattr(x[0],'score',0) or 0),float(getattr(x[0],'risk_reward',0) or 0)),reverse=True)
     return candidates
 
+def _reason_counts(evaluated):
+    counts={}
+    for _,symbol,signal,gate in evaluated:
+        if signal is None:
+            reason='setup_generation_failed'
+        elif getattr(signal,'direction','WAIT')=='WAIT':
+            reason=getattr(signal,'reason',None) or getattr(signal,'status',None) or 'direction_wait'
+        elif not gate.get('actionable'):
+            failed=gate.get('failed') or gate.get('unknown') or ['confluence_gate_rejected']
+            reason=str(failed[0])
+        else:
+            continue
+        reason=' '.join(reason.replace('\n',' ').split())[:80]
+        counts[reason]=counts.get(reason,0)+1
+    return sorted(counts.items(),key=lambda x:x[1],reverse=True)[:5]
+
 async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
     if not CHAT_ID:raise RuntimeError('TELEGRAM_CHAT_ID is not configured')
     try:base_crypto=all_binance_usdt_spot_symbols()
     except Exception:
-        await context.bot.send_message(chat_id=CHAT_ID,text='NO TRADE SETUP TODAY.\n\nAURELIS could not validate the Binance market universe.')
-        return
+        await context.bot.send_message(chat_id=CHAT_ID,text='🔴 AURELIS SCAN FAILED\n\nStage: Binance market universe\nReason: Could not validate Binance-listed symbols.')
+        raise
     if MAX_UNIVERSE_SCAN>0:base_crypto=base_crypto[:MAX_UNIVERSE_SCAN]
     pairs=[('crypto',s) for s in base_crypto]
     sem=asyncio.Semaphore(max(1,MARKET_DATA_CONCURRENCY))
@@ -60,7 +76,9 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
 
     evaluated=await asyncio.gather(*[gated(kind,symbol,signal) for (kind,symbol),signal in zip(pairs,raw)])
     minimum=int(os.getenv('MIN_CONFLUENCES','6'))
-    candidates=[(s,g) for kind,symbol,s,g in evaluated if s is not None and getattr(s,'direction','WAIT')!='WAIT' and g.get('actionable') and g.get('passed',0)>=minimum]
+    technical_candidates=[(s,g) for kind,symbol,s,g in evaluated if s is not None and getattr(s,'direction','WAIT')!='WAIT']
+    gated_candidates=[(s,g) for s,g in technical_candidates if g.get('actionable') and g.get('passed',0)>=minimum]
+    candidates=[x for x in gated_candidates if _within_horizon(x[0])]
     candidates.sort(key=lambda x:(float(getattr(x[0],'score',0) or 0),int(x[1].get('passed',0)),float(getattr(x[0],'risk_reward',0) or 0)),reverse=True)
     candidates=candidates[:MAX_DAILY_ACTIONABLE_SIGNALS]
     if not candidates:candidates=_fallback_candidates(evaluated,DAILY_FALLBACK_MIN_CONFLUENCES)[:MAX_DAILY_ACTIONABLE_SIGNALS]
@@ -84,4 +102,16 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
     body='\n\n'.join(format_signal(s) for s in published) if published else 'NO TRADE SETUP TODAY.\n\nAURELIS found no valid Binance-listed setup.'
     if extended:
         body += '\n\n⚠️ EXTENDED SWING SETUPS\n' + '\n'.join(extended[:10])
-    await context.bot.send_message(chat_id=CHAT_ID,text=body[:3900])
+
+    reasons=_reason_counts(evaluated)
+    reason_text='\n'.join(f'• {reason}: {count}' for reason,count in reasons) or '• No rejection reasons recorded'
+    diagnostics=(
+        f"\n\n📊 AURELIS SCAN AUDIT\n"
+        f"Universe: {len(base_crypto)} Binance USDT spot pairs\n"
+        f"Technical candidates: {len(technical_candidates)}\n"
+        f"Confluence-qualified: {len(gated_candidates)}\n"
+        f"Within 24h: {len([x for x in gated_candidates if _within_horizon(x[0])])}\n"
+        f"Published: {len(published)}\n\n"
+        f"Top rejection reasons:\n{reason_text}"
+    )
+    await context.bot.send_message(chat_id=CHAT_ID,text=(body+diagnostics)[:3900])
