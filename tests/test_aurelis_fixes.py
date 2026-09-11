@@ -64,12 +64,14 @@ class AurelisFixTests(unittest.TestCase):
             self.assertEqual(con.execute("SELECT outcome,exit_price FROM paper_trades WHERE signal_id=?",(sid,)).fetchone(),("WIN_TP1",95.0))
 
     def test_same_candle_stop_and_target_is_conservative(self):
+        """An hourly candle touching both sides remains open rather than guessing order."""
         journal.init_db()
         sid=journal.record_setup(type("S",(),{"symbol":"AMBIGUSDT","asset_type":"crypto","direction":"LONG","score":80,"entry_low":99,"entry_high":101,"stop_loss":95,"take_profit_1":105,"take_profit_2":110,"risk_reward":2,"technical_score":80,"whale_score":50,"sentiment_score":50,"market_regime":"BULLISH"})())
         paper_trader.open_paper_trade(sid,"AMBIGUSDT","LONG",100,95,105,110)
-        self.assertEqual(paper_trader.mark_candle("AMBIGUSDT",{"time":datetime.now(timezone.utc).isoformat(),"high":106,"low":94,"close":101}),1)
+        self.assertEqual(paper_trader.mark_candle("AMBIGUSDT",{"time":datetime.now(timezone.utc).isoformat(),"high":106,"low":94,"close":101}),0)
         with __import__("sqlite3").connect(self.tmp.name) as con:
-            self.assertEqual(con.execute("SELECT outcome FROM paper_trades WHERE signal_id=?",(sid,)).fetchone()[0],"LOSS_SL")
+            row=con.execute("SELECT status,outcome,resolution_source FROM paper_trades WHERE signal_id=?",(sid,)).fetchone()
+        self.assertEqual(row,("OPEN",None,"1h_ohlc_ambiguous"))
 
     def test_expired_trade_is_not_counted_as_win_or_sl(self):
         journal.init_db()
