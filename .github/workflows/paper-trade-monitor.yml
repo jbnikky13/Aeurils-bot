@@ -26,11 +26,10 @@ jobs:
         env:
           PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
         run: python -m trade_bot.paper_persistence restore
-      - name: Evaluate open paper trades
+      - name: Evaluate open paper trades with intraday candles
         env:
           DATABASE_PATH: trade_bot.db
-          STOCK_API_KEY: ${{ secrets.STOCK_API_KEY }}
-        run: python -m trade_bot.paper_monitor
+        run: python -m trade_bot.intraday_paper_monitor
       - name: Persist updated paper ledger
         env:
           DATABASE_PATH: trade_bot.db
