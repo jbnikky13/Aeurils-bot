@@ -26,7 +26,9 @@
       "tp1_eta_hours",
       "tp2_eta_hours",
       "horizon_status",
-      "max_hold_hours"
+      "max_hold_hours",
+      "signal_key",
+      "updated_at"
     ],
     "rows": [
       {
@@ -55,7 +57,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 2,
@@ -83,7 +87,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 3,
@@ -111,7 +117,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 4,
@@ -139,7 +147,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 5,
@@ -167,7 +177,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 6,
@@ -195,7 +207,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 7,
@@ -223,7 +237,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 8,
@@ -251,7 +267,9 @@
         "tp1_eta_hours": 2.0000000000000075,
         "tp2_eta_hours": 3.0000000000000115,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 9,
@@ -279,7 +297,9 @@
         "tp1_eta_hours": 2.000000000000003,
         "tp2_eta_hours": 3.0000000000000044,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 10,
@@ -307,7 +327,9 @@
         "tp1_eta_hours": 1.9999999999999947,
         "tp2_eta_hours": 3.000000000000004,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 11,
@@ -335,7 +357,9 @@
         "tp1_eta_hours": 1.9999999999999893,
         "tp2_eta_hours": 3.0000000000000027,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 12,
@@ -363,7 +387,9 @@
         "tp1_eta_hours": 2.00000000000001,
         "tp2_eta_hours": 3.000000000000003,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 13,
@@ -391,7 +417,9 @@
         "tp1_eta_hours": 2.0000000000000027,
         "tp2_eta_hours": 3.000000000000004,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 14,
@@ -419,7 +447,9 @@
         "tp1_eta_hours": 1.9999999999999964,
         "tp2_eta_hours": 3.000000000000001,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 15,
@@ -447,7 +477,9 @@
         "tp1_eta_hours": 2.0000000000000004,
         "tp2_eta_hours": 3.0000000000000004,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 16,
@@ -475,7 +507,9 @@
         "tp1_eta_hours": 2.000000000000001,
         "tp2_eta_hours": 3.0000000000000013,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 17,
@@ -503,7 +537,9 @@
         "tp1_eta_hours": 1.9999999999999991,
         "tp2_eta_hours": 3.0000000000000013,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 18,
@@ -531,7 +567,9 @@
         "tp1_eta_hours": 2.0,
         "tp2_eta_hours": 3.0,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 19,
@@ -559,7 +597,9 @@
         "tp1_eta_hours": 2.000000000000003,
         "tp2_eta_hours": 2.999999999999998,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 20,
@@ -587,7 +627,9 @@
         "tp1_eta_hours": 1.9999999999999987,
         "tp2_eta_hours": 3.000000000000002,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 21,
@@ -615,7 +657,159 @@
         "tp1_eta_hours": 1.9999999999994778,
         "tp2_eta_hours": 2.999999999999826,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
+      },
+      {
+        "id": 22,
+        "created_at": "2026-09-12T11:49:59.836259+00:00",
+        "symbol": "AWEUSDT",
+        "asset_type": "crypto",
+        "direction": "SHORT",
+        "score": 73,
+        "entry_low": 0.05895478571428571,
+        "entry_high": 0.05928521428571429,
+        "stop_loss": 0.06077214285714286,
+        "tp1": 0.056917142857142854,
+        "tp2": 0.05581571428571429,
+        "risk_reward": 1.9999999999999958,
+        "technical_score": 85,
+        "whale_score": 63,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "BEARISH",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": -0.25,
+        "tp1_eta_hours": 2.0000000000000027,
+        "tp2_eta_hours": 2.999999999999998,
+        "horizon_status": "WITHIN_24H",
+        "max_hold_hours": 24.0,
+        "signal_key": "5eb8c0c27b1fa2e15cbc5967f2801a7353a2a74674a06141e141bb2f048d2d8a",
+        "updated_at": "2026-09-12T11:49:59.838061+00:00"
+      },
+      {
+        "id": 23,
+        "created_at": "2026-09-12T11:49:59.841993+00:00",
+        "symbol": "CVCUSDT",
+        "asset_type": "crypto",
+        "direction": "LONG",
+        "score": 71,
+        "entry_low": 0.022092405,
+        "entry_high": 0.022247595,
+        "stop_loss": 0.020921785714285712,
+        "tp1": 0.023834285714285714,
+        "tp2": 0.02466642857142857,
+        "risk_reward": 1.9999999999999971,
+        "technical_score": 85,
+        "whale_score": 55,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "BULLISH",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.097,
+        "tp1_eta_hours": 2.0000000000000018,
+        "tp2_eta_hours": 2.9999999999999987,
+        "horizon_status": "WITHIN_24H",
+        "max_hold_hours": 24.0,
+        "signal_key": "eded6f8e2156e442b0b81e5647fcd91f921e5dd5f85a9e618734d100ef372638",
+        "updated_at": "2026-09-12T11:49:59.843753+00:00"
+      },
+      {
+        "id": 24,
+        "created_at": "2026-09-12T11:49:59.851656+00:00",
+        "symbol": "BEAMXUSDT",
+        "asset_type": "crypto",
+        "direction": "LONG",
+        "score": 69,
+        "entry_low": 0.001608351,
+        "entry_high": 0.0016196490000000001,
+        "stop_loss": 0.001533107142857143,
+        "tp1": 0.0017218571428571428,
+        "tp2": 0.0017757857142857143,
+        "risk_reward": 2.0000000000000027,
+        "technical_score": 85,
+        "whale_score": 50,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "BULLISH",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.002,
+        "tp1_eta_hours": 1.9999999999999996,
+        "tp2_eta_hours": 3.0000000000000013,
+        "horizon_status": "WITHIN_24H",
+        "max_hold_hours": 24.0,
+        "signal_key": "f95cc19e4ed81fc88d6ee0b739c0b33ba0fa74fa0ec352b56d3f11826fc8a6db",
+        "updated_at": "2026-09-12T11:49:59.853309+00:00"
+      },
+      {
+        "id": 25,
+        "created_at": "2026-09-12T11:49:59.857222+00:00",
+        "symbol": "SCUSDT",
+        "asset_type": "crypto",
+        "direction": "LONG",
+        "score": 67,
+        "entry_low": 0.000920766,
+        "entry_high": 0.0009272340000000001,
+        "stop_loss": 0.0008065714285714286,
+        "tp1": 0.0010805714285714286,
+        "tp2": 0.001158857142857143,
+        "risk_reward": 2.000000000000001,
+        "technical_score": 70,
+        "whale_score": 70,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "HIGH_VOLATILITY",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.3,
+        "tp1_eta_hours": 1.9999999999999996,
+        "tp2_eta_hours": 3.0,
+        "horizon_status": "WITHIN_24H",
+        "max_hold_hours": 24.0,
+        "signal_key": "1967dd24fe82c3f5b011d985b438400b3afc53194fa70fd28d8769003f87007e",
+        "updated_at": "2026-09-12T11:49:59.858953+00:00"
+      },
+      {
+        "id": 26,
+        "created_at": "2026-09-12T11:49:59.862849+00:00",
+        "symbol": "ARKUSDT",
+        "asset_type": "crypto",
+        "direction": "LONG",
+        "score": 67,
+        "entry_low": 0.11599260000000002,
+        "entry_high": 0.1168074,
+        "stop_loss": 0.10545,
+        "tp1": 0.131,
+        "tp2": 0.1383,
+        "risk_reward": 2.0,
+        "technical_score": 75,
+        "whale_score": 61,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "HIGH_VOLATILITY",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.204,
+        "tp1_eta_hours": 1.9999999999999998,
+        "tp2_eta_hours": 2.9999999999999996,
+        "horizon_status": "WITHIN_24H",
+        "max_hold_hours": 24.0,
+        "signal_key": "0a4bcd8c0a0d1c8f691f8e1cb8fbffc4d60928b7290e5ebe3df38111f563dac1",
+        "updated_at": "2026-09-12T11:49:59.864092+00:00"
       }
     ]
   },
@@ -1302,6 +1496,161 @@
         "max_adverse_pct": 0.011999640010800575,
         "expiry_at": "2026-09-12T21:16:15.229130+00:00",
         "resolution_source": "1h_ohlc"
+      },
+      {
+        "id": 22,
+        "signal_id": 22,
+        "symbol": "AWEUSDT",
+        "direction": "SHORT",
+        "entry": 0.05912,
+        "stop_loss": 0.06077214285714286,
+        "tp1": 0.056917142857142854,
+        "tp2": 0.05581571428571429,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-12T11:49:59.839555+00:00",
+        "closed_at": null,
+        "final_score": 73.0,
+        "market_regime": "BEARISH",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 0.05912,
+        "last_checked_at": "2026-09-12T11:49:59.839555+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 0.0,
+        "expiry_at": "2026-09-13T11:49:59.839555+00:00",
+        "resolution_source": null
+      },
+      {
+        "id": 23,
+        "signal_id": 23,
+        "symbol": "CVCUSDT",
+        "direction": "LONG",
+        "entry": 0.02217,
+        "stop_loss": 0.020921785714285712,
+        "tp1": 0.023834285714285714,
+        "tp2": 0.02466642857142857,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-12T11:49:59.845313+00:00",
+        "closed_at": null,
+        "final_score": 71.0,
+        "market_regime": "BULLISH",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 0.02217,
+        "last_checked_at": "2026-09-12T11:49:59.845313+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 0.0,
+        "expiry_at": "2026-09-13T11:49:59.845313+00:00",
+        "resolution_source": null
+      },
+      {
+        "id": 24,
+        "signal_id": 24,
+        "symbol": "BEAMXUSDT",
+        "direction": "LONG",
+        "entry": 0.001614,
+        "stop_loss": 0.001533107142857143,
+        "tp1": 0.0017218571428571428,
+        "tp2": 0.0017757857142857143,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-12T11:49:59.854871+00:00",
+        "closed_at": null,
+        "final_score": 69.0,
+        "market_regime": "BULLISH",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 0.001614,
+        "last_checked_at": "2026-09-12T11:49:59.854871+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 0.0,
+        "expiry_at": "2026-09-13T11:49:59.854871+00:00",
+        "resolution_source": null
+      },
+      {
+        "id": 25,
+        "signal_id": 25,
+        "symbol": "SCUSDT",
+        "direction": "LONG",
+        "entry": 0.0009240000000000001,
+        "stop_loss": 0.0008065714285714286,
+        "tp1": 0.0010805714285714286,
+        "tp2": 0.001158857142857143,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-12T11:49:59.860548+00:00",
+        "closed_at": null,
+        "final_score": 67.0,
+        "market_regime": "HIGH_VOLATILITY",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 0.0009240000000000001,
+        "last_checked_at": "2026-09-12T11:49:59.860548+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 0.0,
+        "expiry_at": "2026-09-13T11:49:59.860548+00:00",
+        "resolution_source": null
+      },
+      {
+        "id": 26,
+        "signal_id": 26,
+        "symbol": "ARKUSDT",
+        "direction": "LONG",
+        "entry": 0.1164,
+        "stop_loss": 0.10545,
+        "tp1": 0.131,
+        "tp2": 0.1383,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-12T11:49:59.865819+00:00",
+        "closed_at": null,
+        "final_score": 67.0,
+        "market_regime": "HIGH_VOLATILITY",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 0.1164,
+        "last_checked_at": "2026-09-12T11:49:59.865819+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 0.0,
+        "expiry_at": "2026-09-13T11:49:59.865819+00:00",
+        "resolution_source": null
       }
     ]
   }
