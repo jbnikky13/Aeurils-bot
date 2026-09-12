@@ -26,9 +26,7 @@
       "tp1_eta_hours",
       "tp2_eta_hours",
       "horizon_status",
-      "max_hold_hours",
-      "signal_key",
-      "updated_at"
+      "max_hold_hours"
     ],
     "rows": [
       {
@@ -57,9 +55,7 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 2,
@@ -87,9 +83,7 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 3,
@@ -117,9 +111,7 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 4,
@@ -147,9 +139,7 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 5,
@@ -177,9 +167,7 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 6,
@@ -207,9 +195,7 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 7,
@@ -237,9 +223,7 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 8,
@@ -267,9 +251,7 @@
         "tp1_eta_hours": 2.0000000000000075,
         "tp2_eta_hours": 3.0000000000000115,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 9,
@@ -297,9 +279,7 @@
         "tp1_eta_hours": 2.000000000000003,
         "tp2_eta_hours": 3.0000000000000044,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 10,
@@ -327,9 +307,7 @@
         "tp1_eta_hours": 1.9999999999999947,
         "tp2_eta_hours": 3.000000000000004,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 11,
@@ -357,9 +335,7 @@
         "tp1_eta_hours": 1.9999999999999893,
         "tp2_eta_hours": 3.0000000000000027,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 12,
@@ -387,9 +363,7 @@
         "tp1_eta_hours": 2.00000000000001,
         "tp2_eta_hours": 3.000000000000003,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 13,
@@ -417,9 +391,7 @@
         "tp1_eta_hours": 2.0000000000000027,
         "tp2_eta_hours": 3.000000000000004,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 14,
@@ -447,9 +419,7 @@
         "tp1_eta_hours": 1.9999999999999964,
         "tp2_eta_hours": 3.000000000000001,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 15,
@@ -477,9 +447,7 @@
         "tp1_eta_hours": 2.0000000000000004,
         "tp2_eta_hours": 3.0000000000000004,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 16,
@@ -507,9 +475,7 @@
         "tp1_eta_hours": 2.000000000000001,
         "tp2_eta_hours": 3.0000000000000013,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 17,
@@ -537,9 +503,7 @@
         "tp1_eta_hours": 1.9999999999999991,
         "tp2_eta_hours": 3.0000000000000013,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 18,
@@ -567,9 +531,7 @@
         "tp1_eta_hours": 2.0,
         "tp2_eta_hours": 3.0,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 19,
@@ -597,9 +559,7 @@
         "tp1_eta_hours": 2.000000000000003,
         "tp2_eta_hours": 2.999999999999998,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 20,
@@ -627,9 +587,7 @@
         "tp1_eta_hours": 1.9999999999999987,
         "tp2_eta_hours": 3.000000000000002,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 21,
@@ -657,9 +615,7 @@
         "tp1_eta_hours": 1.9999999999994778,
         "tp2_eta_hours": 2.999999999999826,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 22,
@@ -687,9 +643,7 @@
         "tp1_eta_hours": 2.0000000000000027,
         "tp2_eta_hours": 2.999999999999998,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 23,
@@ -717,9 +671,7 @@
         "tp1_eta_hours": 2.0000000000000018,
         "tp2_eta_hours": 2.9999999999999987,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 24,
@@ -747,9 +699,7 @@
         "tp1_eta_hours": 1.9999999999999996,
         "tp2_eta_hours": 3.0000000000000013,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 25,
@@ -777,9 +727,7 @@
         "tp1_eta_hours": 1.9999999999999996,
         "tp2_eta_hours": 3.0,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 26,
@@ -807,9 +755,7 @@
         "tp1_eta_hours": 1.9999999999999998,
         "tp2_eta_hours": 2.9999999999999996,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 27,
@@ -837,9 +783,7 @@
         "tp1_eta_hours": 2.000000000000001,
         "tp2_eta_hours": 2.9999999999999987,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 28,
@@ -867,9 +811,7 @@
         "tp1_eta_hours": 2.0000000000000018,
         "tp2_eta_hours": 2.999999999999997,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 29,
@@ -897,9 +839,7 @@
         "tp1_eta_hours": 2.000000000000005,
         "tp2_eta_hours": 3.0000000000000018,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 30,
@@ -927,9 +867,7 @@
         "tp1_eta_hours": 2.0,
         "tp2_eta_hours": 3.000000000000005,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 31,
@@ -957,9 +895,7 @@
         "tp1_eta_hours": 1.999999999999993,
         "tp2_eta_hours": 2.999999999999998,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": null,
-        "updated_at": null
+        "max_hold_hours": 24.0
       },
       {
         "id": 32,
@@ -987,9 +923,7 @@
         "tp1_eta_hours": 2.0000000000000004,
         "tp2_eta_hours": 2.9999999999999996,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": "798c4b3e229457e0f975b19f17d407c5c176c85623f9a5a1741e9234b8f6ddd5",
-        "updated_at": "2026-09-12T20:56:16.590189+00:00"
+        "max_hold_hours": 24.0
       },
       {
         "id": 33,
@@ -1017,9 +951,7 @@
         "tp1_eta_hours": 2.0,
         "tp2_eta_hours": 3.0,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": "91cd2ab68f658fa96a34d2a859d3605d317a47d1397d754caed3481fc3bb0fb6",
-        "updated_at": "2026-09-12T20:56:16.595898+00:00"
+        "max_hold_hours": 24.0
       },
       {
         "id": 34,
@@ -1047,9 +979,7 @@
         "tp1_eta_hours": 2.000000000000001,
         "tp2_eta_hours": 3.0000000000000018,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": "fd93659b5fd9fff3ae7572a5c0333e3b345a4e2d202ad9ff3f84c021389aa82c",
-        "updated_at": "2026-09-12T20:56:16.601146+00:00"
+        "max_hold_hours": 24.0
       },
       {
         "id": 35,
@@ -1077,9 +1007,7 @@
         "tp1_eta_hours": 2.0,
         "tp2_eta_hours": 3.0,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": "5fc4492da3c66aebf54324c36083448ba2683412bf0b712556328804fb959899",
-        "updated_at": "2026-09-12T20:56:16.606431+00:00"
+        "max_hold_hours": 24.0
       },
       {
         "id": 36,
@@ -1107,9 +1035,7 @@
         "tp1_eta_hours": 1.9999999999999971,
         "tp2_eta_hours": 2.9999999999999956,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0,
-        "signal_key": "14fff70b4315c551f8e5ed845b8f2be5353990fd0aac69673032b999d8724b6a",
-        "updated_at": "2026-09-12T20:56:16.612809+00:00"
+        "max_hold_hours": 24.0
       }
     ]
   },
@@ -1682,12 +1608,12 @@
         "stop_loss": 0.5439571428571429,
         "tp1": 0.6308571428571429,
         "tp2": 0.6556857142857143,
-        "status": "OPEN",
-        "exit_price": null,
-        "outcome": null,
-        "pnl_pct": null,
+        "status": "CLOSED",
+        "exit_price": 0.5658,
+        "outcome": "EXPIRED",
+        "pnl_pct": -2.6496902959394495,
         "opened_at": "2026-09-11T21:16:15.217917+00:00",
-        "closed_at": null,
+        "closed_at": "2026-09-12T22:16:43.274147+00:00",
         "final_score": 68.0,
         "market_regime": "HIGH_VOLATILITY",
         "gemini_decision": "UNAVAILABLE",
@@ -1696,13 +1622,13 @@
         "tp1_hit_at": null,
         "tp2_hit_at": null,
         "sl_hit_at": null,
-        "exit_reason": null,
-        "last_price": 0.566,
-        "last_checked_at": "2026-09-12T20:12:00+00:00",
+        "exit_reason": "EXPIRED",
+        "last_price": 0.5658,
+        "last_checked_at": "2026-09-12T22:16:00+00:00",
         "max_favorable_pct": 1.2732278045423195,
         "max_adverse_pct": 3.1486579490709037,
         "expiry_at": "2026-09-12T21:16:15.217917+00:00",
-        "resolution_source": "1h_ohlc"
+        "resolution_source": "24h_timeout"
       },
       {
         "id": 19,
@@ -1713,12 +1639,12 @@
         "stop_loss": 0.11595714285714286,
         "tp1": 0.13005714285714287,
         "tp2": 0.13408571428571428,
-        "status": "OPEN",
-        "exit_price": null,
-        "outcome": null,
-        "pnl_pct": null,
+        "status": "CLOSED",
+        "exit_price": 0.1203,
+        "outcome": "EXPIRED",
+        "pnl_pct": -1.3934426229508141,
         "opened_at": "2026-09-11T21:16:15.221802+00:00",
-        "closed_at": null,
+        "closed_at": "2026-09-12T22:16:43.274147+00:00",
         "final_score": 68.0,
         "market_regime": "BULLISH",
         "gemini_decision": "UNAVAILABLE",
@@ -1727,13 +1653,13 @@
         "tp1_hit_at": null,
         "tp2_hit_at": null,
         "sl_hit_at": null,
-        "exit_reason": null,
+        "exit_reason": "EXPIRED",
         "last_price": 0.1203,
         "last_checked_at": "2026-09-12T20:12:00+00:00",
         "max_favorable_pct": 2.3770491803278686,
         "max_adverse_pct": 1.7213114754098284,
         "expiry_at": "2026-09-12T21:16:15.221802+00:00",
-        "resolution_source": "1h_ohlc"
+        "resolution_source": "24h_timeout"
       },
       {
         "id": 20,
@@ -1775,12 +1701,12 @@
         "stop_loss": 0.9997567857142857,
         "tp1": 1.0003942857142856,
         "tp2": 1.0005764285714285,
-        "status": "OPEN",
-        "exit_price": null,
-        "outcome": null,
-        "pnl_pct": null,
+        "status": "CLOSED",
+        "exit_price": 1.00001,
+        "outcome": "EXPIRED",
+        "pnl_pct": -0.0019999400017908443,
         "opened_at": "2026-09-11T21:16:15.229130+00:00",
-        "closed_at": null,
+        "closed_at": "2026-09-12T22:16:43.274147+00:00",
         "final_score": 67.0,
         "market_regime": "SIDEWAYS",
         "gemini_decision": "UNAVAILABLE",
@@ -1789,13 +1715,13 @@
         "tp1_hit_at": null,
         "tp2_hit_at": null,
         "sl_hit_at": null,
-        "exit_reason": null,
+        "exit_reason": "EXPIRED",
         "last_price": 1.00001,
         "last_checked_at": "2026-09-12T20:12:00+00:00",
         "max_favorable_pct": 0.008999730008092104,
         "max_adverse_pct": 0.011999640010800575,
         "expiry_at": "2026-09-12T21:16:15.229130+00:00",
-        "resolution_source": "1h_ohlc"
+        "resolution_source": "24h_timeout"
       },
       {
         "id": 22,
@@ -1821,9 +1747,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.05905,
-        "last_checked_at": "2026-09-12T20:12:00+00:00",
-        "max_favorable_pct": 0.2875507442489793,
+        "last_price": 0.05891,
+        "last_checked_at": "2026-09-12T22:16:00+00:00",
+        "max_favorable_pct": 0.37212449255750674,
         "max_adverse_pct": 0.18606224627875337,
         "expiry_at": "2026-09-13T11:49:59.839555+00:00",
         "resolution_source": "1h_ohlc"
@@ -1852,8 +1778,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.02218,
-        "last_checked_at": "2026-09-12T20:12:00+00:00",
+        "last_price": 0.02221,
+        "last_checked_at": "2026-09-12T22:16:00+00:00",
         "max_favorable_pct": 2.029769959404612,
         "max_adverse_pct": 2.525935949481272,
         "expiry_at": "2026-09-13T11:49:59.845313+00:00",
@@ -1883,8 +1809,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.001586,
-        "last_checked_at": "2026-09-12T20:12:00+00:00",
+        "last_price": 0.001592,
+        "last_checked_at": "2026-09-12T22:16:00+00:00",
         "max_favorable_pct": 0.0,
         "max_adverse_pct": 1.7348203221809189,
         "expiry_at": "2026-09-13T11:49:59.854871+00:00",
@@ -1914,8 +1840,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.000969,
-        "last_checked_at": "2026-09-12T20:12:00+00:00",
+        "last_price": 0.00095,
+        "last_checked_at": "2026-09-12T22:16:00+00:00",
         "max_favorable_pct": 7.142857142857127,
         "max_adverse_pct": 0.0,
         "expiry_at": "2026-09-13T11:49:59.860548+00:00",
@@ -1945,9 +1871,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.1223,
-        "last_checked_at": "2026-09-12T20:12:00+00:00",
-        "max_favorable_pct": 6.615120274914088,
+        "last_price": 0.123,
+        "last_checked_at": "2026-09-12T22:16:00+00:00",
+        "max_favorable_pct": 7.474226804123699,
         "max_adverse_pct": 0.0,
         "expiry_at": "2026-09-13T11:49:59.865819+00:00",
         "resolution_source": "1h_ohlc"
@@ -1976,8 +1902,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.1025,
-        "last_checked_at": "2026-09-12T20:12:00+00:00",
+        "last_price": 0.1024,
+        "last_checked_at": "2026-09-12T22:16:00+00:00",
         "max_favorable_pct": 10.404040404040394,
         "max_adverse_pct": 0.0,
         "expiry_at": "2026-09-13T15:49:10.562256+00:00",
@@ -2007,8 +1933,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.01423,
-        "last_checked_at": "2026-09-12T20:12:00+00:00",
+        "last_price": 0.01428,
+        "last_checked_at": "2026-09-12T22:16:00+00:00",
         "max_favorable_pct": 0.6267409470751953,
         "max_adverse_pct": 1.6713091922005614,
         "expiry_at": "2026-09-13T15:49:10.568274+00:00",
@@ -2038,8 +1964,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 726.79,
-        "last_checked_at": "2026-09-12T20:12:00+00:00",
+        "last_price": 726.4,
+        "last_checked_at": "2026-09-12T22:16:00+00:00",
         "max_favorable_pct": 0.0,
         "max_adverse_pct": 1.5813549429219218,
         "expiry_at": "2026-09-13T15:49:10.573170+00:00",
@@ -2070,7 +1996,7 @@
         "sl_hit_at": null,
         "exit_reason": null,
         "last_price": 0.00437,
-        "last_checked_at": "2026-09-12T20:12:00+00:00",
+        "last_checked_at": "2026-09-12T22:16:00+00:00",
         "max_favorable_pct": 0.6880733944954247,
         "max_adverse_pct": 0.0,
         "expiry_at": "2026-09-13T15:49:10.577850+00:00",
@@ -2100,8 +2026,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 648.76,
-        "last_checked_at": "2026-09-12T20:12:00+00:00",
+        "last_price": 648.42,
+        "last_checked_at": "2026-09-12T22:16:00+00:00",
         "max_favorable_pct": 0.18824255516124477,
         "max_adverse_pct": 0.0,
         "expiry_at": "2026-09-13T15:49:10.582529+00:00",
@@ -2131,12 +2057,12 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.10220000000000001,
-        "last_checked_at": "2026-09-12T20:56:16.591625+00:00",
-        "max_favorable_pct": 0.0,
-        "max_adverse_pct": 0.0,
+        "last_price": 0.1024,
+        "last_checked_at": "2026-09-12T22:16:00+00:00",
+        "max_favorable_pct": 0.7827788649706273,
+        "max_adverse_pct": 0.5870841487280011,
         "expiry_at": "2026-09-13T20:56:16.591625+00:00",
-        "resolution_source": null
+        "resolution_source": "1h_ohlc"
       },
       {
         "id": 33,
@@ -2162,12 +2088,12 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 6.048,
-        "last_checked_at": "2026-09-12T20:56:16.597440+00:00",
-        "max_favorable_pct": 0.0,
-        "max_adverse_pct": 0.0,
+        "last_price": 6.021,
+        "last_checked_at": "2026-09-12T22:16:00+00:00",
+        "max_favorable_pct": 0.19841269841269124,
+        "max_adverse_pct": 0.9259259259259267,
         "expiry_at": "2026-09-13T20:56:16.597440+00:00",
-        "resolution_source": null
+        "resolution_source": "1h_ohlc"
       },
       {
         "id": 34,
@@ -2193,12 +2119,12 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.0269,
-        "last_checked_at": "2026-09-12T20:56:16.602557+00:00",
-        "max_favorable_pct": 0.0,
-        "max_adverse_pct": 0.0,
+        "last_price": 0.0271,
+        "last_checked_at": "2026-09-12T22:16:00+00:00",
+        "max_favorable_pct": 1.1152416356877255,
+        "max_adverse_pct": 1.486988847583647,
         "expiry_at": "2026-09-13T20:56:16.602557+00:00",
-        "resolution_source": null
+        "resolution_source": "1h_ohlc"
       },
       {
         "id": 35,
@@ -2224,12 +2150,12 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 62.95,
-        "last_checked_at": "2026-09-12T20:56:16.607799+00:00",
+        "last_price": 63.26,
+        "last_checked_at": "2026-09-12T22:16:00+00:00",
         "max_favorable_pct": 0.0,
-        "max_adverse_pct": 0.0,
+        "max_adverse_pct": 0.7942811755361397,
         "expiry_at": "2026-09-13T20:56:16.607799+00:00",
-        "resolution_source": null
+        "resolution_source": "1h_ohlc"
       },
       {
         "id": 36,
@@ -2256,11 +2182,11 @@
         "sl_hit_at": null,
         "exit_reason": null,
         "last_price": 0.00437,
-        "last_checked_at": "2026-09-12T20:56:16.614325+00:00",
+        "last_checked_at": "2026-09-12T22:16:00+00:00",
         "max_favorable_pct": 0.0,
-        "max_adverse_pct": 0.0,
+        "max_adverse_pct": 0.22883295194507078,
         "expiry_at": "2026-09-13T20:56:16.614325+00:00",
-        "resolution_source": null
+        "resolution_source": "1h_ohlc"
       }
     ]
   }
