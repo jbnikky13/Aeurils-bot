@@ -26,7 +26,9 @@
       "tp1_eta_hours",
       "tp2_eta_hours",
       "horizon_status",
-      "max_hold_hours"
+      "max_hold_hours",
+      "signal_key",
+      "updated_at"
     ],
     "rows": [
       {
@@ -55,7 +57,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 2,
@@ -83,7 +87,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 3,
@@ -111,7 +117,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 4,
@@ -139,7 +147,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 5,
@@ -167,7 +177,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 6,
@@ -195,7 +207,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 7,
@@ -223,7 +237,9 @@
         "tp1_eta_hours": null,
         "tp2_eta_hours": null,
         "horizon_status": "UNKNOWN",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 8,
@@ -251,7 +267,9 @@
         "tp1_eta_hours": 2.0000000000000075,
         "tp2_eta_hours": 3.0000000000000115,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 9,
@@ -279,7 +297,9 @@
         "tp1_eta_hours": 2.000000000000003,
         "tp2_eta_hours": 3.0000000000000044,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 10,
@@ -307,7 +327,9 @@
         "tp1_eta_hours": 1.9999999999999947,
         "tp2_eta_hours": 3.000000000000004,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 11,
@@ -335,7 +357,9 @@
         "tp1_eta_hours": 1.9999999999999893,
         "tp2_eta_hours": 3.0000000000000027,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 12,
@@ -363,7 +387,9 @@
         "tp1_eta_hours": 2.00000000000001,
         "tp2_eta_hours": 3.000000000000003,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 13,
@@ -391,7 +417,9 @@
         "tp1_eta_hours": 2.0000000000000027,
         "tp2_eta_hours": 3.000000000000004,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 14,
@@ -419,7 +447,9 @@
         "tp1_eta_hours": 1.9999999999999964,
         "tp2_eta_hours": 3.000000000000001,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 15,
@@ -447,7 +477,9 @@
         "tp1_eta_hours": 2.0000000000000004,
         "tp2_eta_hours": 3.0000000000000004,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 16,
@@ -475,7 +507,9 @@
         "tp1_eta_hours": 2.000000000000001,
         "tp2_eta_hours": 3.0000000000000013,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 17,
@@ -503,7 +537,9 @@
         "tp1_eta_hours": 1.9999999999999991,
         "tp2_eta_hours": 3.0000000000000013,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 18,
@@ -531,7 +567,9 @@
         "tp1_eta_hours": 2.0,
         "tp2_eta_hours": 3.0,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 19,
@@ -559,7 +597,9 @@
         "tp1_eta_hours": 2.000000000000003,
         "tp2_eta_hours": 2.999999999999998,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 20,
@@ -587,7 +627,9 @@
         "tp1_eta_hours": 1.9999999999999987,
         "tp2_eta_hours": 3.000000000000002,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 21,
@@ -615,7 +657,9 @@
         "tp1_eta_hours": 1.9999999999994778,
         "tp2_eta_hours": 2.999999999999826,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 22,
@@ -643,7 +687,9 @@
         "tp1_eta_hours": 2.0000000000000027,
         "tp2_eta_hours": 2.999999999999998,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 23,
@@ -671,7 +717,9 @@
         "tp1_eta_hours": 2.0000000000000018,
         "tp2_eta_hours": 2.9999999999999987,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 24,
@@ -699,7 +747,9 @@
         "tp1_eta_hours": 1.9999999999999996,
         "tp2_eta_hours": 3.0000000000000013,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 25,
@@ -727,7 +777,9 @@
         "tp1_eta_hours": 1.9999999999999996,
         "tp2_eta_hours": 3.0,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 26,
@@ -755,7 +807,159 @@
         "tp1_eta_hours": 1.9999999999999998,
         "tp2_eta_hours": 2.9999999999999996,
         "horizon_status": "WITHIN_24H",
-        "max_hold_hours": 24.0
+        "max_hold_hours": 24.0,
+        "signal_key": null,
+        "updated_at": null
+      },
+      {
+        "id": 27,
+        "created_at": "2026-09-12T15:49:10.559533+00:00",
+        "symbol": "PUNDIXUSDT",
+        "asset_type": "crypto",
+        "direction": "LONG",
+        "score": 70,
+        "entry_low": 0.0986535,
+        "entry_high": 0.0993465,
+        "stop_loss": 0.09090000000000001,
+        "tp1": 0.10980000000000001,
+        "tp2": 0.1152,
+        "risk_reward": 2.0,
+        "technical_score": 78,
+        "whale_score": 65,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "HIGH_VOLATILITY",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.276,
+        "tp1_eta_hours": 2.000000000000001,
+        "tp2_eta_hours": 2.9999999999999987,
+        "horizon_status": "WITHIN_24H",
+        "max_hold_hours": 24.0,
+        "signal_key": "81b3cf8caeb2ad12427231d326a9ba43149f34894f6f3a0752f426c74950572e",
+        "updated_at": "2026-09-12T15:49:10.560683+00:00"
+      },
+      {
+        "id": 28,
+        "created_at": "2026-09-12T15:49:10.564588+00:00",
+        "symbol": "CHZUSDT",
+        "asset_type": "crypto",
+        "direction": "LONG",
+        "score": 70,
+        "entry_low": 0.01430974,
+        "entry_high": 0.014410260000000001,
+        "stop_loss": 0.013628214285714285,
+        "tp1": 0.015335714285714286,
+        "tp2": 0.015823571428571426,
+        "risk_reward": 1.9999999999999976,
+        "technical_score": 78,
+        "whale_score": 66,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "BULLISH",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.292,
+        "tp1_eta_hours": 2.0000000000000018,
+        "tp2_eta_hours": 2.999999999999997,
+        "horizon_status": "WITHIN_24H",
+        "max_hold_hours": 24.0,
+        "signal_key": "6a83c645eeb04dd8646bea369e93e7501660291164aa17175eb1e20d9c1872a5",
+        "updated_at": "2026-09-12T15:49:10.566681+00:00"
+      },
+      {
+        "id": 29,
+        "created_at": "2026-09-12T15:49:10.570649+00:00",
+        "symbol": "BNBUSDT",
+        "asset_type": "crypto",
+        "direction": "LONG",
+        "score": 67,
+        "entry_low": 735.2260714285715,
+        "entry_high": 738.1939285714285,
+        "stop_loss": 721.8707142857144,
+        "tp1": 756.4957142857144,
+        "tp2": 766.3885714285715,
+        "risk_reward": 2.0000000000000075,
+        "technical_score": 70,
+        "whale_score": 70,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "BULLISH",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.3,
+        "tp1_eta_hours": 2.000000000000005,
+        "tp2_eta_hours": 3.0000000000000018,
+        "horizon_status": "WITHIN_24H",
+        "max_hold_hours": 24.0,
+        "signal_key": "85370274998ebded283280410e9ac230bfedcaf3044dbe211bfc8f19d8e9944f",
+        "updated_at": "2026-09-12T15:49:10.571761+00:00"
+      },
+      {
+        "id": 30,
+        "created_at": "2026-09-12T15:49:10.575452+00:00",
+        "symbol": "TUSDT",
+        "asset_type": "crypto",
+        "direction": "LONG",
+        "score": 67,
+        "entry_low": 0.004347142857142857,
+        "entry_high": 0.004372857142857143,
+        "stop_loss": 0.004231428571428572,
+        "tp1": 0.004531428571428572,
+        "tp2": 0.004617142857142858,
+        "risk_reward": 2.0000000000000067,
+        "technical_score": 70,
+        "whale_score": 70,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "BULLISH",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.3,
+        "tp1_eta_hours": 2.0,
+        "tp2_eta_hours": 3.000000000000005,
+        "horizon_status": "WITHIN_24H",
+        "max_hold_hours": 24.0,
+        "signal_key": "aa64b1be8fd007cefab8e228c5dd6fbbd6e4a6a130b0cfb49375ec20e5849cb1",
+        "updated_at": "2026-09-12T15:49:10.576441+00:00"
+      },
+      {
+        "id": 31,
+        "created_at": "2026-09-12T15:49:10.580119+00:00",
+        "symbol": "METABUSDT",
+        "asset_type": "crypto",
+        "direction": "LONG",
+        "score": 67,
+        "entry_low": 647.0982142857143,
+        "entry_high": 649.1017857142857,
+        "stop_loss": 638.0821428571429,
+        "tp1": 661.4571428571428,
+        "tp2": 668.1357142857142,
+        "risk_reward": 2.0,
+        "technical_score": 70,
+        "whale_score": 70,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "BULLISH",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.3,
+        "tp1_eta_hours": 1.999999999999993,
+        "tp2_eta_hours": 2.999999999999998,
+        "horizon_status": "WITHIN_24H",
+        "max_hold_hours": 24.0,
+        "signal_key": "655ba7963902673cd81fc7e3f294080d267683df5ab59f4bed70dd145d1e7c86",
+        "updated_at": "2026-09-12T15:49:10.581200+00:00"
       }
     ]
   },
@@ -1597,6 +1801,161 @@
         "max_adverse_pct": 0.0,
         "expiry_at": "2026-09-13T11:49:59.865819+00:00",
         "resolution_source": "1h_ohlc"
+      },
+      {
+        "id": 27,
+        "signal_id": 27,
+        "symbol": "PUNDIXUSDT",
+        "direction": "LONG",
+        "entry": 0.099,
+        "stop_loss": 0.09090000000000001,
+        "tp1": 0.10980000000000001,
+        "tp2": 0.1152,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-12T15:49:10.562256+00:00",
+        "closed_at": null,
+        "final_score": 70.0,
+        "market_regime": "HIGH_VOLATILITY",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 0.099,
+        "last_checked_at": "2026-09-12T15:49:10.562256+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 0.0,
+        "expiry_at": "2026-09-13T15:49:10.562256+00:00",
+        "resolution_source": null
+      },
+      {
+        "id": 28,
+        "signal_id": 28,
+        "symbol": "CHZUSDT",
+        "direction": "LONG",
+        "entry": 0.014360000000000001,
+        "stop_loss": 0.013628214285714285,
+        "tp1": 0.015335714285714286,
+        "tp2": 0.015823571428571426,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-12T15:49:10.568274+00:00",
+        "closed_at": null,
+        "final_score": 70.0,
+        "market_regime": "BULLISH",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 0.014360000000000001,
+        "last_checked_at": "2026-09-12T15:49:10.568274+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 0.0,
+        "expiry_at": "2026-09-13T15:49:10.568274+00:00",
+        "resolution_source": null
+      },
+      {
+        "id": 29,
+        "signal_id": 29,
+        "symbol": "BNBUSDT",
+        "direction": "LONG",
+        "entry": 736.71,
+        "stop_loss": 721.8707142857144,
+        "tp1": 756.4957142857144,
+        "tp2": 766.3885714285715,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-12T15:49:10.573170+00:00",
+        "closed_at": null,
+        "final_score": 67.0,
+        "market_regime": "BULLISH",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 736.71,
+        "last_checked_at": "2026-09-12T15:49:10.573170+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 0.0,
+        "expiry_at": "2026-09-13T15:49:10.573170+00:00",
+        "resolution_source": null
+      },
+      {
+        "id": 30,
+        "signal_id": 30,
+        "symbol": "TUSDT",
+        "direction": "LONG",
+        "entry": 0.004359999999999999,
+        "stop_loss": 0.004231428571428572,
+        "tp1": 0.004531428571428572,
+        "tp2": 0.004617142857142858,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-12T15:49:10.577850+00:00",
+        "closed_at": null,
+        "final_score": 67.0,
+        "market_regime": "BULLISH",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 0.004359999999999999,
+        "last_checked_at": "2026-09-12T15:49:10.577850+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 0.0,
+        "expiry_at": "2026-09-13T15:49:10.577850+00:00",
+        "resolution_source": null
+      },
+      {
+        "id": 31,
+        "signal_id": 31,
+        "symbol": "METABUSDT",
+        "direction": "LONG",
+        "entry": 648.1,
+        "stop_loss": 638.0821428571429,
+        "tp1": 661.4571428571428,
+        "tp2": 668.1357142857142,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-12T15:49:10.582529+00:00",
+        "closed_at": null,
+        "final_score": 67.0,
+        "market_regime": "BULLISH",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 648.1,
+        "last_checked_at": "2026-09-12T15:49:10.582529+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 0.0,
+        "expiry_at": "2026-09-13T15:49:10.582529+00:00",
+        "resolution_source": null
       }
     ]
   }
