@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       days:
-        description: "Historical days (recommended 365)"
+        description: "Historical days to test"
         required: false
-        default: "365"
+        default: "30"
       symbols:
         description: "Representative USD-M perpetual count (10 includes BRUSDT)"
         required: false
@@ -28,7 +28,7 @@ permissions:
 jobs:
   research:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -46,13 +46,13 @@ jobs:
       - name: Compile sources
         run: python -m compileall -q trade_bot tests
 
-      - name: Run 12-month representative futures backtest
+      - name: Run 30-day representative futures backtest
         env:
-          BACKTEST_DAYS: 365
+          BACKTEST_DAYS: 30
           BACKTEST_SYMBOLS: 10
         run: |
           python trade_bot/futures_backtest.py \
-            --days "${{ github.event.inputs.days || '365' }}" \
+            --days "${{ github.event.inputs.days || '30' }}" \
             --symbols "${{ github.event.inputs.symbols || '10' }}" \
             > futures-research-source.json
 
