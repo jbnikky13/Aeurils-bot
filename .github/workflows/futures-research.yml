@@ -1,0 +1,100 @@
+name: AURELIS Futures Research Validation
+
+on:
+  workflow_dispatch:
+    inputs:
+      days:
+        description: "Historical days (recommended 365)"
+        required: false
+        default: "365"
+      symbols:
+        description: "Representative USD-M perpetual count (10 includes BRUSDT)"
+        required: false
+        default: "10"
+      risk_per_trade:
+        description: "Risk fraction per trade"
+        required: false
+        default: "0.01"
+  push:
+    paths:
+      - "trade_bot/futures_backtest.py"
+      - "trade_bot/futures_research.py"
+      - ".github/workflows/futures-research.yml"
+      - "trade_bot/requirements.txt"
+
+permissions:
+  contents: read
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: trade_bot/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r trade_bot/requirements.txt
+
+      - name: Compile sources
+        run: python -m compileall -q trade_bot tests
+
+      - name: Run 12-month representative futures backtest
+        env:
+          BACKTEST_DAYS: 365
+          BACKTEST_SYMBOLS: 10
+        run: |
+          python trade_bot/futures_backtest.py \
+            --days "${{ github.event.inputs.days || '365' }}" \
+            --symbols "${{ github.event.inputs.symbols || '10' }}" \
+            > futures-research-source.json
+
+      - name: Run risk and out-of-sample analysis
+        run: |
+          python trade_bot/futures_research.py futures-research-source.json \
+            --starting-equity 100 \
+            --risk-per-trade "${{ github.event.inputs.risk_per_trade || '0.01' }}" \
+            --taker-fee 0.0005 \
+            --slippage 0.0005 \
+            --funding-per-8h 0.0001 \
+            --leverage-cap 3 \
+            > futures-research-report.json
+
+      - name: Validate research report
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('futures-research-report.json'))
+          o=r['overall']
+          print('## AURELIS Futures Research Validation')
+          print(f"Window: {r['source_window']['start']} -> {r['source_window']['end']}")
+          print(f"Trades: {o['trades']} | Win rate: {o['win_rate_pct']:.2f}%")
+          print(f"Ending equity: {o['ending_equity']:.4f} | Net return: {o['net_return_pct']:.2f}%")
+          print(f"Profit factor: {o['profit_factor']} | Expectancy: {o['expectancy_pct_per_trade']:.5f}%")
+          print(f"Max drawdown: {o['max_drawdown_pct']:.2f}% | Max consecutive losses: {o['max_consecutive_losses']}")
+          for k,v in r['by_direction'].items():
+              print(f"{k}: {v['trades']} trades | {v['win_rate_pct']:.2f}% win | {v['net_return_pct']:.2f}% return")
+          for k,v in r['by_mode'].items():
+              print(f"{k}: {v['trades']} trades | {v['win_rate_pct']:.2f}% win | {v['net_return_pct']:.2f}% return")
+          print('BRUSDT:', r['brusdt_case_study']['trades'], 'trades,', r['brusdt_case_study']['net_return_pct'], '% return')
+          if o['trades'] == 0:
+              raise SystemExit('No closed trades: research is inconclusive.')
+          if not r['time_split']['out_of_sample_20']['trades']:
+              raise SystemExit('No out-of-sample trades: research is inconclusive.')
+          PY
+
+      - name: Upload research artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: aurelis-futures-research
+          path: |
+            futures-research-source.json
+            futures-research-report.json
+          retention-days: 30
