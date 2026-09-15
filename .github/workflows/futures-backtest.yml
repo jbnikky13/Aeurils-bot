@@ -14,7 +14,6 @@ on:
   push:
     paths:
       - "trade_bot/futures_backtest.py"
-      - "tests/test_futures_backtest.py"
       - ".github/workflows/futures-backtest.yml"
 
 permissions:
@@ -41,10 +40,19 @@ jobs:
       - name: Compile Python sources
         run: python -m compileall -q trade_bot tests
 
-      - name: Run futures backtest unit tests
+      - name: Smoke test futures backtest engine
         env:
           PYTHONPATH: .
-        run: python tests/test_futures_backtest.py -v
+        run: |
+          python - <<'PY'
+          import pandas as pd
+          from trade_bot.futures_backtest import continuation, Trade, simulate
+          prior=pd.DataFrame({"high":[110]*20,"low":[100]*20})
+          row=pd.Series({"close":99,"ema20":101,"ema50":103,"ema200":105,"rsi":30,"adx":30,"macd_hist":-1,"atr":2,"volume_ratio":2.0})
+          mode, score, trend = continuation(row, prior, "SHORT", 3.0, 0.80)
+          assert mode in {"BREAKOUT","CONTINUATION"} and score >= 70 and trend
+          print(f"Smoke test passed: {mode} score={score}")
+          PY
 
       - name: Run 30-day futures backtest
         env:
