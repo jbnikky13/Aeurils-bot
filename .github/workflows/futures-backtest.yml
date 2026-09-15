@@ -8,9 +8,9 @@ on:
         required: false
         default: "30"
       symbols:
-        description: "Top Binance USDT perpetuals by 24h quote volume"
+        description: "Number of representative USD-M perpetuals to test"
         required: false
-        default: "20"
+        default: "5"
   push:
     paths:
       - "trade_bot/futures_backtest.py"
@@ -43,9 +43,9 @@ jobs:
       - name: Run 30-day futures backtest
         env:
           BACKTEST_DAYS: 30
-          BACKTEST_SYMBOLS: 20
+          BACKTEST_SYMBOLS: 5
         run: |
-          python trade_bot/futures_backtest.py --days "${{ github.event.inputs.days || '30' }}" --symbols "${{ github.event.inputs.symbols || '20' }}" > futures-backtest-report.json
+          python trade_bot/futures_backtest.py --days "${{ github.event.inputs.days || '30' }}" --symbols "${{ github.event.inputs.symbols || '5' }}" > futures-backtest-report.json
 
       - name: Publish backtest summary
         run: |
@@ -54,8 +54,8 @@ jobs:
           r=json.load(open("futures-backtest-report.json"))
           o=r["overall"]
           print("## AURELIS Futures Continuation Backtest")
-          print(f"- Window: {r['days']} days")
-          print(f"- Symbols tested: {len(r['symbols_tested'])}")
+          print(f"- Window: {r['days']} completed days ({r['start']} → {r['end']})")
+          print(f"- Symbols tested: {len(r['symbols_tested'])} — {', '.join(r['symbols_tested'])}")
           print(f"- Signals: {r['trades']}")
           print(f"- Closed: {r['closed_trades']}")
           print(f"- Ambiguous candles: {r['ambiguous']}")
