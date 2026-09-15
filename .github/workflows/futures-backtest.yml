@@ -14,6 +14,7 @@ on:
   push:
     paths:
       - "trade_bot/futures_backtest.py"
+      - "trade_bot/requirements.txt"
       - ".github/workflows/futures-backtest.yml"
 
 permissions:
@@ -40,22 +41,24 @@ jobs:
       - name: Compile Python sources
         run: python -m compileall -q trade_bot tests
 
-      - name: Run 30-day futures backtest
+      - name: Run futures backtest
         env:
           BACKTEST_DAYS: 30
           BACKTEST_SYMBOLS: 5
         run: |
           python trade_bot/futures_backtest.py --days "${{ github.event.inputs.days || '30' }}" --symbols "${{ github.event.inputs.symbols || '5' }}" > futures-backtest-report.json
 
-      - name: Publish backtest summary
+      - name: Validate and publish backtest summary
         run: |
           python - <<'PY'
           import json
           r=json.load(open("futures-backtest-report.json"))
           o=r["overall"]
           print("## AURELIS Futures Continuation Backtest")
-          print(f"- Window: {r['days']} completed days ({r['start']} → {r['end']})")
+          print(f"- Window: {r['days']} days ({r['start']} → {r['end']})")
           print(f"- Symbols tested: {len(r['symbols_tested'])} — {', '.join(r['symbols_tested'])}")
+          if r.get("errors"):
+              print(f"- Symbol errors: {r['errors']}")
           print(f"- Signals: {r['trades']}")
           print(f"- Closed: {r['closed_trades']}")
           print(f"- Ambiguous candles: {r['ambiguous']}")
