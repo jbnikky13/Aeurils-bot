@@ -19,15 +19,20 @@ def init_db():
             "tp2_eta_hours":"REAL",
             "horizon_status":"TEXT DEFAULT 'UNKNOWN'",
             "max_hold_hours":"REAL DEFAULT 24",
+            "strategy_mode":"TEXT DEFAULT 'NORMAL'",
+            "continuation_score":"REAL DEFAULT 0",
+            "runner_enabled":"INTEGER DEFAULT 0",
+            "trailing_atr_multiplier":"REAL",
         }
         for col,typ in additions.items():
             if col not in cols: con.execute(f"ALTER TABLE setups ADD COLUMN {col} {typ}")
+        con.commit()
 
 def record_setup(s):
     init_db()
     with sqlite3.connect(DB) as con:
-        cur=con.execute("INSERT INTO setups(created_at,symbol,asset_type,direction,score,entry_low,entry_high,stop_loss,tp1,tp2,risk_reward,technical_score,whale_score,sentiment_score,market_regime,gemini_confidence,gemini_decision,gemini_rationale,whale_bias,tp1_eta_hours,tp2_eta_hours,horizon_status,max_hold_hours) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(
-            datetime.now(timezone.utc).isoformat(),s.symbol,s.asset_type,s.direction,s.score,s.entry_low,s.entry_high,s.stop_loss,s.take_profit_1,s.take_profit_2,s.risk_reward,s.technical_score,s.whale_score,s.sentiment_score,getattr(s,"market_regime","UNKNOWN"),getattr(s,"gemini_confidence",None),getattr(s,"gemini_decision",None),getattr(s,"gemini_rationale",None),getattr(s,"whale_bias",None),getattr(s,"tp1_eta_hours",None),getattr(s,"tp2_eta_hours",None),getattr(s,"horizon_status","UNKNOWN"),getattr(s,"max_hold_hours",24.0)))
+        cur=con.execute("INSERT INTO setups(created_at,symbol,asset_type,direction,score,entry_low,entry_high,stop_loss,tp1,tp2,risk_reward,technical_score,whale_score,sentiment_score,market_regime,gemini_confidence,gemini_decision,gemini_rationale,whale_bias,tp1_eta_hours,tp2_eta_hours,horizon_status,max_hold_hours,strategy_mode,continuation_score,runner_enabled,trailing_atr_multiplier) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(
+            datetime.now(timezone.utc).isoformat(),s.symbol,s.asset_type,s.direction,s.score,s.entry_low,s.entry_high,s.stop_loss,s.take_profit_1,s.take_profit_2,s.risk_reward,s.technical_score,s.whale_score,s.sentiment_score,getattr(s,"market_regime","UNKNOWN"),getattr(s,"gemini_confidence",None),getattr(s,"gemini_decision",None),getattr(s,"gemini_rationale",None),getattr(s,"whale_bias",None),getattr(s,"tp1_eta_hours",None),getattr(s,"tp2_eta_hours",None),getattr(s,"horizon_status","UNKNOWN"),getattr(s,"max_hold_hours",24.0),getattr(s,"strategy_mode","NORMAL"),getattr(s,"continuation_score",0),1 if getattr(s,"runner_enabled",False) else 0,getattr(s,"trailing_atr_multiplier",None)))
         return cur.lastrowid
 
 def performance():
@@ -39,5 +44,5 @@ def audit_stats():
     init_db()
     with sqlite3.connect(DB) as con:
         con.row_factory=sqlite3.Row
-        rows=con.execute("SELECT market_regime,asset_type,outcome,COUNT(*) AS count,ROUND(AVG(score),1) AS avg_score,ROUND(AVG(technical_score),1) AS avg_technical,ROUND(AVG(whale_score),1) AS avg_whale,ROUND(AVG(sentiment_score),1) AS avg_sentiment FROM setups GROUP BY market_regime,asset_type,outcome ORDER BY market_regime,asset_type,outcome").fetchall()
+        rows=con.execute("SELECT market_regime,strategy_mode,asset_type,outcome,COUNT(*) AS count,ROUND(AVG(score),1) AS avg_score,ROUND(AVG(technical_score),1) AS avg_technical,ROUND(AVG(whale_score),1) AS avg_whale,ROUND(AVG(sentiment_score),1) AS avg_sentiment,ROUND(AVG(continuation_score),1) AS avg_continuation FROM setups GROUP BY market_regime,strategy_mode,asset_type,outcome ORDER BY market_regime,strategy_mode,asset_type,outcome").fetchall()
     return [dict(r) for r in rows]
