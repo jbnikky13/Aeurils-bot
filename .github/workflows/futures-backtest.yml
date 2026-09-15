@@ -42,6 +42,8 @@ jobs:
         run: python -m compileall -q trade_bot tests
 
       - name: Run futures backtest unit tests
+        env:
+          PYTHONPATH: .
         run: python tests/test_futures_backtest.py -v
 
       - name: Run 30-day futures backtest
