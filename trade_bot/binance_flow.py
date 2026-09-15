@@ -1,15 +1,15 @@
-"""Binance-native market-flow intelligence inspired by multi-module agent kits.
-Read-only: no order execution. Uses spot depth plus Binance USD-M futures OI,
-funding and taker flow to confirm (or reject) a 4H setup.
+"""Binance-native futures market-flow intelligence for AURELIS.
+
+Read-only: no order execution. Uses Binance USD-M futures depth, OI, funding,
+taker flow and optional liquidation pressure to confirm a 4H setup.
 """
 import httpx
 
-SPOT_BASE = "https://data-api.binance.vision"
 FUTURES_BASE = "https://fapi.binance.com"
 
 
-def _get(base, path, params=None):
-    r = httpx.get(f"{base}{path}", params=params or {}, timeout=8)
+def _get(path, params=None):
+    r = httpx.get(f"{FUTURES_BASE}{path}", params=params or {}, timeout=8)
     r.raise_for_status()
     return r.json()
 
@@ -19,28 +19,29 @@ def _clamp(v, lo=0.0, hi=100.0):
 
 
 def snapshot(symbol: str, direction: str) -> dict:
-    """Return a conservative flow score. Any unavailable component is neutral."""
+    """Return conservative futures-flow evidence; unavailable providers remain neutral."""
     s = symbol.upper()
     result = {
         "available": False, "score": 50.0, "bias": 0.0,
         "oi_change_pct": None, "funding_rate": None,
         "orderbook_imbalance": None, "taker_ratio": None,
+        "price_change_pct": None, "liquidation_pressure": False,
         "reasons": []
     }
+
     try:
-        depth = _get(SPOT_BASE, "/api/v3/depth", {"symbol": s, "limit": 20})
+        depth = _get("/fapi/v1/depth", {"symbol": s, "limit": 20})
         bids = sum(float(p) * float(q) for p, q in depth.get("bids", []))
         asks = sum(float(p) * float(q) for p, q in depth.get("asks", []))
         total = bids + asks
-        imbalance = (bids - asks) / total if total else 0.0
-        result["orderbook_imbalance"] = imbalance
+        result["orderbook_imbalance"] = (bids - asks) / total if total else 0.0
     except Exception as exc:
-        result["reasons"].append(f"Order book unavailable: {type(exc).__name__}")
+        result["reasons"].append(f"Futures order book unavailable: {type(exc).__name__}")
 
     try:
-        oi = _get(FUTURES_BASE, "/fapi/v1/openInterest", {"symbol": s})
+        oi = _get("/fapi/v1/openInterest", {"symbol": s})
         oi_now = float(oi.get("openInterest", 0))
-        hist = _get(FUTURES_BASE, "/futures/data/openInterestHist", {
+        hist = _get("/futures/data/openInterestHist", {
             "symbol": s, "period": "4h", "limit": 3, "contractType": "PERPETUAL"
         })
         if len(hist) >= 2:
@@ -52,58 +53,93 @@ def snapshot(symbol: str, direction: str) -> dict:
         result["reasons"].append(f"Open interest unavailable: {type(exc).__name__}")
 
     try:
-        funding = _get(FUTURES_BASE, "/fapi/v1/fundingRate", {"symbol": s, "limit": 1})
+        candles = _get("/fapi/v1/klines", {"symbol": s, "interval": "4h", "limit": 2})
+        if len(candles) >= 2:
+            old_close = float(candles[-2][4]); new_close = float(candles[-1][4])
+            if old_close:
+                result["price_change_pct"] = (new_close - old_close) / old_close * 100.0
+    except Exception as exc:
+        result["reasons"].append(f"4H price/OI relationship unavailable: {type(exc).__name__}")
+
+    try:
+        funding = _get("/fapi/v1/fundingRate", {"symbol": s, "limit": 1})
         if funding:
             result["funding_rate"] = float(funding[-1].get("fundingRate", 0))
     except Exception as exc:
         result["reasons"].append(f"Funding unavailable: {type(exc).__name__}")
 
     try:
-        taker = _get(FUTURES_BASE, "/futures/data/takerlongshortRatio", {
-            "symbol": s, "period": "4h", "limit": 1
-        })
+        taker = _get("/futures/data/takerlongshortRatio", {"symbol": s, "period": "4h", "limit": 1})
         if taker:
             result["taker_ratio"] = float(taker[-1].get("buySellRatio", 1.0))
     except Exception:
-        # Endpoint availability varies by Binance market; remain neutral.
+        pass
+
+    try:
+        forced = _get("/fapi/v1/allForceOrders", {"symbol": s, "limit": 100})
+        recent = forced if isinstance(forced, list) else []
+        long_liq = sum(float(x.get("executedQty", 0)) for x in recent if str(x.get("side", "")).upper() == "SELL")
+        short_liq = sum(float(x.get("executedQty", 0)) for x in recent if str(x.get("side", "")).upper() == "BUY")
+        if direction == "SHORT" and long_liq > short_liq * 1.25 and long_liq > 0:
+            result["liquidation_pressure"] = True
+        elif direction == "LONG" and short_liq > long_liq * 1.25 and short_liq > 0:
+            result["liquidation_pressure"] = True
+    except Exception:
+        # Liquidation endpoint availability is not a hard dependency.
         pass
 
     score = 50.0
     bias = 0.0
-    if result["orderbook_imbalance"] is not None:
-        x = result["orderbook_imbalance"]
-        bias += max(-1, min(1, x * 2.5)) * 0.30
-        score += max(-20, min(20, x * 40)) * (1 if direction == "LONG" else -1)
-    if result["oi_change_pct"] is not None:
-        oi = result["oi_change_pct"]
-        # Rising OI confirms the prevailing direction; falling OI weakens it.
-        oi_sign = 1 if direction == "LONG" else -1
-        bias += max(-1, min(1, oi / 5.0)) * oi_sign * 0.25
-        score += max(-15, min(15, oi * 3)) * oi_sign
-    if result["taker_ratio"] is not None:
-        tr = result["taker_ratio"]
+    imbalance = result["orderbook_imbalance"]
+    if imbalance is not None:
+        directional = imbalance if direction == "LONG" else -imbalance
+        bias += max(-1, min(1, directional * 2.5)) * 0.25
+        score += max(-18, min(18, directional * 36))
+
+    oi = result["oi_change_pct"]
+    price_change = result["price_change_pct"]
+    if oi is not None:
+        # Price and OI together distinguish trend participation from liquidation.
+        if price_change is not None:
+            same_direction = (price_change > 0 and direction == "LONG") or (price_change < 0 and direction == "SHORT")
+            opposing_direction = (price_change < 0 and direction == "LONG") or (price_change > 0 and direction == "SHORT")
+            if same_direction and oi > 0.5:
+                bias += 0.25; score += 14
+            elif opposing_direction and oi > 0.5:
+                bias -= 0.25; score -= 14
+            elif oi < -0.5:
+                score += 3 if same_direction else -3
+        elif oi > 0.5:
+            score += 6
+        bias = max(-1, min(1, bias))
+
+    tr = result["taker_ratio"]
+    if tr is not None:
         taker_bias = max(-1, min(1, (tr - 1.0) * 2.5))
-        bias += taker_bias * 0.30
-        score += taker_bias * 20 if direction == "LONG" else -taker_bias * 20
-    if result["funding_rate"] is not None:
-        fr = result["funding_rate"]
-        # Extreme positive funding is a contrarian warning for longs and vice versa.
-        if direction == "LONG":
-            score -= min(10, max(0, fr * 10000 - 5))
-        elif direction == "SHORT":
-            score -= min(10, max(0, -fr * 10000 - 5))
+        directional = taker_bias if direction == "LONG" else -taker_bias
+        bias += directional * 0.30
+        score += directional * 18
+
+    fr = result["funding_rate"]
+    if fr is not None:
+        # Extreme funding against the proposed trade is a warning, not a veto.
+        if direction == "LONG" and fr > 0.0005: score -= 7
+        if direction == "SHORT" and fr < -0.0005: score -= 7
+
+    if result["liquidation_pressure"]:
+        score += 8
+        bias += 0.10
 
     result["score"] = round(_clamp(score), 1)
     result["bias"] = round(max(-1.0, min(1.0, bias)), 3)
     result["available"] = any(v is not None for v in (
-        result["orderbook_imbalance"], result["oi_change_pct"], result["funding_rate"], result["taker_ratio"]
+        result["orderbook_imbalance"], result["oi_change_pct"], result["funding_rate"],
+        result["taker_ratio"], result["price_change_pct"]
     ))
-    if result["orderbook_imbalance"] is not None:
-        result["reasons"].append(f"Spot depth imbalance: {result['orderbook_imbalance']:+.1%}")
-    if result["oi_change_pct"] is not None:
-        result["reasons"].append(f"4H OI change: {result['oi_change_pct']:+.2f}%")
-    if result["funding_rate"] is not None:
-        result["reasons"].append(f"Funding: {result['funding_rate']:+.5f}")
-    if result["taker_ratio"] is not None:
-        result["reasons"].append(f"Taker buy/sell ratio: {result['taker_ratio']:.2f}")
+    if imbalance is not None: result["reasons"].append(f"Futures depth imbalance: {imbalance:+.1%}")
+    if price_change is not None: result["reasons"].append(f"4H futures price change: {price_change:+.2f}%")
+    if oi is not None: result["reasons"].append(f"4H OI change: {oi:+.2f}%")
+    if fr is not None: result["reasons"].append(f"Funding: {fr:+.5f}")
+    if tr is not None: result["reasons"].append(f"Taker buy/sell ratio: {tr:.2f}")
+    if result["liquidation_pressure"]: result["reasons"].append("Liquidation pressure confirms the directional move")
     return result
