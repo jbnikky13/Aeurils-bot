@@ -2,11 +2,11 @@
 
 Uses Binance Vision public futures kline archives instead of live REST endpoints.
 Signals use completed 4H candles; subsequent 1H candles resolve entries, stops,
-targets and the ATR trailing runner. Open interest is not fabricated; the kline
+targets and the ATR trailing runner. Open interest is not fabricated; kline
 taker-buy volume is used as a directional flow proxy for this historical test.
 """
 from __future__ import annotations
-import argparse, io, json, os, zipfile
+import argparse, io, json, os, sys, zipfile
 from dataclasses import dataclass, asdict
 from datetime import date, timedelta, datetime, timezone
 import requests
@@ -16,7 +16,7 @@ import numpy as np
 BASE="https://data.binance.vision/data/futures/um"
 DEFAULT_SYMBOLS=["BTCUSDT","ETHUSDT","SOLUSDT","XRPUSDT","BNBUSDT","DOGEUSDT","ADAUSDT","SUIUSDT","LINKUSDT","BRUSDT"]
 LOOKBACK_DAYS=int(os.getenv("BACKTEST_DAYS","30")); SYMBOL_COUNT=int(os.getenv("BACKTEST_SYMBOLS","10")); TIMEOUT=30
-HEADERS={"User-Agent":"AURELIS-futures-backtest/1.0"}
+HEADERS={"User-Agent":"AURELIS-futures-backtest/2.0"}
 
 def _download(url):
     r=requests.get(url,headers=HEADERS,timeout=TIMEOUT)
@@ -33,8 +33,9 @@ def _kline_frame(raw):
     cols=["open_time","open","high","low","close","volume","close_time","quote_volume","trades","taker_buy_volume","taker_buy_quote_volume","ignore"]
     if raw.shape[1]<len(cols):raise ValueError(f"Unexpected kline columns: {raw.shape[1]}")
     raw=raw.iloc[:,:len(cols)].copy(); raw.columns=cols
+    raw["open_time"]=pd.to_numeric(raw["open_time"],errors="coerce")
     for c in ["open","high","low","close","volume","quote_volume","taker_buy_volume","taker_buy_quote_volume"]:raw[c]=pd.to_numeric(raw[c],errors="coerce")
-    raw["time"]=pd.to_datetime(pd.to_numeric(raw["open_time"]),unit="ms",utc=True)
+    raw["time"]=pd.to_datetime(raw["open_time"],unit="ms",utc=True)
     return raw.dropna(subset=["time","open","high","low","close","volume"])
 
 def _dates(start,end):
@@ -44,21 +45,20 @@ def _dates(start,end):
 def load_klines(symbol,interval,start,end):
     frames=[]; months={(d.year,d.month) for d in _dates(start,end)}
     for year,month in sorted(months):
-        month_start=date(year,month,1); next_month=date(year+1,1,1) if month==12 else date(year,month+1,1); month_end=next_month-timedelta(days=1)
-        loaded=False
+        month_start=date(year,month,1); next_month=date(year+1,1,1) if month==12 else date(year,month+1,1); month_end=next_month-timedelta(days=1); loaded=False
         if month_end<date.today():
             url=f"{BASE}/monthly/klines/{symbol}/{interval}/{symbol}-{interval}-{year:04d}-{month:02d}.zip"
             try:
                 blob=_download(url)
                 if blob:frames.append(_kline_frame(_read_zip(blob))); loaded=True
-            except Exception:loaded=False
+            except Exception as exc:print(f"{symbol} {interval} {year}-{month:02d}: monthly archive fallback ({exc})",file=sys.stderr,flush=True)
         if not loaded:
             for d in _dates(max(start,month_start),min(end,month_end)):
                 url=f"{BASE}/daily/klines/{symbol}/{interval}/{symbol}-{interval}-{d.isoformat()}.zip"
                 try:
                     blob=_download(url)
                     if blob:frames.append(_kline_frame(_read_zip(blob)))
-                except Exception:continue
+                except Exception as exc:print(f"{symbol} {interval} {d}: daily archive unavailable ({exc})",file=sys.stderr,flush=True)
     if not frames:return pd.DataFrame()
     out=pd.concat(frames,ignore_index=True).drop_duplicates("time").sort_values("time")
     return out[(out.time>=pd.Timestamp(start,tz="UTC"))&(out.time<pd.Timestamp(end+timedelta(days=1),tz="UTC"))].reset_index(drop=True)
@@ -109,12 +109,12 @@ def simulate(t,h1):
     return t
 
 def run(days=LOOKBACK_DAYS,symbol_count=SYMBOL_COUNT):
-    end=date.today()-timedelta(days=1);start=end-timedelta(days=days-1);universe=DEFAULT_SYMBOLS[:symbol_count];trades=[]
+    end=date.today()-timedelta(days=1);start=end-timedelta(days=days-1);universe=DEFAULT_SYMBOLS[:symbol_count];trades=[];tested=[];errors={}
     for i,symbol in enumerate(universe,1):
         try:
             h4=indicators(load_klines(symbol,"4h",start-timedelta(days=20),end));h1=indicators(load_klines(symbol,"1h",start,end))
-            if len(h4)<40 or len(h1)<30:print(f"{symbol}: insufficient Vision data",flush=True);continue
-            h4=h4[h4.time>=pd.Timestamp(start,tz="UTC")].reset_index(drop=True)
+            if len(h4)<40 or len(h1)<30:raise RuntimeError("insufficient Vision data")
+            tested.append(symbol);h4=h4[h4.time>=pd.Timestamp(start,tz="UTC")].reset_index(drop=True)
             for j in range(30,len(h4)):
                 r=h4.iloc[j]
                 if any(pd.isna(r[k]) for k in ["atr","volume_ratio","ema200","adx"]):continue
@@ -128,13 +128,14 @@ def run(days=LOOKBACK_DAYS,symbol_count=SYMBOL_COUNT):
                     else:stop=max(entry+1.8*atr,float(r.high)+.25*atr);tp1=entry-2*atr;tp2=entry-4*atr
                     if min(stop,tp1,tp2)<=0:continue
                     trades.append(simulate(Trade(symbol,direction,mode,score,str(future.iloc[0].time),entry,stop,tp1,tp2),future))
-            print(f"{i}/{len(universe)} {symbol}: signals={len(trades)}",flush=True)
-        except Exception as exc:print(f"{symbol}: ERROR {exc}",flush=True)
+            print(f"{i}/{len(universe)} {symbol}: signals={len(trades)}",file=sys.stderr,flush=True)
+        except Exception as exc:
+            errors[symbol]=str(exc);print(f"{i}/{len(universe)} {symbol}: ERROR {exc}",file=sys.stderr,flush=True)
     closed=[t for t in trades if t.outcome not in ("OPEN","AMBIGUOUS")];by={}
     for mode in ("BREAKOUT","CONTINUATION"):
         xs=[t for t in closed if t.mode==mode];by[mode]={"trades":len(xs),"win_rate":round(100*sum(t.pnl_pct>0 for t in xs)/len(xs),2) if xs else 0,"avg_pnl_pct":round(sum(t.pnl_pct for t in xs)/len(xs),4) if xs else 0,"total_pnl_pct":round(sum(t.pnl_pct for t in xs),4) if xs else 0}
     overall={"win_rate":round(100*sum(t.pnl_pct>0 for t in closed)/len(closed),2) if closed else 0,"avg_pnl_pct":round(sum(t.pnl_pct for t in closed)/len(closed),4) if closed else 0,"total_pnl_pct":round(sum(t.pnl_pct for t in closed),4) if closed else 0}
-    return {"generated_at":datetime.now(timezone.utc).isoformat(),"days":days,"start":start.isoformat(),"end":end.isoformat(),"symbols_tested":universe,"trades":len(trades),"closed_trades":len(closed),"ambiguous":sum(t.outcome=="AMBIGUOUS" for t in trades),"overall":overall,"by_mode":by,"trades_detail":[asdict(t) for t in trades]}
+    return {"generated_at":datetime.now(timezone.utc).isoformat(),"days":days,"start":start.isoformat(),"end":end.isoformat(),"symbols_requested":universe,"symbols_tested":tested,"errors":errors,"trades":len(trades),"closed_trades":len(closed),"ambiguous":sum(t.outcome=="AMBIGUOUS" for t in trades),"data_source":"Binance Data Vision USD-M Futures public kline archives","flow_proxy":"taker-buy/sell volume ratio from kline data; historical OI/funding/liquidations are not fabricated","overall":overall,"by_mode":by,"trades_detail":[asdict(t) for t in trades]}
 
 if __name__=="__main__":
     p=argparse.ArgumentParser();p.add_argument("--days",type=int,default=LOOKBACK_DAYS);p.add_argument("--symbols",type=int,default=SYMBOL_COUNT);a=p.parse_args();print(json.dumps(run(a.days,a.symbols),indent=2))
