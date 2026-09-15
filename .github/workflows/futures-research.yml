@@ -93,7 +93,7 @@ jobs:
       - name: Upload research artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: aurelis-futures-research
+          name: aurelis-futures-research-30d
           path: |
             futures-research-source.json
             futures-research-report.json
