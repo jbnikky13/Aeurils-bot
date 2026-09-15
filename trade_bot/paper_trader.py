@@ -7,17 +7,18 @@ import sqlite3
 from datetime import datetime, timezone, timedelta
 from .journal import DB, init_db
 
-PAPER_TABLE = "paper_trades"
-RESOLUTION_INTERVAL = "1h"
-TP1_FRACTION = 0.30
-TP2_FRACTION = 0.30
+PAPER_TABLE="paper_trades"
+RESOLUTION_INTERVAL="1h"
+TP1_FRACTION=0.30
+TP2_FRACTION=0.30
 
 
 def _now(): return datetime.now(timezone.utc).isoformat()
 def _parse_time(value):
     if not value: return None
-    try: return datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    try: return datetime.fromisoformat(str(value).replace("Z","+00:00"))
     except ValueError: return None
+
 
 def init_paper_db():
     init_db()
@@ -30,16 +31,7 @@ def init_paper_db():
             closed_at TEXT, final_score REAL, market_regime TEXT DEFAULT 'UNKNOWN',
             gemini_decision TEXT, gemini_confidence REAL, gemini_available INTEGER)""")
         cols={r[1] for r in con.execute(f"PRAGMA table_info({PAPER_TABLE})")}
-        additions={
-            "final_score":"REAL", "market_regime":"TEXT DEFAULT 'UNKNOWN'", "gemini_decision":"TEXT",
-            "gemini_confidence":"REAL", "gemini_available":"INTEGER", "tp1_hit_at":"TEXT",
-            "tp2_hit_at":"TEXT", "sl_hit_at":"TEXT", "exit_reason":"TEXT", "last_price":"REAL",
-            "last_checked_at":"TEXT", "max_favorable_pct":"REAL DEFAULT 0", "max_adverse_pct":"REAL DEFAULT 0",
-            "expiry_at":"TEXT", "resolution_source":"TEXT", "runner_enabled":"INTEGER DEFAULT 0",
-            "runner_active":"INTEGER DEFAULT 0", "remaining_pct":"REAL DEFAULT 100", "realized_pnl_pct":"REAL DEFAULT 0",
-            "trailing_stop":"REAL", "trailing_atr_multiplier":"REAL DEFAULT 2.0", "initial_risk":"REAL",
-            "realized_r":"REAL DEFAULT 0", "unrealized_r":"REAL DEFAULT 0"
-        }
+        additions={"final_score":"REAL","market_regime":"TEXT DEFAULT 'UNKNOWN'","gemini_decision":"TEXT","gemini_confidence":"REAL","gemini_available":"INTEGER","tp1_hit_at":"TEXT","tp2_hit_at":"TEXT","sl_hit_at":"TEXT","exit_reason":"TEXT","last_price":"REAL","last_checked_at":"TEXT","max_favorable_pct":"REAL DEFAULT 0","max_adverse_pct":"REAL DEFAULT 0","expiry_at":"TEXT","resolution_source":"TEXT","runner_enabled":"INTEGER DEFAULT 0","runner_active":"INTEGER DEFAULT 0","remaining_pct":"REAL DEFAULT 100","realized_pnl_pct":"REAL DEFAULT 0","trailing_stop":"REAL","trailing_atr_multiplier":"REAL DEFAULT 2.0","initial_risk":"REAL","realized_r":"REAL DEFAULT 0","unrealized_r":"REAL DEFAULT 0"}
         for col,typ in additions.items():
             if col not in cols: con.execute(f"ALTER TABLE {PAPER_TABLE} ADD COLUMN {col} {typ}")
         con.commit()
@@ -50,13 +42,11 @@ def open_paper_trade(signal_id,symbol,direction,entry,stop_loss=None,tp1=None,tp
     with sqlite3.connect(DB) as con:
         cur=con.execute(f"""INSERT OR IGNORE INTO {PAPER_TABLE}
             (signal_id,symbol,direction,entry,stop_loss,tp1,tp2,opened_at,final_score,market_regime,gemini_decision,gemini_confidence,gemini_available,last_price,last_checked_at,expiry_at,runner_enabled,remaining_pct,trailing_atr_multiplier,initial_risk)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
-            (signal_id,symbol,direction,float(entry),stop_loss,tp1,tp2,opened.isoformat(),final_score,market_regime,gemini_decision,gemini_confidence,gemini_available,float(entry),opened.isoformat(),expiry.isoformat(),1 if runner_enabled else 0,100.0,float(trailing_atr_multiplier or 2.0),risk))
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",(signal_id,symbol,direction,float(entry),stop_loss,tp1,tp2,opened.isoformat(),final_score,market_regime,gemini_decision,gemini_confidence,gemini_available,float(entry),opened.isoformat(),expiry.isoformat(),1 if runner_enabled else 0,100.0,float(trailing_atr_multiplier or 2.0),risk))
         con.commit(); return cur.rowcount==1
 
 
-def _pnl(direction,entry,exit_price):
-    return ((exit_price-entry)/entry*100 if direction=="LONG" else (entry-exit_price)/entry*100 if direction=="SHORT" else 0.0)
+def _pnl(direction,entry,exit_price): return ((exit_price-entry)/entry*100 if direction=="LONG" else (entry-exit_price)/entry*100 if direction=="SHORT" else 0.0)
 def _favorable(direction,entry,price): return max(0.0,_pnl(direction,entry,price))
 def _adverse(direction,entry,price): return max(0.0,-_pnl(direction,entry,price))
 def _sync_setup(signal_id,outcome):
@@ -83,7 +73,6 @@ def mark_candle(symbol,candle):
             if opened_dt and candle_dt and candle_dt<opened_dt: continue
             fav=max(float(old_fav or 0),_favorable(direction,float(entry),high if direction=="LONG" else low)); adv=max(float(old_adv or 0),_adverse(direction,float(entry),low if direction=="LONG" else high))
 
-            # Active runner: ratchet the trailing stop from the completed candle.
             if runner_active and atr>0:
                 proposed=close-float(mult or 2.0)*atr if direction=="LONG" else close+float(mult or 2.0)*atr
                 trail=proposed if trail is None else (max(float(trail),proposed) if direction=="LONG" else min(float(trail),proposed))
@@ -93,25 +82,30 @@ def mark_candle(symbol,candle):
                     con.execute(f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome='WIN_RUNNER',pnl_pct=?,closed_at=?,exit_reason='RUNNER_TRAIL',last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,trailing_stop=?,realized_pnl_pct=?,realized_r=?,unrealized_r=0,resolution_source='1h_runner' WHERE signal_id=?",(exit_price,total_pnl,candle_time,close,candle_time,fav,adv,trail,total_pnl,rr,sid)); closed_ids.append((sid,"WIN_RUNNER")); continue
                 con.execute(f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,trailing_stop=?,unrealized_r=? WHERE signal_id=?",(close,candle_time,fav,adv,trail,(_pnl(direction,float(entry),close)*float(remaining_pct or 0)/100/float(risk)) if risk else 0,sid)); continue
 
-            # Runner TP1 takes 30% and moves protection to breakeven.
-            if runner_enabled and not tp1_hit_at and tp1 is not None and ((direction=="LONG" and high>=tp1) or (direction=="SHORT" and low<=tp1)):
-                realized_new=float(realized or 0)+TP1_FRACTION*_pnl(direction,float(entry),float(tp1)); remaining_new=float(remaining_pct or 100)-TP1_FRACTION*100
-                con.execute(f"UPDATE {PAPER_TABLE} SET tp1_hit_at=?,remaining_pct=?,realized_pnl_pct=?,trailing_stop=?,last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='1h_runner' WHERE signal_id=?",(candle_time,remaining_new,realized_new,float(entry),close,candle_time,fav,adv,sid)); tp1_hit_at=candle_time; remaining_pct=remaining_new; realized=realized_new; trail=float(entry)
-
-            # Runner TP2 takes another 30% and activates the trailing runner.
-            if runner_enabled and not tp2_hit_at and tp2 is not None and ((direction=="LONG" and high>=tp2) or (direction=="SHORT" and low<=tp2)):
-                realized_new=float(realized or 0)+TP2_FRACTION*_pnl(direction,float(entry),float(tp2)); remaining_new=max(0,float(remaining_pct or 100)-TP2_FRACTION*100)
-                trail_new=(close-float(mult or 2.0)*atr) if direction=="LONG" and atr>0 else ((close+float(mult or 2.0)*atr) if direction=="SHORT" and atr>0 else float(entry))
-                con.execute(f"UPDATE {PAPER_TABLE} SET tp2_hit_at=?,runner_active=1,remaining_pct=?,realized_pnl_pct=?,trailing_stop=?,last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='1h_runner' WHERE signal_id=?",(candle_time,remaining_new,realized_new,trail_new,close,candle_time,fav,adv,sid)); continue
+            if runner_enabled:
+                stop_hit=(direction=="LONG" and stop is not None and low<=stop) or (direction=="SHORT" and stop is not None and high>=stop)
+                tp1_hit=(direction=="LONG" and tp1 is not None and high>=tp1) or (direction=="SHORT" and tp1 is not None and low<=tp1)
+                tp2_hit=(direction=="LONG" and tp2 is not None and high>=tp2) or (direction=="SHORT" and tp2 is not None and low<=tp2)
+                if stop_hit and (tp1_hit or tp2_hit):
+                    con.execute(f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='1h_ohlc_ambiguous' WHERE signal_id=?",(close,candle_time,fav,adv,sid)); continue
+                if stop_hit:
+                    con.execute(f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome='LOSS_SL',pnl_pct=?,closed_at=?,exit_reason='SL',sl_hit_at=?,last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='1h_ohlc' WHERE signal_id=?",(stop,_pnl(direction,float(entry),float(stop)),candle_time,candle_time,close,candle_time,fav,adv,sid)); closed_ids.append((sid,"LOSS_SL")); continue
+                touched=False
+                if not tp1_hit_at and tp1_hit:
+                    realized_new=float(realized or 0)+TP1_FRACTION*_pnl(direction,float(entry),float(tp1)); remaining_new=float(remaining_pct or 100)-TP1_FRACTION*100
+                    con.execute(f"UPDATE {PAPER_TABLE} SET tp1_hit_at=?,remaining_pct=?,realized_pnl_pct=?,trailing_stop=?,last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='1h_runner' WHERE signal_id=?",(candle_time,remaining_new,realized_new,float(entry),close,candle_time,fav,adv,sid)); tp1_hit_at=candle_time; remaining_pct=remaining_new; realized=realized_new; trail=float(entry); touched=True
+                if not tp2_hit_at and tp2_hit:
+                    realized_new=float(realized or 0)+TP2_FRACTION*_pnl(direction,float(entry),float(tp2)); remaining_new=max(0,float(remaining_pct or 100)-TP2_FRACTION*100); trail_new=(close-float(mult or 2.0)*atr) if direction=="LONG" and atr>0 else ((close+float(mult or 2.0)*atr) if direction=="SHORT" and atr>0 else float(entry))
+                    con.execute(f"UPDATE {PAPER_TABLE} SET tp2_hit_at=?,runner_active=1,remaining_pct=?,realized_pnl_pct=?,trailing_stop=?,last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='1h_runner' WHERE signal_id=?",(candle_time,remaining_new,realized_new,trail_new,close,candle_time,fav,adv,sid)); touched=True
+                if touched:
+                    con.execute(f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,unrealized_r=? WHERE signal_id=?",(close,candle_time,fav,adv,(_pnl(direction,float(entry),close)*float(remaining_pct or 0)/100/float(risk)) if risk else 0,sid)); continue
 
             outcome=_resolve_candle(direction,high,low,stop,tp1,tp2)
             if outcome in {"WIN_TP1","WIN_TP2","LOSS_SL"}:
                 exit_price=float(tp2 if outcome=="WIN_TP2" else tp1 if outcome=="WIN_TP1" else stop); reason="TP2" if outcome=="WIN_TP2" else "TP1" if outcome=="WIN_TP1" else "SL"
                 con.execute(f"""UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome=?,pnl_pct=?,closed_at=?,exit_reason=?,last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='1h_ohlc',tp1_hit_at=CASE WHEN ? IN ('WIN_TP1','WIN_TP2') THEN COALESCE(tp1_hit_at,?) ELSE tp1_hit_at END,tp2_hit_at=CASE WHEN ?='WIN_TP2' THEN COALESCE(tp2_hit_at,?) ELSE tp2_hit_at END,sl_hit_at=CASE WHEN ?='LOSS_SL' THEN COALESCE(sl_hit_at,?) ELSE sl_hit_at END WHERE signal_id=?""",(exit_price,outcome,_pnl(direction,float(entry),exit_price),candle_time,reason,close,candle_time,fav,adv,outcome,candle_time,outcome,candle_time,outcome,candle_time,sid)); closed_ids.append((sid,outcome))
-            elif outcome=="AMBIGUOUS":
-                con.execute(f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='1h_ohlc_ambiguous' WHERE signal_id=?",(close,candle_time,fav,adv,sid))
-            else:
-                con.execute(f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,unrealized_r=? WHERE signal_id=?",(close,candle_time,fav,adv,(_pnl(direction,float(entry),close)/float(risk)) if risk else 0,sid))
+            elif outcome=="AMBIGUOUS": con.execute(f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='1h_ohlc_ambiguous' WHERE signal_id=?",(close,candle_time,fav,adv,sid))
+            else: con.execute(f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,unrealized_r=? WHERE signal_id=?",(close,candle_time,fav,adv,(_pnl(direction,float(entry),close)/float(risk)) if risk else 0,sid))
         con.commit()
     for sid,outcome in closed_ids: _sync_setup(sid,outcome)
     return len(closed_ids)
@@ -138,16 +132,13 @@ def close_paper_trade(signal_id,outcome,exit_price):
     with sqlite3.connect(DB) as con:
         row=con.execute(f"SELECT direction,entry,remaining_pct,realized_pnl_pct FROM {PAPER_TABLE} WHERE signal_id=? AND status='OPEN'",(signal_id,)).fetchone()
         if not row:return False
-        direction,entry,remaining,realized=row; pnl=float(realized or 0)+float(remaining or 100)/100*_pnl(direction,float(entry),float(exit_price)); now=_now()
-        con.execute(f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome=?,pnl_pct=?,closed_at=?,exit_reason=?,realized_pnl_pct=?,unrealized_r=0 WHERE signal_id=?",(exit_price,outcome,pnl,now,outcome.replace('WIN_',''),pnl,signal_id)); con.commit()
+        direction,entry,remaining,realized=row; pnl=float(realized or 0)+float(remaining or 100)/100*_pnl(direction,float(entry),float(exit_price)); now=_now(); con.execute(f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome=?,pnl_pct=?,closed_at=?,exit_reason=?,realized_pnl_pct=?,unrealized_r=0 WHERE signal_id=?",(exit_price,outcome,pnl,now,outcome.replace('WIN_',''),pnl,signal_id)); con.commit()
     _sync_setup(signal_id,outcome); return True
 
 
 def paper_summary():
     init_paper_db()
     with sqlite3.connect(DB) as con:
-        total=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE}").fetchone()[0]; opened=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE status='OPEN'").fetchone()[0]; closed=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE status='CLOSED'").fetchone()[0]
-        pnl=con.execute(f"SELECT COALESCE(SUM(pnl_pct),0) FROM {PAPER_TABLE} WHERE status='CLOSED' AND outcome!='AMBIGUOUS'").fetchone()[0]; wins=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome IN ('WIN_TP1','WIN_TP2','WIN_RUNNER')").fetchone()[0]; losses=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='LOSS_SL'").fetchone()[0]
-        tp1=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='WIN_TP1'").fetchone()[0]; tp2=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='WIN_TP2'").fetchone()[0]; runners=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='WIN_RUNNER'").fetchone()[0]; expired=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='EXPIRED'").fetchone()[0]; ambiguous=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='AMBIGUOUS'").fetchone()[0]
+        total=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE}").fetchone()[0]; opened=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE status='OPEN'").fetchone()[0]; closed=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE status='CLOSED'").fetchone()[0]; pnl=con.execute(f"SELECT COALESCE(SUM(pnl_pct),0) FROM {PAPER_TABLE} WHERE status='CLOSED' AND outcome!='AMBIGUOUS'").fetchone()[0]; wins=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome IN ('WIN_TP1','WIN_TP2','WIN_RUNNER')").fetchone()[0]; losses=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='LOSS_SL'").fetchone()[0]; tp1=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='WIN_TP1'").fetchone()[0]; tp2=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='WIN_TP2'").fetchone()[0]; runners=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='WIN_RUNNER'").fetchone()[0]; expired=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='EXPIRED'").fetchone()[0]; ambiguous=con.execute(f"SELECT COUNT(*) FROM {PAPER_TABLE} WHERE outcome='AMBIGUOUS'").fetchone()[0]
     resolved=wins+losses
     return {'total':total,'open':opened,'closed':closed,'wins':wins,'losses':losses,'tp1':tp1,'tp2':tp2,'runners':runners,'expired':expired,'ambiguous':ambiguous,'win_rate_pct':round(wins/resolved*100,2) if resolved else 0.0,'sl_rate_pct':round(losses/resolved*100,2) if resolved else 0.0,'pnl_pct':round(float(pnl),4),'avg_pnl_pct':round(float(pnl)/resolved,4) if resolved else 0.0}
