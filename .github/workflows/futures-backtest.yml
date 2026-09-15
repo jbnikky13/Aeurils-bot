@@ -1,0 +1,79 @@
+name: Futures Continuation Backtest
+
+on:
+  workflow_dispatch:
+    inputs:
+      days:
+        description: "Historical days to test"
+        required: false
+        default: "30"
+      symbols:
+        description: "Top Binance USDT perpetuals by 24h quote volume"
+        required: false
+        default: "20"
+  push:
+    paths:
+      - "trade_bot/futures_backtest.py"
+      - "tests/test_futures_backtest.py"
+      - ".github/workflows/futures-backtest.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-and-backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: trade_bot/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r trade_bot/requirements.txt
+
+      - name: Compile and unit test
+        run: |
+          python -m compileall -q trade_bot tests
+          python -m unittest tests.test_futures_backtest -v
+
+      - name: Run 30-day futures backtest
+        env:
+          BACKTEST_DAYS: 30
+          BACKTEST_SYMBOLS: 20
+        run: |
+          python trade_bot/futures_backtest.py --days "${{ github.event.inputs.days || '30' }}" --symbols "${{ github.event.inputs.symbols || '20' }}" > futures-backtest-report.json
+
+      - name: Publish backtest summary
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open("futures-backtest-report.json"))
+          o=r["overall"]
+          print("## AURELIS Futures Continuation Backtest")
+          print(f"- Window: {r['days']} days")
+          print(f"- Symbols tested: {len(r['symbols_tested'])}")
+          print(f"- Signals: {r['trades']}")
+          print(f"- Closed: {r['closed_trades']}")
+          print(f"- Ambiguous candles: {r['ambiguous']}")
+          print(f"- Overall win rate: {o['win_rate']:.2f}%")
+          print(f"- Overall average P&L/trade: {o['avg_pnl_pct']:.4f}%")
+          print(f"- Overall cumulative trade P&L: {o['total_pnl_pct']:.4f}%")
+          for mode,v in r["by_mode"].items():
+              print(f"- {mode}: {v['trades']} trades | {v['win_rate']:.2f}% win | {v['avg_pnl_pct']:.4f}% avg | {v['total_pnl_pct']:.4f}% total")
+          if r["closed_trades"] == 0:
+              raise SystemExit("Backtest produced no closed trades; do not treat this as evidence of strategy quality.")
+          PY
+
+      - name: Upload backtest report
+        uses: actions/upload-artifact@v4
+        with:
+          name: aurelis-futures-backtest
+          path: futures-backtest-report.json
+          retention-days: 14
