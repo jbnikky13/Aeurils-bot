@@ -30,7 +30,9 @@
       "strategy_mode",
       "continuation_score",
       "runner_enabled",
-      "trailing_atr_multiplier"
+      "trailing_atr_multiplier",
+      "signal_key",
+      "updated_at"
     ],
     "rows": [
       {
@@ -63,7 +65,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 2,
@@ -95,7 +99,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 3,
@@ -127,7 +133,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 4,
@@ -159,7 +167,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 5,
@@ -191,7 +201,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 6,
@@ -223,7 +235,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 7,
@@ -255,7 +269,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 8,
@@ -287,7 +303,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 9,
@@ -319,7 +337,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 10,
@@ -351,7 +371,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 11,
@@ -383,7 +405,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 12,
@@ -415,7 +439,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 13,
@@ -447,7 +473,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 14,
@@ -479,7 +507,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 15,
@@ -511,7 +541,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 16,
@@ -543,7 +575,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 17,
@@ -575,7 +609,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 18,
@@ -607,7 +643,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 19,
@@ -639,7 +677,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 20,
@@ -671,7 +711,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 21,
@@ -703,7 +745,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 22,
@@ -735,7 +779,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 23,
@@ -767,7 +813,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 24,
@@ -799,7 +847,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 25,
@@ -831,7 +881,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 26,
@@ -863,7 +915,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 27,
@@ -895,7 +949,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 28,
@@ -927,7 +983,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 29,
@@ -959,7 +1017,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 30,
@@ -991,7 +1051,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 31,
@@ -1023,7 +1085,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 32,
@@ -1055,7 +1119,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 33,
@@ -1087,7 +1153,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 34,
@@ -1119,7 +1187,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 35,
@@ -1151,7 +1221,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 36,
@@ -1183,7 +1255,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 37,
@@ -1215,7 +1289,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 38,
@@ -1247,7 +1323,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 39,
@@ -1279,7 +1357,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 40,
@@ -1311,7 +1391,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 41,
@@ -1343,7 +1425,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 42,
@@ -1375,7 +1459,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 43,
@@ -1407,7 +1493,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 44,
@@ -1439,7 +1527,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 45,
@@ -1471,7 +1561,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 46,
@@ -1503,7 +1595,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 47,
@@ -1535,7 +1629,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 48,
@@ -1567,7 +1663,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 49,
@@ -1599,7 +1697,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 50,
@@ -1631,7 +1731,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 51,
@@ -1663,7 +1765,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 52,
@@ -1695,7 +1799,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 53,
@@ -1727,7 +1833,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 54,
@@ -1759,7 +1867,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 55,
@@ -1791,7 +1901,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 56,
@@ -1823,7 +1935,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 57,
@@ -1855,7 +1969,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 58,
@@ -1887,7 +2003,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 59,
@@ -1919,7 +2037,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 60,
@@ -1951,7 +2071,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 61,
@@ -1983,7 +2105,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 62,
@@ -2015,7 +2139,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 63,
@@ -2047,7 +2173,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 64,
@@ -2079,7 +2207,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 65,
@@ -2111,7 +2241,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 66,
@@ -2143,7 +2275,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 67,
@@ -2175,7 +2309,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 68,
@@ -2207,7 +2343,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 69,
@@ -2239,7 +2377,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 70,
@@ -2271,7 +2411,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 71,
@@ -2303,7 +2445,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 72,
@@ -2335,7 +2479,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 73,
@@ -2367,7 +2513,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 74,
@@ -2399,7 +2547,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 75,
@@ -2431,7 +2581,9 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
       },
       {
         "id": 76,
@@ -2463,7 +2615,179 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null
+        "trailing_atr_multiplier": null,
+        "signal_key": null,
+        "updated_at": null
+      },
+      {
+        "id": 77,
+        "created_at": "2026-09-15T21:45:55.308194+00:00",
+        "symbol": "MANTRAUSDT",
+        "asset_type": "crypto",
+        "direction": "SHORT",
+        "score": 69,
+        "entry_low": 0.00400593,
+        "entry_high": 0.004034070000000001,
+        "stop_loss": 0.004194642857142857,
+        "tp1": 0.0037871428571428574,
+        "tp2": 0.003670714285714286,
+        "risk_reward": 2.000000000000005,
+        "technical_score": 85,
+        "whale_score": 50,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "BEARISH",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.0,
+        "tp1_eta_hours": 1.9999999999999996,
+        "tp2_eta_hours": 3.0000000000000013,
+        "horizon_status": "WITHIN_24H",
+        "max_hold_hours": 24.0,
+        "strategy_mode": "NORMAL",
+        "continuation_score": 65.0,
+        "runner_enabled": 0,
+        "trailing_atr_multiplier": null,
+        "signal_key": "473f60f69457804ec0889f7318ce279f5a9f4a3ac991934c8c60a834f45f0062",
+        "updated_at": "2026-09-15T21:45:55.309485+00:00"
+      },
+      {
+        "id": 78,
+        "created_at": "2026-09-15T21:45:55.313635+00:00",
+        "symbol": "GIGGLEUSDT",
+        "asset_type": "crypto",
+        "direction": "SHORT",
+        "score": 69,
+        "entry_low": 34.110195,
+        "entry_high": 34.349804999999996,
+        "stop_loss": 35.467499999999994,
+        "tp1": 32.58,
+        "tp2": 31.755,
+        "risk_reward": 2.0000000000000027,
+        "technical_score": 85,
+        "whale_score": 50,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "BEARISH",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.0,
+        "tp1_eta_hours": 2.0,
+        "tp2_eta_hours": 3.0,
+        "horizon_status": "WITHIN_24H",
+        "max_hold_hours": 24.0,
+        "strategy_mode": "NORMAL",
+        "continuation_score": 50.0,
+        "runner_enabled": 0,
+        "trailing_atr_multiplier": null,
+        "signal_key": "e8d32c19646908b897783ab0c352d59b0b1b96c94437440d35b7c43e1fe9fc63",
+        "updated_at": "2026-09-15T21:45:55.314688+00:00"
+      },
+      {
+        "id": 79,
+        "created_at": "2026-09-15T21:45:55.318935+00:00",
+        "symbol": "XPLUSDT",
+        "asset_type": "crypto",
+        "direction": "SHORT",
+        "score": 69,
+        "entry_low": 0.08079622,
+        "entry_high": 0.08136378000000001,
+        "stop_loss": 0.08595928571428571,
+        "tp1": 0.0745742857142857,
+        "tp2": 0.07132142857142856,
+        "risk_reward": 2.0000000000000027,
+        "technical_score": 85,
+        "whale_score": 50,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "HIGH_VOLATILITY",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.0,
+        "tp1_eta_hours": 2.0000000000000018,
+        "tp2_eta_hours": 3.000000000000001,
+        "horizon_status": "WITHIN_24H",
+        "max_hold_hours": 24.0,
+        "strategy_mode": "NORMAL",
+        "continuation_score": 50.0,
+        "runner_enabled": 0,
+        "trailing_atr_multiplier": null,
+        "signal_key": "d602af8b35c8e8ec664904f13ae91719dcf3b5083e232fe64bcf7148fd271e42",
+        "updated_at": "2026-09-15T21:45:55.320075+00:00"
+      },
+      {
+        "id": 80,
+        "created_at": "2026-09-15T21:45:55.324113+00:00",
+        "symbol": "PORTALUSDT",
+        "asset_type": "crypto",
+        "direction": "LONG",
+        "score": 69,
+        "entry_low": 0.018784025,
+        "entry_high": 0.018915974999999998,
+        "stop_loss": 0.01782142857142857,
+        "tp1": 0.02022142857142857,
+        "tp2": 0.020907142857142853,
+        "risk_reward": 2.0,
+        "technical_score": 85,
+        "whale_score": 50,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "BULLISH",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.0,
+        "tp1_eta_hours": 2.000000000000002,
+        "tp2_eta_hours": 2.9999999999999982,
+        "horizon_status": "WITHIN_24H",
+        "max_hold_hours": 24.0,
+        "strategy_mode": "NORMAL",
+        "continuation_score": 50.0,
+        "runner_enabled": 0,
+        "trailing_atr_multiplier": null,
+        "signal_key": "baee8f1db3084d1c6d4aaca1b8c9ced31ce062eb6e15799a5f89393fed8707f1",
+        "updated_at": "2026-09-15T21:45:55.325141+00:00"
+      },
+      {
+        "id": 81,
+        "created_at": "2026-09-15T21:45:55.328982+00:00",
+        "symbol": "PUMPUSDT",
+        "asset_type": "crypto",
+        "direction": "SHORT",
+        "score": 69,
+        "entry_low": 0.0035704595,
+        "entry_high": 0.0035955405,
+        "stop_loss": 0.003788392857142857,
+        "tp1": 0.003309142857142857,
+        "tp2": 0.0031722142857142856,
+        "risk_reward": 2.0,
+        "technical_score": 85,
+        "whale_score": 50,
+        "sentiment_score": 50,
+        "outcome": "OPEN",
+        "closed_at": null,
+        "market_regime": "BEARISH",
+        "gemini_confidence": null,
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_rationale": "Gemini unavailable: HTTP 429",
+        "whale_bias": 0.0,
+        "tp1_eta_hours": 2.000000000000001,
+        "tp2_eta_hours": 2.9999999999999996,
+        "horizon_status": "WITHIN_24H",
+        "max_hold_hours": 24.0,
+        "strategy_mode": "NORMAL",
+        "continuation_score": 50.0,
+        "runner_enabled": 0,
+        "trailing_atr_multiplier": null,
+        "signal_key": "00077589191a5379a4e88c6d52a2717ed5635dde3fd6d48dbd41144ba147b88c",
+        "updated_at": "2026-09-15T21:45:55.330523+00:00"
       }
     ]
   },
@@ -5548,6 +5872,206 @@
         "initial_risk": 0.00016821428571428456,
         "realized_r": 0.0,
         "unrealized_r": 4436.416642900383
+      },
+      {
+        "id": 77,
+        "signal_id": 77,
+        "symbol": "MANTRAUSDT",
+        "direction": "SHORT",
+        "entry": 0.004020000000000001,
+        "stop_loss": 0.004194642857142857,
+        "tp1": 0.0037871428571428574,
+        "tp2": 0.003670714285714286,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-15T21:45:55.311099+00:00",
+        "closed_at": null,
+        "final_score": 69.0,
+        "market_regime": "BEARISH",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 0.004020000000000001,
+        "last_checked_at": "2026-09-15T21:45:55.311099+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 0.0,
+        "expiry_at": "2026-09-16T21:45:55.311099+00:00",
+        "resolution_source": null,
+        "runner_enabled": 0,
+        "runner_active": 0,
+        "remaining_pct": 100.0,
+        "realized_pnl_pct": 0.0,
+        "trailing_stop": null,
+        "trailing_atr_multiplier": 2.0,
+        "initial_risk": 0.00017464285714285585,
+        "realized_r": 0.0,
+        "unrealized_r": 0.0
+      },
+      {
+        "id": 78,
+        "signal_id": 78,
+        "symbol": "GIGGLEUSDT",
+        "direction": "SHORT",
+        "entry": 34.23,
+        "stop_loss": 35.467499999999994,
+        "tp1": 32.58,
+        "tp2": 31.755,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-15T21:45:55.316133+00:00",
+        "closed_at": null,
+        "final_score": 69.0,
+        "market_regime": "BEARISH",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 34.23,
+        "last_checked_at": "2026-09-15T21:45:55.316133+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 0.0,
+        "expiry_at": "2026-09-16T21:45:55.316133+00:00",
+        "resolution_source": null,
+        "runner_enabled": 0,
+        "runner_active": 0,
+        "remaining_pct": 100.0,
+        "realized_pnl_pct": 0.0,
+        "trailing_stop": null,
+        "trailing_atr_multiplier": 2.0,
+        "initial_risk": 1.2374999999999972,
+        "realized_r": 0.0,
+        "unrealized_r": 0.0
+      },
+      {
+        "id": 79,
+        "signal_id": 79,
+        "symbol": "XPLUSDT",
+        "direction": "SHORT",
+        "entry": 0.08108000000000001,
+        "stop_loss": 0.08595928571428571,
+        "tp1": 0.0745742857142857,
+        "tp2": 0.07132142857142856,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-15T21:45:55.321548+00:00",
+        "closed_at": null,
+        "final_score": 69.0,
+        "market_regime": "HIGH_VOLATILITY",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 0.08108000000000001,
+        "last_checked_at": "2026-09-15T21:45:55.321548+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 0.0,
+        "expiry_at": "2026-09-16T21:45:55.321548+00:00",
+        "resolution_source": null,
+        "runner_enabled": 0,
+        "runner_active": 0,
+        "remaining_pct": 100.0,
+        "realized_pnl_pct": 0.0,
+        "trailing_stop": null,
+        "trailing_atr_multiplier": 2.0,
+        "initial_risk": 0.004879285714285697,
+        "realized_r": 0.0,
+        "unrealized_r": 0.0
+      },
+      {
+        "id": 80,
+        "signal_id": 80,
+        "symbol": "PORTALUSDT",
+        "direction": "LONG",
+        "entry": 0.01885,
+        "stop_loss": 0.01782142857142857,
+        "tp1": 0.02022142857142857,
+        "tp2": 0.020907142857142853,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-15T21:45:55.326553+00:00",
+        "closed_at": null,
+        "final_score": 69.0,
+        "market_regime": "BULLISH",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 0.01885,
+        "last_checked_at": "2026-09-15T21:45:55.326553+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 0.0,
+        "expiry_at": "2026-09-16T21:45:55.326553+00:00",
+        "resolution_source": null,
+        "runner_enabled": 0,
+        "runner_active": 0,
+        "remaining_pct": 100.0,
+        "realized_pnl_pct": 0.0,
+        "trailing_stop": null,
+        "trailing_atr_multiplier": 2.0,
+        "initial_risk": 0.0010285714285714273,
+        "realized_r": 0.0,
+        "unrealized_r": 0.0
+      },
+      {
+        "id": 81,
+        "signal_id": 81,
+        "symbol": "PUMPUSDT",
+        "direction": "SHORT",
+        "entry": 0.0035830000000000002,
+        "stop_loss": 0.003788392857142857,
+        "tp1": 0.003309142857142857,
+        "tp2": 0.0031722142857142856,
+        "status": "OPEN",
+        "exit_price": null,
+        "outcome": null,
+        "pnl_pct": null,
+        "opened_at": "2026-09-15T21:45:55.331978+00:00",
+        "closed_at": null,
+        "final_score": 69.0,
+        "market_regime": "BEARISH",
+        "gemini_decision": "UNAVAILABLE",
+        "gemini_confidence": null,
+        "gemini_available": 0,
+        "tp1_hit_at": null,
+        "tp2_hit_at": null,
+        "sl_hit_at": null,
+        "exit_reason": null,
+        "last_price": 0.0035830000000000002,
+        "last_checked_at": "2026-09-15T21:45:55.331978+00:00",
+        "max_favorable_pct": 0.0,
+        "max_adverse_pct": 0.0,
+        "expiry_at": "2026-09-16T21:45:55.331978+00:00",
+        "resolution_source": null,
+        "runner_enabled": 0,
+        "runner_active": 0,
+        "remaining_pct": 100.0,
+        "realized_pnl_pct": 0.0,
+        "trailing_stop": null,
+        "trailing_atr_multiplier": 2.0,
+        "initial_risk": 0.00020539285714285668,
+        "realized_r": 0.0,
+        "unrealized_r": 0.0
       }
     ]
   }
