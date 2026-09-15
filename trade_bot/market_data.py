@@ -3,14 +3,15 @@ import httpx
 import pandas as pd
 
 CRYPTO_API_URL = os.getenv("CRYPTO_API_URL", "https://data-api.binance.vision").rstrip("/")
+BINANCE_FUTURES_API_URL = os.getenv("BINANCE_FUTURES_API_URL", "https://fapi.binance.com").rstrip("/")
 
 
-def crypto_klines(symbol: str, interval: str = "1h", limit: int = 240, start_time: int | None = None, end_time: int | None = None) -> pd.DataFrame:
-    """Fetch Binance candles. Supports intraday replay with start/end timestamps."""
+def _klines(base_url: str, symbol: str, interval: str, limit: int, start_time: int | None = None, end_time: int | None = None) -> pd.DataFrame:
     params = {"symbol": symbol.upper(), "interval": interval, "limit": min(int(limit), 1000)}
     if start_time is not None: params["startTime"] = int(start_time)
     if end_time is not None: params["endTime"] = int(end_time)
-    r = httpx.get(f"{CRYPTO_API_URL}/api/v3/klines", params=params, timeout=15)
+    endpoint = "/api/v3/klines" if base_url == CRYPTO_API_URL else "/fapi/v1/klines"
+    r = httpx.get(f"{base_url}{endpoint}", params=params, timeout=15)
     r.raise_for_status()
     rows = r.json()
     if not rows:
@@ -20,6 +21,16 @@ def crypto_klines(symbol: str, interval: str = "1h", limit: int = 240, start_tim
     for c in ["open", "high", "low", "close", "volume"]:
         df[c] = pd.to_numeric(df[c], errors="coerce")
     return df
+
+
+def crypto_klines(symbol: str, interval: str = "1h", limit: int = 240, start_time: int | None = None, end_time: int | None = None) -> pd.DataFrame:
+    """Fetch Binance spot candles. Supports intraday replay with start/end timestamps."""
+    return _klines(CRYPTO_API_URL, symbol, interval, limit, start_time, end_time)
+
+
+def crypto_futures_klines(symbol: str, interval: str = "1h", limit: int = 240, start_time: int | None = None, end_time: int | None = None) -> pd.DataFrame:
+    """Fetch Binance USD-M perpetual futures candles."""
+    return _klines(BINANCE_FUTURES_API_URL, symbol, interval, limit, start_time, end_time)
 
 
 def stock_daily(symbol: str, outputsize: str = "compact") -> pd.DataFrame:
