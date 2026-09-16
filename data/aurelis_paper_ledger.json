@@ -5333,8 +5333,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 758.6,
-        "last_checked_at": "2026-09-15T23:49:00+00:00",
+        "last_price": 758.3,
+        "last_checked_at": "2026-09-16T02:21:00+00:00",
         "max_favorable_pct": 0.4132720883401975,
         "max_adverse_pct": 0.15398991826689912,
         "expiry_at": "2026-09-16T12:57:53.649736+00:00",
@@ -5347,7 +5347,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 3.3203571428571195,
         "realized_r": 0.0,
-        "unrealized_r": 0.047170294586826006
+        "unrealized_r": 0.05906196549107116
       },
       {
         "id": 68,
@@ -5373,9 +5373,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.0837,
-        "last_checked_at": "2026-09-15T23:49:00+00:00",
-        "max_favorable_pct": 2.9447852760736186,
+        "last_price": 0.0825,
+        "last_checked_at": "2026-09-16T02:21:00+00:00",
+        "max_favorable_pct": 3.5582822085889565,
         "max_adverse_pct": 1.595092024539889,
         "expiry_at": "2026-09-16T12:57:53.654023+00:00",
         "resolution_source": null,
@@ -5387,7 +5387,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0025499999999999967,
         "realized_r": 0.0,
-        "unrealized_r": 1058.582942379404
+        "unrealized_r": 481.17406471791276
       },
       {
         "id": 69,
@@ -5453,8 +5453,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.00797,
-        "last_checked_at": "2026-09-15T23:49:00+00:00",
+        "last_price": 0.0078,
+        "last_checked_at": "2026-09-16T02:21:00+00:00",
         "max_favorable_pct": 4.030226700251879,
         "max_adverse_pct": 2.01511335012595,
         "expiry_at": "2026-09-16T12:57:53.662313+00:00",
@@ -5467,7 +5467,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0003857142857142861,
         "realized_r": 0.0,
-        "unrealized_r": -979.5689896445723
+        "unrealized_r": 4571.321951674576
       },
       {
         "id": 71,
@@ -5493,8 +5493,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.3429,
-        "last_checked_at": "2026-09-15T23:49:00+00:00",
+        "last_price": 0.3397,
+        "last_checked_at": "2026-09-16T02:21:00+00:00",
         "max_favorable_pct": 4.470387243735761,
         "max_adverse_pct": 0.5125284738040912,
         "expiry_at": "2026-09-16T12:57:53.666377+00:00",
@@ -5507,7 +5507,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.01186071428571428,
         "realized_r": 0.0,
-        "unrealized_r": 199.25661164989359
+        "unrealized_r": 276.078437828165
       },
       {
         "id": 72,
@@ -5573,8 +5573,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 1.015e-05,
-        "last_checked_at": "2026-09-15T23:49:00+00:00",
+        "last_price": 1.013e-05,
+        "last_checked_at": "2026-09-16T02:21:00+00:00",
         "max_favorable_pct": 3.2882011605415715,
         "max_adverse_pct": 1.6441005802707935,
         "expiry_at": "2026-09-16T17:22:22.295909+00:00",
@@ -5587,7 +5587,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 3.0321428571428505e-07,
         "realized_r": 0.0,
-        "unrealized_r": 6060150.410199289
+        "unrealized_r": 6698060.979693945
       },
       {
         "id": 74,
@@ -5613,8 +5613,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.0718,
-        "last_checked_at": "2026-09-15T23:49:00+00:00",
+        "last_price": 0.071,
+        "last_checked_at": "2026-09-16T02:21:00+00:00",
         "max_favorable_pct": 3.4482758620689684,
         "max_adverse_pct": 0.827586206896537,
         "expiry_at": "2026-09-16T17:22:22.301050+00:00",
@@ -5627,7 +5627,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0029785714285714138,
         "realized_r": 0.0,
-        "unrealized_r": 324.15446952783043
+        "unrealized_r": 694.6167204167805
       },
       {
         "id": 75,
@@ -5653,9 +5653,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.003535,
-        "last_checked_at": "2026-09-15T23:49:00+00:00",
-        "max_favorable_pct": 2.897327707454284,
+        "last_price": 0.003457,
+        "last_checked_at": "2026-09-16T02:21:00+00:00",
+        "max_favorable_pct": 4.5288326300984565,
         "max_adverse_pct": 1.7440225035161743,
         "expiry_at": "2026-09-16T17:22:22.305972+00:00",
         "resolution_source": null,
@@ -5667,7 +5667,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00019928571428571434,
         "realized_r": 0.0,
-        "unrealized_r": 2823.021742308533
+        "unrealized_r": 13832.806537311773
       },
       {
         "id": 76,
@@ -5693,8 +5693,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.00401,
-        "last_checked_at": "2026-09-15T23:49:00+00:00",
+        "last_price": 0.00402,
+        "last_checked_at": "2026-09-16T02:21:00+00:00",
         "max_favorable_pct": 2.9850746268657002,
         "max_adverse_pct": 1.74129353233828,
         "expiry_at": "2026-09-16T17:22:22.310764+00:00",
@@ -5707,7 +5707,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00016821428571428456,
         "realized_r": 0.0,
-        "unrealized_r": 1478.805547633589
+        "unrealized_r": 1.2826593499421925e-10
       },
       {
         "id": 77,
@@ -5733,8 +5733,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.00401,
-        "last_checked_at": "2026-09-15T23:49:00+00:00",
+        "last_price": 0.00402,
+        "last_checked_at": "2026-09-16T02:21:00+00:00",
         "max_favorable_pct": 1.492537313432861,
         "max_adverse_pct": 0.24875621890544083,
         "expiry_at": "2026-09-16T21:45:55.311099+00:00",
@@ -5747,7 +5747,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00017464285714285585,
         "realized_r": 0.0,
-        "unrealized_r": 1424.3709875979976
+        "unrealized_r": 1.235444895343094e-10
       },
       {
         "id": 78,
@@ -5773,9 +5773,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 34.08,
-        "last_checked_at": "2026-09-15T23:49:00+00:00",
-        "max_favorable_pct": 1.2562080046742616,
+        "last_price": 33.7,
+        "last_checked_at": "2026-09-16T02:21:00+00:00",
+        "max_favorable_pct": 2.7169149868536366,
         "max_adverse_pct": 0.26292725679229745,
         "expiry_at": "2026-09-16T21:45:55.316133+00:00",
         "resolution_source": null,
@@ -5787,7 +5787,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 1.2374999999999972,
         "realized_r": 0.0,
-        "unrealized_r": 0.3541107835586338
+        "unrealized_r": 1.2511914352405038
       },
       {
         "id": 79,
@@ -5813,8 +5813,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.08191,
-        "last_checked_at": "2026-09-15T23:49:00+00:00",
+        "last_price": 0.08032,
+        "last_checked_at": "2026-09-16T02:21:00+00:00",
         "max_favorable_pct": 1.9980266403552172,
         "max_adverse_pct": 1.9116921558953892,
         "expiry_at": "2026-09-16T21:45:55.321548+00:00",
@@ -5827,7 +5827,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.004879285714285697,
         "realized_r": 0.0,
-        "unrealized_r": -209.8012651196804
+        "unrealized_r": 192.1071825192319
       },
       {
         "id": 80,
@@ -5853,10 +5853,10 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.01899,
-        "last_checked_at": "2026-09-15T23:49:00+00:00",
-        "max_favorable_pct": 1.7506631299734774,
-        "max_adverse_pct": 0.5305039787798377,
+        "last_price": 0.01884,
+        "last_checked_at": "2026-09-16T02:21:00+00:00",
+        "max_favorable_pct": 2.0159151193634055,
+        "max_adverse_pct": 1.3793103448275854,
         "expiry_at": "2026-09-16T21:45:55.326553+00:00",
         "resolution_source": null,
         "runner_enabled": 0,
@@ -5867,7 +5867,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0010285714285714273,
         "realized_r": 0.0,
-        "unrealized_r": 722.0748600059018
+        "unrealized_r": -51.57677571470471
       },
       {
         "id": 81,
@@ -5893,9 +5893,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.003535,
-        "last_checked_at": "2026-09-15T23:49:00+00:00",
-        "max_favorable_pct": 2.846776444320404,
+        "last_price": 0.003457,
+        "last_checked_at": "2026-09-16T02:21:00+00:00",
+        "max_favorable_pct": 5.274909293887813,
         "max_adverse_pct": 0.0,
         "expiry_at": "2026-09-16T21:45:55.331978+00:00",
         "resolution_source": null,
@@ -5907,7 +5907,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00020539285714285668,
         "realized_r": 0.0,
-        "unrealized_r": 6522.424985197208
+        "unrealized_r": 17121.365586142594
       }
     ]
   }
