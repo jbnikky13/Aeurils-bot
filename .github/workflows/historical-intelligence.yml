@@ -1,0 +1,42 @@
+name: AURELIS Binance Historical Intelligence
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 8 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install -r trade_bot/requirements.txt
+      - name: Build historical intelligence
+        env:
+          AURELIS_HISTORY_SYMBOLS: BTCUSDT,ETHUSDT,BNBUSDT,SOLUSDT,XRPUSDT,ADAUSDT,DOGEUSDT
+          AURELIS_HISTORY_DAYS: "180"
+          AURELIS_HISTORY_DIR: /tmp/aurelis-history
+        run: |
+          mkdir -p reports
+          python -m trade_bot.historical_report > reports/historical-intelligence.json
+          python - <<'PY'
+          import json
+          d=json.load(open("reports/historical-intelligence.json"))
+          for s,v in d["symbols"].items():
+              if "error" in v:
+                  print(f"{s}: ERROR {v['error']}")
+                  continue
+              print(f"{s}: long={v['long']['win_rate_pct']}% ({v['long']['matches']} matches) | short={v['short']['win_rate_pct']}% ({v['short']['matches']} matches)")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aurelis-historical-intelligence
+          path: reports/historical-intelligence.json
+          retention-days: 30
