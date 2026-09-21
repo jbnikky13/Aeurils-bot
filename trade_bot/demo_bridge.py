@@ -66,4 +66,5 @@ def execute_signal(signal, equity):
         "entry_order":entry_order,"stop_order":stop_order,"tp1_order":tp_order,
         "risk_pct":cfg["max_risk_per_trade_pct"],"max_leverage":cfg["max_leverage"],
         "entry_avg_price":entry_order.get("avgPrice"),"entry_order_id":entry_order.get("orderId"),
+        "entry_avg_price":entry_order.get("avgPrice"),"entry_order_id":entry_order.get("orderId"),
     }
