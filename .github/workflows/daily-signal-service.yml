@@ -66,6 +66,13 @@ jobs:
           MARKET_DATA_CONCURRENCY: '12'
           MAX_HOLD_HOURS: '24'
           PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
+          EXECUTION_MODE: ${{ secrets.AURELIS_EXECUTION_MODE || 'PAPER' }}
+          BINANCE_DEMO_API_KEY: ${{ secrets.BINANCE_DEMO_API_KEY }}
+          BINANCE_DEMO_API_SECRET: ${{ secrets.BINANCE_DEMO_API_SECRET }}
+          BINANCE_DEMO_BASE_URL: https://testnet.binancefuture.com
+          BINANCE_DEMO_MAX_POSITIONS: '3'
+          BINANCE_DEMO_MAX_RISK_PER_TRADE_PCT: '0.5'
+          BINANCE_DEMO_MAX_LEVERAGE: '3'
         run: python -m trade_bot.daily_service
       - name: Persist paper ledger
         env:
