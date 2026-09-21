@@ -7,6 +7,7 @@ from .paper_trader import open_paper_trade
 from .confluence_gate import evaluate
 from .confluence_providers import crypto_evidence
 from .binance_universe import all_binance_usdt_spot_symbols
+from .signal_execution import execute_signal_if_enabled
 
 CHAT_ID=os.getenv('TELEGRAM_CHAT_ID')
 MAX_DAILY_ACTIONABLE_SIGNALS=int(os.getenv('MAX_DAILY_ACTIONABLE_SIGNALS','5'))
@@ -100,10 +101,21 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
     for signal,gate in candidates:
         sid,created=record_open(signal)
         if created:
-            open_paper_trade(sid,signal.symbol,signal.direction,_entry(signal),signal.stop_loss,signal.take_profit_1,signal.take_profit_2,
+            entry=_entry(signal)
+            open_paper_trade(sid,signal.symbol,signal.direction,entry,signal.stop_loss,signal.take_profit_1,signal.take_profit_2,
                               final_score=signal.score,market_regime=getattr(signal,'market_regime','UNKNOWN'),
                               gemini_decision=getattr(signal,'gemini_decision',None),gemini_confidence=getattr(signal,'gemini_confidence',None),
                               gemini_available=1 if getattr(signal,'gemini_decision',None) not in (None,'UNAVAILABLE') else 0)
+            try:
+                demo=execute_signal_if_enabled({
+                    'symbol':signal.symbol,'direction':signal.direction,'entry':entry,
+                    'stop_loss':signal.stop_loss,'tp1':signal.take_profit_1,
+                    'tp2':signal.take_profit_2,'leverage':getattr(signal,'leverage',1)
+                }, float(os.getenv('DEMO_EQUITY_OVERRIDE','0') or 0) or 1.0)
+                if demo.get('executed'):
+                    setattr(signal,'demo_execution',demo)
+            except Exception as exc:
+                setattr(signal,'demo_execution_error',f'{type(exc).__name__}: {exc}')
             published.append(signal)
 
     extended=[]
