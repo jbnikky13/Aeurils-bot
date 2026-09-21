@@ -63,6 +63,26 @@ class BinanceDemoClient:
             r.raise_for_status()
             return r.json()
 
+    def usdt_equity(self):
+        assets=self.account().get("assets", [])
+        for asset in assets:
+            if asset.get("asset")=="USDT":
+                return float(asset.get("walletBalance") or asset.get("availableBalance") or 0)
+        return 0.0
+
+    def symbol_step_size(self, symbol):
+        info=self.exchange_info()
+        for item in info.get("symbols", []):
+            if item.get("symbol")==symbol.upper():
+                for f in item.get("filters", []):
+                    if f.get("filterType")=="LOT_SIZE":
+                        return float(f["stepSize"])
+        return 0.001
+
+    def open_positions(self):
+        positions=self.position_risk()
+        return [p for p in positions if abs(float(p.get("positionAmt",0) or 0))>0]
+
     def position_risk(self, symbol=None):
         return self._signed("GET","/fapi/v2/positionRisk", {"symbol":symbol} if symbol else {})
 
@@ -76,6 +96,13 @@ class BinanceDemoClient:
         return self._signed("POST","/fapi/v1/order",{
             "symbol":symbol.upper(),"side":side.upper(),"type":"MARKET",
             "quantity":quantity,"newClientOrderId":client_order_id,
+            "newOrderRespType":"RESULT",
+        })
+
+    def close_market(self, symbol, side, quantity, client_order_id):
+        return self._signed("POST","/fapi/v1/order",{
+            "symbol":symbol.upper(),"side":side.upper(),"type":"MARKET",
+            "quantity":quantity,"reduceOnly":"true","newClientOrderId":client_order_id,
             "newOrderRespType":"RESULT",
         })
 
