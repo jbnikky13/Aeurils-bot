@@ -69,7 +69,7 @@ jobs:
           EXECUTION_MODE: BINANCE_DEMO
           BINANCE_DEMO_API_KEY: ${{ secrets.BINANCE_DEMO_API_KEY }}
           BINANCE_DEMO_API_SECRET: ${{ secrets.BINANCE_DEMO_API_SECRET }}
-          BINANCE_DEMO_BASE_URL: https://testnet.binancefuture.com
+          BINANCE_DEMO_BASE_URL: https://demo-fapi.binance.com
           BINANCE_DEMO_MAX_POSITIONS: '3'
           BINANCE_DEMO_MAX_RISK_PER_TRADE_PCT: '0.5'
           BINANCE_DEMO_MAX_LEVERAGE: '3'
