@@ -66,7 +66,7 @@ jobs:
           MARKET_DATA_CONCURRENCY: '12'
           MAX_HOLD_HOURS: '24'
           PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
-          EXECUTION_MODE: ${{ secrets.AURELIS_EXECUTION_MODE || 'PAPER' }}
+          EXECUTION_MODE: BINANCE_DEMO
           BINANCE_DEMO_API_KEY: ${{ secrets.BINANCE_DEMO_API_KEY }}
           BINANCE_DEMO_API_SECRET: ${{ secrets.BINANCE_DEMO_API_SECRET }}
           BINANCE_DEMO_BASE_URL: https://testnet.binancefuture.com
