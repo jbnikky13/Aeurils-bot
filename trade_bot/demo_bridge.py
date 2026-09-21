@@ -41,21 +41,29 @@ def execute_signal(signal, equity):
     entry=float(signal["entry"])
     stop=float(signal["stop_loss"])
     tp1=float(signal["tp1"])
-    step=float(signal.get("step_size",0.001))
+    client=BinanceDemoClient()
+    if len(client.open_positions()) >= cfg["max_positions"]:
+        raise RuntimeError("Demo max open-position limit reached.")
+    step=client.symbol_step_size(symbol)
     qty=calculate_quantity(entry,stop,equity,cfg["max_risk_per_trade_pct"],20.0,step)
     if qty <= 0:
         raise ValueError("Calculated demo quantity is zero.")
 
-    client=BinanceDemoClient()
     client.set_leverage(symbol,min(int(signal.get("leverage",1)),cfg["max_leverage"]))
     side="BUY" if direction=="LONG" else "SELL"
     close_side="SELL" if side=="BUY" else "BUY"
     cid=f"AUR-{int(time.time())}-{symbol[:5]}"
     entry_order=client.market_order(symbol,side,qty,cid)
-    stop_order=client.stop_market(symbol,close_side,qty,stop,cid+"-SL")
-    tp_order=client.take_profit_market(symbol,close_side,qty,tp1,cid+"-TP1")
+    try:
+        stop_order=client.stop_market(symbol,close_side,qty,stop,cid+"-SL")
+        tp_order=client.take_profit_market(symbol,close_side,qty,tp1,cid+"-TP1")
+    except Exception:
+        # Never leave a demo position naked if protective orders fail.
+        try: client.close_market(symbol,close_side,qty,cid+"-EMERGENCY")
+        finally: raise
     return {
         "mode":"BINANCE_DEMO","symbol":symbol,"direction":direction,"quantity":qty,
         "entry_order":entry_order,"stop_order":stop_order,"tp1_order":tp_order,
         "risk_pct":cfg["max_risk_per_trade_pct"],"max_leverage":cfg["max_leverage"],
+        "entry_avg_price":entry_order.get("avgPrice"),"entry_order_id":entry_order.get("orderId"),
     }
