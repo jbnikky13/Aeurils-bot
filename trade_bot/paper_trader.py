@@ -49,12 +49,12 @@ def open_paper_trade(signal_id,symbol,direction,entry,stop_loss=None,tp1=None,tp
 def _pnl(direction,entry,exit_price):
     return ((exit_price-entry)/entry*100 if direction=="LONG" else (entry-exit_price)/entry*100 if direction=="SHORT" else 0.0)
 
-def _r_value(direction,entry,exit_price,fraction=1.0,realized_pnl_pct=0.0):
+def _r_value(direction,entry,exit_price,initial_risk,fraction=1.0):
     """Risk multiple based on absolute price risk, never percent/risk mixing."""
     if entry is None or exit_price is None:
         return 0.0
-    risk = abs(float(entry) - float(exit_price))
-    if risk == 0:
+    risk = float(initial_risk)
+    if risk <= 0:
         return 0.0
     move = (float(exit_price)-float(entry)) if direction=="LONG" else (float(entry)-float(exit_price)) if direction=="SHORT" else 0.0
     return (move / risk) * float(fraction)
@@ -95,7 +95,7 @@ def mark_candle(symbol,candle):
                 trail=proposed if trail is None else (max(float(trail),proposed) if direction=="LONG" else min(float(trail),proposed))
                 trail_hit=(low<=trail) if direction=="LONG" else (high>=trail)
                 if trail_hit:
-                    exit_price=float(trail); total_pnl=float(realized or 0)+float(remaining_pct or 0)/100*_pnl(direction,float(entry),exit_price); rr=(_r_value(direction,float(entry),exit_price,float(remaining_pct or 0)/100,total_pnl)) if risk else 0
+                    exit_price=float(trail); total_pnl=float(realized or 0)+float(remaining_pct or 0)/100*_pnl(direction,float(entry),exit_price); rr=(float(realized or 0)/100 + float(remaining_pct or 0)/100*_r_value(direction,float(entry),exit_price,float(risk),1.0)) if risk else 0
                     con.execute(f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome='WIN_RUNNER',pnl_pct=?,closed_at=?,exit_reason='RUNNER_TRAIL',last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,trailing_stop=?,realized_pnl_pct=?,realized_r=?,unrealized_r=0,resolution_source='1h_runner' WHERE signal_id=?",(exit_price,total_pnl,candle_time,close,candle_time,fav,adv,trail,total_pnl,rr,sid)); closed_ids.append((sid,"WIN_RUNNER")); continue
                 con.execute(f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,trailing_stop=?,unrealized_r=? WHERE signal_id=?",(close,candle_time,fav,adv,trail,_unrealized_r(direction,float(entry),close,float(risk),float(remaining_pct or 0)/100) if risk else 0,sid)); continue
 
