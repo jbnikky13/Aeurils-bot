@@ -1,10 +1,13 @@
 name: Aeurils Paper Performance
+
 on:
   workflow_dispatch:
   schedule:
     - cron: '0 9 * * *'
+
 permissions:
   contents: read
+
 jobs:
   analytics:
     runs-on: ubuntu-latest
@@ -18,4 +21,14 @@ jobs:
       - name: Run paper performance analytics
         env:
           DATABASE_PATH: trade_bot.db
-        run: python -m trade_bot.paper_analytics
+          PAPER_FEE_BPS_PER_SIDE: '10'
+        run: |
+          mkdir -p reports
+          python -m trade_bot.paper_analytics | tee reports/paper-performance.txt
+          python -m trade_bot.paper_analytics > reports/paper-performance.json
+      - name: Upload performance report
+        uses: actions/upload-artifact@v4
+        with:
+          name: aurelis-paper-performance
+          path: reports/paper-performance.*
+          retention-days: 30
