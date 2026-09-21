@@ -12,7 +12,7 @@ import hashlib, hmac, os, time
 from urllib.parse import urlencode
 import httpx
 
-DEMO_BASE = os.getenv("BINANCE_DEMO_BASE_URL", "https://testnet.binancefuture.com").rstrip("/")
+DEMO_BASE = os.getenv("BINANCE_DEMO_BASE_URL", "https://demo-fapi.binance.com").rstrip("/")
 API_KEY = os.getenv("BINANCE_DEMO_API_KEY", "")
 API_SECRET = os.getenv("BINANCE_DEMO_API_SECRET", "")
 RECV_WINDOW = int(os.getenv("BINANCE_DEMO_RECV_WINDOW", "5000"))
@@ -28,7 +28,7 @@ class BinanceDemoClient:
         mode=os.getenv("EXECUTION_MODE","PAPER").upper()
         if mode != "BINANCE_DEMO":
             raise DemoTradingDisabled("Set EXECUTION_MODE=BINANCE_DEMO to use Binance demo trading.")
-        if "testnet.binancefuture.com" not in DEMO_BASE:
+        if "demo-fapi.binance.com" not in DEMO_BASE:
             raise DemoTradingDisabled("Refusing non-testnet Binance endpoint.")
         if not API_KEY or not API_SECRET:
             raise DemoTradingDisabled("BINANCE_DEMO_API_KEY and BINANCE_DEMO_API_SECRET are required.")
@@ -128,18 +128,16 @@ class BinanceDemoClient:
     def close_market(self, symbol, side, quantity, client_order_id):
         return self._signed("POST","/fapi/v1/order",{"symbol":symbol.upper(),"side":side.upper(),"type":"MARKET","quantity":quantity,"reduceOnly":"true","newClientOrderId":client_order_id,"newOrderRespType":"RESULT"})
 
-    def stop_market(self, symbol, side, quantity, stop_price, client_order_id):
-        return self._signed("POST","/fapi/v1/order",{
-            "symbol":symbol.upper(),"side":side.upper(),"type":"STOP_MARKET",
-            "stopPrice":stop_price,"quantity":quantity,
+    def _algo_order(self, symbol, side, order_type, quantity, trigger_price, client_order_id):
+        return self._signed("POST","/fapi/v1/algoOrder",{
+            "algoType":"CONDITIONAL","symbol":symbol.upper(),"side":side.upper(),
+            "type":order_type,"quantity":quantity,"triggerPrice":trigger_price,
             "reduceOnly":"true","workingType":"MARK_PRICE",
-            "newClientOrderId":client_order_id,
+            "clientAlgoId":client_order_id,"newOrderRespType":"RESULT",
         })
 
+    def stop_market(self, symbol, side, quantity, stop_price, client_order_id):
+        return self._algo_order(symbol,side,"STOP_MARKET",quantity,stop_price,client_order_id)
+
     def take_profit_market(self, symbol, side, quantity, stop_price, client_order_id):
-        return self._signed("POST","/fapi/v1/order",{
-            "symbol":symbol.upper(),"side":side.upper(),"type":"TAKE_PROFIT_MARKET",
-            "stopPrice":stop_price,"quantity":quantity,
-            "reduceOnly":"true","workingType":"MARK_PRICE",
-            "newClientOrderId":client_order_id,
-        })
+        return self._algo_order(symbol,side,"TAKE_PROFIT_MARKET",quantity,stop_price,client_order_id)
