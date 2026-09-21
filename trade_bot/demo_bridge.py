@@ -31,7 +31,7 @@ def calculate_quantity(entry, stop, equity, risk_pct=0.5, max_notional_pct=20.0,
     return max(0.0,_round_step(min(qty,max_qty),float(step_size)))
 
 
-def execute_signal(signal, equity):
+def execute_signal(signal, equity=0):
     cfg=assert_demo_only()
     if cfg["mode"] != "BINANCE_DEMO":
         raise RuntimeError("Demo bridge requires EXECUTION_MODE=BINANCE_DEMO.")
@@ -42,6 +42,10 @@ def execute_signal(signal, equity):
     stop=float(signal["stop_loss"])
     tp1=float(signal["tp1"])
     client=BinanceDemoClient()
+    if equity <= 0:
+        equity=client.usdt_equity()
+    if equity <= 0:
+        raise RuntimeError("Demo account has no positive USDT wallet balance.")
     if len(client.open_positions()) >= cfg["max_positions"]:
         raise RuntimeError("Demo max open-position limit reached.")
     step=client.symbol_step_size(symbol)
