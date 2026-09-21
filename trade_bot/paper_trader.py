@@ -46,7 +46,24 @@ def open_paper_trade(signal_id,symbol,direction,entry,stop_loss=None,tp1=None,tp
         con.commit(); return cur.rowcount==1
 
 
-def _pnl(direction,entry,exit_price): return ((exit_price-entry)/entry*100 if direction=="LONG" else (entry-exit_price)/entry*100 if direction=="SHORT" else 0.0)
+def _pnl(direction,entry,exit_price):
+    return ((exit_price-entry)/entry*100 if direction=="LONG" else (entry-exit_price)/entry*100 if direction=="SHORT" else 0.0)
+
+def _r_value(direction,entry,exit_price,fraction=1.0,realized_pnl_pct=0.0):
+    """Risk multiple based on absolute price risk, never percent/risk mixing."""
+    if entry is None or exit_price is None:
+        return 0.0
+    risk = abs(float(entry) - float(exit_price))
+    if risk == 0:
+        return 0.0
+    move = (float(exit_price)-float(entry)) if direction=="LONG" else (float(entry)-float(exit_price)) if direction=="SHORT" else 0.0
+    return (move / risk) * float(fraction)
+
+def _unrealized_r(direction,entry,current_price,initial_risk,fraction=1.0):
+    if not initial_risk or float(initial_risk) <= 0:
+        return 0.0
+    move = (float(current_price)-float(entry)) if direction=="LONG" else (float(entry)-float(current_price)) if direction=="SHORT" else 0.0
+    return (move / float(initial_risk)) * float(fraction)
 def _favorable(direction,entry,price): return max(0.0,_pnl(direction,entry,price))
 def _adverse(direction,entry,price): return max(0.0,-_pnl(direction,entry,price))
 def _sync_setup(signal_id,outcome):
@@ -78,9 +95,9 @@ def mark_candle(symbol,candle):
                 trail=proposed if trail is None else (max(float(trail),proposed) if direction=="LONG" else min(float(trail),proposed))
                 trail_hit=(low<=trail) if direction=="LONG" else (high>=trail)
                 if trail_hit:
-                    exit_price=float(trail); total_pnl=float(realized or 0)+float(remaining_pct or 0)/100*_pnl(direction,float(entry),exit_price); rr=(total_pnl/float(risk)) if risk else 0
+                    exit_price=float(trail); total_pnl=float(realized or 0)+float(remaining_pct or 0)/100*_pnl(direction,float(entry),exit_price); rr=(_r_value(direction,float(entry),exit_price,float(remaining_pct or 0)/100,total_pnl)) if risk else 0
                     con.execute(f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome='WIN_RUNNER',pnl_pct=?,closed_at=?,exit_reason='RUNNER_TRAIL',last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,trailing_stop=?,realized_pnl_pct=?,realized_r=?,unrealized_r=0,resolution_source='1h_runner' WHERE signal_id=?",(exit_price,total_pnl,candle_time,close,candle_time,fav,adv,trail,total_pnl,rr,sid)); closed_ids.append((sid,"WIN_RUNNER")); continue
-                con.execute(f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,trailing_stop=?,unrealized_r=? WHERE signal_id=?",(close,candle_time,fav,adv,trail,(_pnl(direction,float(entry),close)*float(remaining_pct or 0)/100/float(risk)) if risk else 0,sid)); continue
+                con.execute(f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,trailing_stop=?,unrealized_r=? WHERE signal_id=?",(close,candle_time,fav,adv,trail,_unrealized_r(direction,float(entry),close,float(risk),float(remaining_pct or 0)/100) if risk else 0,sid)); continue
 
             if runner_enabled:
                 stop_hit=(direction=="LONG" and stop is not None and low<=stop) or (direction=="SHORT" and stop is not None and high>=stop)
@@ -105,7 +122,7 @@ def mark_candle(symbol,candle):
                 exit_price=float(tp2 if outcome=="WIN_TP2" else tp1 if outcome=="WIN_TP1" else stop); reason="TP2" if outcome=="WIN_TP2" else "TP1" if outcome=="WIN_TP1" else "SL"
                 con.execute(f"""UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome=?,pnl_pct=?,closed_at=?,exit_reason=?,last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='1h_ohlc',tp1_hit_at=CASE WHEN ? IN ('WIN_TP1','WIN_TP2') THEN COALESCE(tp1_hit_at,?) ELSE tp1_hit_at END,tp2_hit_at=CASE WHEN ?='WIN_TP2' THEN COALESCE(tp2_hit_at,?) ELSE tp2_hit_at END,sl_hit_at=CASE WHEN ?='LOSS_SL' THEN COALESCE(sl_hit_at,?) ELSE sl_hit_at END WHERE signal_id=?""",(exit_price,outcome,_pnl(direction,float(entry),exit_price),candle_time,reason,close,candle_time,fav,adv,outcome,candle_time,outcome,candle_time,outcome,candle_time,sid)); closed_ids.append((sid,outcome))
             elif outcome=="AMBIGUOUS": con.execute(f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='1h_ohlc_ambiguous' WHERE signal_id=?",(close,candle_time,fav,adv,sid))
-            else: con.execute(f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,unrealized_r=? WHERE signal_id=?",(close,candle_time,fav,adv,(_pnl(direction,float(entry),close)/float(risk)) if risk else 0,sid))
+            else: con.execute(f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,unrealized_r=? WHERE signal_id=?",(close,candle_time,fav,adv,_unrealized_r(direction,float(entry),close,float(risk)) if risk else 0,sid))
         con.commit()
     for sid,outcome in closed_ids: _sync_setup(sid,outcome)
     return len(closed_ids)
