@@ -25,7 +25,7 @@ jobs:
         run: |
           mkdir -p reports
           python -m trade_bot.paper_analytics | tee reports/paper-performance.txt
-          python -m trade_bot.paper_analytics > reports/paper-performance.json
+          python -c "import json; from trade_bot.paper_analytics import analytics; json.dump(analytics(), open('reports/paper-performance.json','w'), indent=2)"
       - name: Upload performance report
         uses: actions/upload-artifact@v4
         with:
