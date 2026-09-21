@@ -1,0 +1,24 @@
+name: AURELIS Demo Connectivity
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  demo-health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install -r trade_bot/requirements.txt
+      - name: Validate demo adapter without credentials
+        env:
+          EXECUTION_MODE: PAPER
+        run: python -c "from trade_bot.execution_config import assert_demo_only; print(assert_demo_only())"
+      - name: Compile adapter
+        run: python -m py_compile trade_bot/binance_demo.py trade_bot/execution_config.py
