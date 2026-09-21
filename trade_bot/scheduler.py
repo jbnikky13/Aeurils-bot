@@ -111,7 +111,7 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
                     'symbol':signal.symbol,'direction':signal.direction,'entry':entry,
                     'stop_loss':signal.stop_loss,'tp1':signal.take_profit_1,
                     'tp2':signal.take_profit_2,'leverage':getattr(signal,'leverage',1)
-                }, float(os.getenv('DEMO_EQUITY_OVERRIDE','0') or 0) or 1.0)
+                }, float(os.getenv('DEMO_EQUITY_OVERRIDE','0') or 0))
                 if demo.get('executed'):
                     setattr(signal,'demo_execution',demo)
             except Exception as exc:
