@@ -1,0 +1,35 @@
+name: AURELIS Demo Bridge Safety
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bridge-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install -r trade_bot/requirements.txt
+      - name: Run demo bridge tests
+        run: python -m unittest discover -s tests -p "test_demo_bridge.py" -v
+      - name: Compile bridge
+        run: python -m py_compile trade_bot/demo_bridge.py trade_bot/demo_reconciler.py
+      - name: Confirm live execution is unavailable
+        env:
+          EXECUTION_MODE: LIVE
+        run: |
+          python - <<'PY'
+          from trade_bot.execution_config import assert_demo_only
+          try:
+              assert_demo_only()
+          except RuntimeError:
+              print("PASS: LIVE mode rejected")
+          else:
+              raise SystemExit("FAIL: LIVE mode was accepted")
+          PY
