@@ -37,7 +37,7 @@ def _group(rows, key_fn):
 def calibration():
     rows=_rows()
     closed=[r for r in rows if r["exit_price"] is not None and str(r["status"]).upper()=="CLOSED"]
-    wins=sum(str(r["outcome"] or "").upper() in {"WIN_TP1","WIN_TP2","WIN"} for r in closed)
+    wins=sum(str(r["outcome"] or "").upper() in {"WIN_TP1","WIN_TP2","WIN_RUNNER","WIN"} for r in closed)
     tp1=sum(str(r["outcome"] or "").upper()=="WIN_TP1" for r in closed)
     tp2=sum(str(r["outcome"] or "").upper()=="WIN_TP2" for r in closed)
     runner=sum(str(r["outcome"] or "").upper()=="WIN_RUNNER" for r in closed)
