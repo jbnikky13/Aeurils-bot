@@ -25,6 +25,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
@@ -62,6 +64,11 @@ jobs:
           MIN_SIGNAL_SCORE: '70'
           MIN_CONFLUENCES: '6'
           DAILY_FALLBACK_MIN_CONFLUENCES: '4'
+          ENABLE_QUOTA_FALLBACK: '0'
+          SKIP_REGIMES: ''
+          CALIBRATION_MIN_TOTAL_TRADES: '50'
+          CALIBRATION_MIN_GROUP_TRADES: '20'
+          PAPER_FEE_BPS_PER_SIDE: '10'
           MAX_DAILY_ACTIONABLE_SIGNALS: '5'
           MARKET_DATA_CONCURRENCY: '12'
           MAX_HOLD_HOURS: '24'
@@ -74,6 +81,14 @@ jobs:
           BINANCE_DEMO_MAX_RISK_PER_TRADE_PCT: '0.5'
           BINANCE_DEMO_MAX_LEVERAGE: '3'
         run: python -m trade_bot.daily_service
+      - name: Generate post-scan adaptive calibration snapshot
+        env:
+          DATABASE_PATH: trade_bot.db
+          PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
+          CALIBRATION_MIN_TOTAL_TRADES: '50'
+          CALIBRATION_MIN_GROUP_TRADES: '20'
+          PAPER_FEE_BPS_PER_SIDE: '10'
+        run: python -m trade_bot.adaptive_calibration
       - name: Persist paper ledger
         env:
           DATABASE_PATH: trade_bot.db
@@ -81,8 +96,26 @@ jobs:
         run: python -m trade_bot.paper_persistence
       - name: Commit paper ledger
         run: |
+          set -euo pipefail
           git config user.name 'aurelis-bot'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add data/aurelis_paper_ledger.json
-          git diff --cached --quiet || git commit -m 'chore: persist AURELIS paper ledger'
-          git push
+          if git diff --cached --quiet; then
+            echo "No ledger changes to commit."
+            exit 0
+          fi
+          git commit -m 'chore: persist AURELIS paper ledger'
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              echo "Push succeeded on attempt ${attempt}."
+              exit 0
+            fi
+            echo "Push failed (attempt ${attempt}); rebasing onto origin/main..."
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort
+              exit 1
+            fi
+            sleep $((attempt * 5))
+          done
+          exit 1
