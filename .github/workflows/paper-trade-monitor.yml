@@ -18,6 +18,8 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
@@ -37,8 +39,28 @@ jobs:
         run: python -m trade_bot.paper_persistence
       - name: Commit paper-trade results
         run: |
+          set -euo pipefail
           git config user.name 'aurelis-bot'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add data/aurelis_paper_ledger.json
-          git diff --cached --quiet || git commit -m 'chore: update AURELIS paper-trade results'
-          git push
+          if git diff --cached --quiet; then
+            echo "No ledger changes to commit."
+            exit 0
+          fi
+          git commit -m 'chore: update AURELIS paper-trade results'
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              echo "Push succeeded on attempt ${attempt}."
+              exit 0
+            fi
+            echo "Push failed (attempt ${attempt}); fetching and rebasing onto origin/main..."
+            git fetch origin main
+            if ! git rebase origin/main; then
+              echo "Rebase conflict on ${GITHUB_REPOSITORY} paper ledger — aborting rebase."
+              git rebase --abort
+              exit 1
+            fi
+            sleep $((attempt * 5))
+          done
+          echo "Push failed after retries."
+          exit 1
