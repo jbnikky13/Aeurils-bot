@@ -13,6 +13,8 @@ CHAT_ID=os.getenv('TELEGRAM_CHAT_ID')
 MAX_DAILY_ACTIONABLE_SIGNALS=int(os.getenv('MAX_DAILY_ACTIONABLE_SIGNALS','5'))
 MAX_UNIVERSE_SCAN=int(os.getenv('MAX_UNIVERSE_SCAN','0'))
 DAILY_FALLBACK_MIN_CONFLUENCES=int(os.getenv('DAILY_FALLBACK_MIN_CONFLUENCES','4'))
+ENABLE_QUOTA_FALLBACK=os.getenv('ENABLE_QUOTA_FALLBACK','0')=='1'
+SKIP_REGIMES={r.strip().upper() for r in os.getenv('SKIP_REGIMES','').split(',') if r.strip()}
 MARKET_DATA_CONCURRENCY=int(os.getenv('MARKET_DATA_CONCURRENCY','12'))
 MAX_HOLD_HOURS=float(os.getenv('MAX_HOLD_HOURS','24'))
 
@@ -28,13 +30,16 @@ def _horizon_status(signal):
 def _within_horizon(signal):
     return _horizon_status(signal)=='WITHIN_24H'
 
+def _regime_ok(signal):
+    return str(getattr(signal,'market_regime','UNKNOWN') or 'UNKNOWN').upper() not in SKIP_REGIMES
+
 async def _run_crypto(symbol,sem):
     async with sem:
         try:return await crypto_setup(symbol)
         except Exception:return None
 
 def _fallback_candidates(evaluated,minimum):
-    candidates=[(s,g) for kind,symbol,s,g in evaluated if s is not None and getattr(s,'direction','WAIT')!='WAIT' and _within_horizon(s) and g.get('passed',0)>=minimum]
+    candidates=[(s,g) for kind,symbol,s,g in evaluated if s is not None and getattr(s,'direction','WAIT')!='WAIT' and _within_horizon(s) and _regime_ok(s) and g.get('passed',0)>=minimum]
     candidates.sort(key=lambda x:(int(x[1].get('passed',0)),float(getattr(x[0],'score',0) or 0),float(getattr(x[0],'risk_reward',0) or 0)),reverse=True)
     return candidates
 
@@ -48,6 +53,8 @@ def _reason_counts(evaluated):
         elif not gate.get('actionable'):
             failed=gate.get('failed') or gate.get('unknown') or ['confluence_gate_rejected']
             reason=str(failed[0])
+        elif not _regime_ok(signal):
+            reason=f"regime_filtered:{getattr(signal,'market_regime','UNKNOWN')}"
         else:
             continue
         reason=' '.join(reason.replace('\n',' ').split())[:80]
@@ -78,7 +85,7 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
     evaluated=await asyncio.gather(*[gated(kind,symbol,signal) for (kind,symbol),signal in zip(pairs,raw)])
     minimum=int(os.getenv('MIN_CONFLUENCES','6'))
     technical_candidates=[(s,g) for kind,symbol,s,g in evaluated if s is not None and getattr(s,'direction','WAIT')!='WAIT']
-    gated_candidates=[(s,g) for s,g in technical_candidates if g.get('actionable') and g.get('passed',0)>=minimum]
+    gated_candidates=[(s,g) for s,g in technical_candidates if g.get('actionable') and g.get('passed',0)>=minimum and _regime_ok(s)]
     candidates=[x for x in gated_candidates if _within_horizon(x[0])]
     candidates.sort(key=lambda x:(float(getattr(x[0],'score',0) or 0),int(x[1].get('passed',0)),float(getattr(x[0],'risk_reward',0) or 0)),reverse=True)
 
@@ -86,26 +93,29 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
     # primary gate leaves fewer than the target, fill from the softer fallback
     # pool rather than allowing a single arbitrary setup to be published.
     target=max(1,MAX_DAILY_ACTIONABLE_SIGNALS)
-    selected=candidates[:target]
-    if len(selected)<target:
-        seen={getattr(s,'symbol',None) for s,_ in selected}
+    selected=[(s,g,'PRIMARY') for s,g in candidates[:target]]
+    if len(selected)<target and ENABLE_QUOTA_FALLBACK:
+        seen={getattr(s,'symbol',None) for s,g,_ in selected}
         for item in _fallback_candidates(evaluated,DAILY_FALLBACK_MIN_CONFLUENCES):
             symbol=getattr(item[0],'symbol',None)
             if symbol in seen:continue
-            selected.append(item)
+            selected.append((item[0],item[1],'FALLBACK'))
             seen.add(symbol)
             if len(selected)>=target:break
     candidates=selected
 
     published=[]
-    for signal,gate in candidates:
+    for signal,gate,source in candidates:
         sid,created=record_open(signal)
         if created:
             entry=_entry(signal)
             open_paper_trade(sid,signal.symbol,signal.direction,entry,signal.stop_loss,signal.take_profit_1,signal.take_profit_2,
                               final_score=signal.score,market_regime=getattr(signal,'market_regime','UNKNOWN'),
                               gemini_decision=getattr(signal,'gemini_decision',None),gemini_confidence=getattr(signal,'gemini_confidence',None),
-                              gemini_available=1 if getattr(signal,'gemini_decision',None) not in (None,'UNAVAILABLE') else 0)
+                              gemini_available=1 if getattr(signal,'gemini_decision',None) not in (None,'UNAVAILABLE') else 0,
+                              runner_enabled=getattr(signal,'runner_enabled',False),
+                              trailing_atr_multiplier=getattr(signal,'trailing_atr_multiplier',None) or 2.0,
+                              signal_source=source,confluence_score=gate.get('score'),confluence_tier=gate.get('tier'))
             try:
                 demo=execute_signal_if_enabled({
                     'symbol':signal.symbol,'direction':signal.direction,'entry':entry,
