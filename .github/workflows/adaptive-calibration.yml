@@ -1,0 +1,35 @@
+name: AURELIS Adaptive Calibration
+
+on:
+  schedule:
+    - cron: '30 23 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aurelis-adaptive-calibration
+  cancel-in-progress: true
+
+jobs:
+  calibrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install -r trade_bot/requirements.txt
+      - name: Restore paper ledger
+        env:
+          PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
+        run: python -m trade_bot.paper_persistence restore
+      - name: Generate adaptive calibration report
+        env:
+          DATABASE_PATH: trade_bot.db
+          CALIBRATION_MIN_TOTAL_TRADES: '50'
+          CALIBRATION_MIN_GROUP_TRADES: '20'
+          PAPER_FEE_BPS_PER_SIDE: '10'
+        run: python -m trade_bot.adaptive_calibration
