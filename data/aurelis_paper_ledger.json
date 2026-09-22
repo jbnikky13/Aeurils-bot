@@ -4881,8 +4881,8 @@
         "technical_score": 85,
         "whale_score": 50,
         "sentiment_score": 50,
-        "outcome": "OPEN",
-        "closed_at": null,
+        "outcome": "WIN_TP1",
+        "closed_at": "2026-09-22T11:32:35.614021+00:00",
         "market_regime": "HIGH_VOLATILITY",
         "gemini_confidence": 60.0,
         "gemini_decision": "WAIT",
@@ -5642,7 +5642,10 @@
       "trailing_atr_multiplier",
       "initial_risk",
       "realized_r",
-      "unrealized_r"
+      "unrealized_r",
+      "signal_source",
+      "confluence_score",
+      "confluence_tier"
     ],
     "rows": [
       {
@@ -5683,7 +5686,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 2,
@@ -5723,7 +5729,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 3,
@@ -5763,7 +5772,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 4,
@@ -5803,7 +5815,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 5,
@@ -5843,7 +5858,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 6,
@@ -5883,7 +5901,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 7,
@@ -5923,7 +5944,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 8,
@@ -5963,7 +5987,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 9,
@@ -6003,7 +6030,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 10,
@@ -6043,7 +6073,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 11,
@@ -6083,7 +6116,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 12,
@@ -6123,7 +6159,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 13,
@@ -6163,7 +6202,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 14,
@@ -6203,7 +6245,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 15,
@@ -6243,7 +6288,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 16,
@@ -6283,7 +6331,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 17,
@@ -6323,7 +6374,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 18,
@@ -6363,7 +6417,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 19,
@@ -6403,7 +6460,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 20,
@@ -6443,7 +6503,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 21,
@@ -6483,7 +6546,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 22,
@@ -6523,7 +6589,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 23,
@@ -6563,7 +6632,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 24,
@@ -6603,7 +6675,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 25,
@@ -6643,7 +6718,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 26,
@@ -6683,7 +6761,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 27,
@@ -6723,7 +6804,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 28,
@@ -6763,7 +6847,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 29,
@@ -6803,7 +6890,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 30,
@@ -6843,7 +6933,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 31,
@@ -6883,7 +6976,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 32,
@@ -6923,7 +7019,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 33,
@@ -6963,7 +7062,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 34,
@@ -7003,7 +7105,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 35,
@@ -7043,7 +7148,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 36,
@@ -7083,7 +7191,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 37,
@@ -7123,7 +7234,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 38,
@@ -7163,7 +7277,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 39,
@@ -7203,7 +7320,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 40,
@@ -7243,7 +7363,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 41,
@@ -7283,7 +7406,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 42,
@@ -7323,7 +7449,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 43,
@@ -7363,7 +7492,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 44,
@@ -7403,7 +7535,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 45,
@@ -7443,7 +7578,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 46,
@@ -7483,7 +7621,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 47,
@@ -7523,7 +7664,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 48,
@@ -7563,7 +7707,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 49,
@@ -7603,7 +7750,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 50,
@@ -7643,7 +7793,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 51,
@@ -7683,7 +7836,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 52,
@@ -7723,7 +7879,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 53,
@@ -7763,7 +7922,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 54,
@@ -7803,7 +7965,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 55,
@@ -7843,7 +8008,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 56,
@@ -7883,7 +8051,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 57,
@@ -7923,7 +8094,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 58,
@@ -7963,7 +8137,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 59,
@@ -8003,7 +8180,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 60,
@@ -8043,7 +8223,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 61,
@@ -8083,7 +8266,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 62,
@@ -8123,7 +8309,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 63,
@@ -8163,7 +8352,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 64,
@@ -8203,7 +8395,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 65,
@@ -8243,7 +8438,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 66,
@@ -8283,7 +8481,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": null,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 67,
@@ -8323,7 +8524,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 3.3203571428571195,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 68,
@@ -8363,7 +8567,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0025499999999999967,
         "realized_r": 0.0,
-        "unrealized_r": 1587.8744135691095
+        "unrealized_r": 1587.8744135691095,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 69,
@@ -8403,7 +8610,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.001103571428571426,
         "realized_r": 0.0,
-        "unrealized_r": 3278.0579179314827
+        "unrealized_r": 3278.0579179314827,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 70,
@@ -8443,7 +8653,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0003857142857142861,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 71,
@@ -8483,7 +8696,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.01186071428571428,
         "realized_r": 0.0,
-        "unrealized_r": 360.10231021065005
+        "unrealized_r": 360.10231021065005,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 72,
@@ -8523,7 +8739,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0004392857142856421,
         "realized_r": 0.0,
-        "unrealized_r": -68.36104397080378
+        "unrealized_r": -68.36104397080378,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 73,
@@ -8563,7 +8782,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 3.0321428571428505e-07,
         "realized_r": 0.0,
-        "unrealized_r": 11163434.966156593
+        "unrealized_r": 11163434.966156593,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 74,
@@ -8603,7 +8825,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0029785714285714138,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 75,
@@ -8643,7 +8868,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00019928571428571434,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 76,
@@ -8683,7 +8911,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00016821428571428456,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 77,
@@ -8723,7 +8954,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00017464285714285585,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 78,
@@ -8763,7 +8997,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 1.2374999999999972,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 79,
@@ -8803,7 +9040,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.004879285714285697,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 80,
@@ -8843,7 +9083,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0010285714285714273,
         "realized_r": 0.0,
-        "unrealized_r": -5106.100795755964
+        "unrealized_r": -5106.100795755964,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 81,
@@ -8883,7 +9126,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00020539285714285668,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 82,
@@ -8923,7 +9169,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.01329642857142857,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 83,
@@ -8963,7 +9212,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.009139285714285739,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 84,
@@ -9003,7 +9255,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 1.1892857142857167,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 85,
@@ -9043,7 +9298,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0009321428571428571,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 86,
@@ -9083,7 +9341,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.14250000000000007,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 87,
@@ -9123,7 +9384,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.7371428571428602,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 88,
@@ -9163,7 +9427,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.14024999999999999,
         "realized_r": 0.0,
-        "unrealized_r": 51.364757247110205
+        "unrealized_r": 51.364757247110205,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 89,
@@ -9203,7 +9470,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0009642857142857127,
         "realized_r": 0.0,
-        "unrealized_r": 5495.109352676132
+        "unrealized_r": 5495.109352676132,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 90,
@@ -9243,7 +9513,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 1.087499999999995,
         "realized_r": 0.0,
-        "unrealized_r": -3.4021044446064557
+        "unrealized_r": -3.4021044446064557,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 91,
@@ -9283,7 +9556,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0010928571428570066,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 92,
@@ -9323,7 +9599,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 1.1335714285714218,
         "realized_r": 0.0,
-        "unrealized_r": -3.4289200460455
+        "unrealized_r": -3.4289200460455,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 93,
@@ -9363,7 +9642,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 2.232857142857142,
         "realized_r": 0.0,
-        "unrealized_r": -1.9728189670156668
+        "unrealized_r": -1.9728189670156668,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 94,
@@ -9403,7 +9685,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 3.848571428571418,
         "realized_r": 0.0,
-        "unrealized_r": -1.0143371145950222
+        "unrealized_r": -1.0143371145950222,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 95,
@@ -9443,7 +9728,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 3.471428571428575,
         "realized_r": 0.0,
-        "unrealized_r": 1.0279929769407374
+        "unrealized_r": 1.0279929769407374,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 96,
@@ -9483,7 +9771,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 5.749285714285634,
         "realized_r": 0.0,
-        "unrealized_r": -0.14072901152356293
+        "unrealized_r": -0.14072901152356293,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 97,
@@ -9523,7 +9814,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.003593571428571432,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 98,
@@ -9563,7 +9857,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 3.310714285714269,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 99,
@@ -9603,7 +9900,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.11611071428571429,
         "realized_r": 0.0,
-        "unrealized_r": 90.73327543843192
+        "unrealized_r": 90.73327543843192,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 100,
@@ -9643,7 +9943,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.004650000000000015,
         "realized_r": 0.0,
-        "unrealized_r": 1039.911815478039
+        "unrealized_r": 1039.911815478039,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 101,
@@ -9683,7 +9986,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.018214285714285683,
         "realized_r": 0.0,
-        "unrealized_r": -276.23628067579205
+        "unrealized_r": -276.23628067579205,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 102,
@@ -9723,7 +10029,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00020249999999999435,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 103,
@@ -9763,7 +10072,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.12385714285714267,
         "realized_r": 0.0,
-        "unrealized_r": 53.9869511759218
+        "unrealized_r": 53.9869511759218,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 104,
@@ -9803,7 +10115,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00022821428571428645,
         "realized_r": 0.0,
-        "unrealized_r": 19341.48438746789
+        "unrealized_r": 19341.48438746789,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 105,
@@ -9843,7 +10158,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 11.615357142857135,
         "realized_r": 0.0,
-        "unrealized_r": -0.1394948944694584
+        "unrealized_r": -0.1394948944694584,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 106,
@@ -9883,7 +10201,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.06696428571428559,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 107,
@@ -9923,7 +10244,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.7307142857142921,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 108,
@@ -9963,7 +10287,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0037928571428571395,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 109,
@@ -10003,7 +10330,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0003610714285714276,
         "realized_r": 0.0,
-        "unrealized_r": -15313.385305087973
+        "unrealized_r": -15313.385305087973,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 110,
@@ -10043,7 +10373,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.12061071428571424,
         "realized_r": 0.0,
-        "unrealized_r": 84.48369324131306
+        "unrealized_r": 84.48369324131306,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 111,
@@ -10083,7 +10416,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.004242857142857159,
         "realized_r": 0.0,
-        "unrealized_r": 997.1509971509902
+        "unrealized_r": 997.1509971509902,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 112,
@@ -10123,7 +10459,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0002078571428571433,
         "realized_r": 0.0,
-        "unrealized_r": 20826.824950536113
+        "unrealized_r": 20826.824950536113,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 113,
@@ -10163,7 +10502,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.5785714285714256,
         "realized_r": 0.0,
-        "unrealized_r": -3.2277990934321488
+        "unrealized_r": -3.2277990934321488,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 114,
@@ -10203,7 +10545,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.004540714285714287,
         "realized_r": 0.0,
-        "unrealized_r": 1229.3945326689818
+        "unrealized_r": 1229.3945326689818,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 115,
@@ -10243,7 +10588,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0012214285714285747,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 116,
@@ -10283,7 +10631,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0004178571428572475,
         "realized_r": 0.0,
-        "unrealized_r": -71.73031451178531
+        "unrealized_r": -71.73031451178531,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 117,
@@ -10323,7 +10674,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.40285714285714214,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 118,
@@ -10363,7 +10717,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 5.686071428571381,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 119,
@@ -10403,7 +10760,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 1.0553571428571402,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 120,
@@ -10443,7 +10803,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0033696428571428627,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 121,
@@ -10483,7 +10846,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.001870714285714288,
         "realized_r": 0.0,
-        "unrealized_r": 2046.4705965114588
+        "unrealized_r": 2046.4705965114588,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 122,
@@ -10523,7 +10889,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.45428571428571196,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 123,
@@ -10563,7 +10932,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00245357142857143,
         "realized_r": 0.0,
-        "unrealized_r": -536.2751857810457
+        "unrealized_r": -536.2751857810457,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 124,
@@ -10603,7 +10975,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 6.009642857142865,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 125,
@@ -10643,7 +11018,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0031371428571428522,
         "realized_r": 0.0,
-        "unrealized_r": -850.7189060104317
+        "unrealized_r": -850.7189060104317,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 126,
@@ -10683,7 +11061,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.02015357142857141,
         "realized_r": 0.0,
-        "unrealized_r": -588.440236045971
+        "unrealized_r": -588.440236045971,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 127,
@@ -10723,7 +11104,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 4.65000000000001e-05,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 128,
@@ -10763,7 +11147,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0006535714285714304,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 129,
@@ -10803,7 +11190,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 2.539285714285751e-05,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 130,
@@ -10843,7 +11233,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0012310714285714286,
         "realized_r": 0.0,
-        "unrealized_r": -3074.039929582938
+        "unrealized_r": -3074.039929582938,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 131,
@@ -10883,7 +11276,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 5.507142857142863e-05,
         "realized_r": 0.0,
-        "unrealized_r": -140464.55459054574
+        "unrealized_r": -140464.55459054574,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 132,
@@ -10923,7 +11319,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0009964285714285648,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 133,
@@ -10963,7 +11362,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0002785714285713503,
         "realized_r": 0.0,
-        "unrealized_r": -71.7876930255815
+        "unrealized_r": -71.7876930255815,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 134,
@@ -11003,7 +11405,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 5.059285714285693,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 135,
@@ -11043,7 +11448,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0062892857142857195,
         "realized_r": 0.0,
-        "unrealized_r": -0.9540034071550256
+        "unrealized_r": -0.9540034071550256,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 136,
@@ -11083,7 +11491,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 1.767857142857143e-05,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 137,
@@ -11123,7 +11534,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 2.8071428571428654e-06,
         "realized_r": 0.0,
-        "unrealized_r": 777089.3039207896
+        "unrealized_r": 777089.3039207896,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 138,
@@ -11163,7 +11577,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0014035714285714207,
         "realized_r": 0.0,
-        "unrealized_r": -0.9262086513994932
+        "unrealized_r": -0.9262086513994932,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 139,
@@ -11203,7 +11620,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0017271428571428576,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 140,
@@ -11243,7 +11663,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 2.7964285714285542e-06,
         "realized_r": 0.0,
-        "unrealized_r": 654643.4385146698
+        "unrealized_r": 654643.4385146698,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 141,
@@ -11283,7 +11706,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0002528571428571432,
         "realized_r": 0.0,
-        "unrealized_r": 13783.493130973497
+        "unrealized_r": 13783.493130973497,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 142,
@@ -11323,7 +11749,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 6.289285714285728e-05,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 143,
@@ -11363,7 +11792,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.11967857142857152,
         "realized_r": 0.0,
-        "unrealized_r": 53.305453465588066
+        "unrealized_r": 53.305453465588066,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 144,
@@ -11403,7 +11835,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0007103571428571445,
         "realized_r": 0.0,
-        "unrealized_r": 0.0
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 145,
@@ -11443,7 +11878,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0007360714285714262,
         "realized_r": 0.0,
-        "unrealized_r": 1.1955361475012152
+        "unrealized_r": 1.1955361475012152,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 146,
@@ -11483,7 +11921,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.000444642857142857,
         "realized_r": 0.0,
-        "unrealized_r": 1.2594377510040158
+        "unrealized_r": 1.2594377510040158,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 147,
@@ -11523,7 +11964,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.008935714285714269,
         "realized_r": 0.0,
-        "unrealized_r": 1.1974420463629105
+        "unrealized_r": 1.1974420463629105,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 148,
@@ -11563,7 +12007,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0006921428571428599,
         "realized_r": 0.0,
-        "unrealized_r": 1.2858617131062877
+        "unrealized_r": 1.2858617131062877,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 149,
@@ -11603,7 +12050,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0031392857142857056,
         "realized_r": 0.0,
-        "unrealized_r": 1.2741751990898795
+        "unrealized_r": 1.2741751990898795,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 150,
@@ -11643,7 +12093,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 67.07142857142844,
         "realized_r": 0.0,
-        "unrealized_r": 1.2076677316293953
+        "unrealized_r": 1.2076677316293953,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 151,
@@ -11654,12 +12107,12 @@
         "stop_loss": 0.023030714285714286,
         "tp1": 0.025595714285714284,
         "tp2": 0.026328571428571427,
-        "status": "OPEN",
-        "exit_price": null,
-        "outcome": null,
-        "pnl_pct": null,
+        "status": "CLOSED",
+        "exit_price": 0.02354,
+        "outcome": "EXPIRED",
+        "pnl_pct": -2.4450891007045183,
         "opened_at": "2026-09-21T07:58:02.657199+00:00",
-        "closed_at": null,
+        "closed_at": "2026-09-22T11:32:47.375252+00:00",
         "final_score": 69.0,
         "market_regime": "BULLISH",
         "gemini_decision": "UNAVAILABLE",
@@ -11668,22 +12121,25 @@
         "tp1_hit_at": null,
         "tp2_hit_at": null,
         "sl_hit_at": null,
-        "exit_reason": null,
-        "last_price": 0.02394,
-        "last_checked_at": "2026-09-22T06:10:00+00:00",
+        "exit_reason": "EXPIRED",
+        "last_price": 0.02354,
+        "last_checked_at": "2026-09-22T11:30:00+00:00",
         "max_favorable_pct": 2.942395358474937,
         "max_adverse_pct": 3.232490675507665,
         "expiry_at": "2026-09-22T07:58:02.657199+00:00",
-        "resolution_source": null,
+        "resolution_source": "24h_timeout",
         "runner_enabled": 0,
         "runner_active": 0,
         "remaining_pct": 100.0,
-        "realized_pnl_pct": 0.0,
+        "realized_pnl_pct": -2.4450891007045183,
         "trailing_stop": null,
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0010992857142857124,
         "realized_r": 0.0,
-        "unrealized_r": -0.17283950617283908
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 152,
@@ -11694,27 +12150,27 @@
         "stop_loss": 0.20657857142857144,
         "tp1": 0.23952857142857142,
         "tp2": 0.24894285714285713,
-        "status": "OPEN",
-        "exit_price": null,
-        "outcome": null,
-        "pnl_pct": null,
+        "status": "CLOSED",
+        "exit_price": 0.23952857142857142,
+        "outcome": "WIN_TP1",
+        "pnl_pct": 8.531296524046859,
         "opened_at": "2026-09-21T07:58:03.005938+00:00",
-        "closed_at": null,
+        "closed_at": "2026-09-22T08:35:00+00:00",
         "final_score": 69.0,
         "market_regime": "HIGH_VOLATILITY",
         "gemini_decision": "WAIT",
         "gemini_confidence": 60.0,
         "gemini_available": 1,
-        "tp1_hit_at": null,
+        "tp1_hit_at": "2026-09-22T08:35:00+00:00",
         "tp2_hit_at": null,
         "sl_hit_at": null,
-        "exit_reason": null,
-        "last_price": 0.2355,
-        "last_checked_at": "2026-09-22T06:10:00+00:00",
-        "max_favorable_pct": 7.838695061168998,
+        "exit_reason": "TP1",
+        "last_price": 0.2388,
+        "last_checked_at": "2026-09-22T08:35:00+00:00",
+        "max_favorable_pct": 8.654281830539196,
         "max_adverse_pct": 0.0,
         "expiry_at": "2026-09-22T07:58:03.005938+00:00",
-        "resolution_source": null,
+        "resolution_source": "1h_ohlc",
         "runner_enabled": 0,
         "runner_active": 0,
         "remaining_pct": 100.0,
@@ -11723,7 +12179,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.014121428571428563,
         "realized_r": 0.0,
-        "unrealized_r": 1.0480526049570047
+        "unrealized_r": 1.1117855336368236,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 153,
@@ -11763,7 +12222,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 5.567142857142869,
         "realized_r": 0.0,
-        "unrealized_r": 1.3292276109828054
+        "unrealized_r": 1.3292276109828054,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 154,
@@ -11803,7 +12265,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00015642857142857125,
         "realized_r": 0.0,
-        "unrealized_r": 0.9589041095890419
+        "unrealized_r": 0.9589041095890419,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 155,
@@ -11829,9 +12294,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 18.01,
-        "last_checked_at": "2026-09-22T06:10:00+00:00",
-        "max_favorable_pct": 2.1481062747314605,
+        "last_price": 17.87,
+        "last_checked_at": "2026-09-22T11:30:00+00:00",
+        "max_favorable_pct": 2.8829847371395947,
         "max_adverse_pct": 0.8479366873940398,
         "expiry_at": "2026-09-22T14:36:25.835357+00:00",
         "resolution_source": null,
@@ -11843,7 +12308,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.7071428571428591,
         "realized_r": 0.0,
-        "unrealized_r": 0.45252525252524667
+        "unrealized_r": 0.2545454545454484,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 156,
@@ -11883,7 +12351,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.02742857142857158,
         "realized_r": 0.0,
-        "unrealized_r": -0.9843749999999994
+        "unrealized_r": -0.9843749999999994,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 157,
@@ -11909,10 +12380,10 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.0248,
-        "last_checked_at": "2026-09-22T06:11:00+00:00",
-        "max_favorable_pct": 1.6727866177070467,
-        "max_adverse_pct": 1.223990208078356,
+        "last_price": 0.02377,
+        "last_checked_at": "2026-09-22T11:30:00+00:00",
+        "max_favorable_pct": 1.9175846593227037,
+        "max_adverse_pct": 3.4271725826193546,
         "expiry_at": "2026-09-22T14:36:27.037021+00:00",
         "resolution_source": null,
         "runner_enabled": 0,
@@ -11923,7 +12394,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0012750000000000018,
         "realized_r": 0.0,
-        "unrealized_r": 0.22745098039215272
+        "unrealized_r": -0.5803921568627478,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 158,
@@ -11963,7 +12437,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00045214285714285755,
         "realized_r": 0.0,
-        "unrealized_r": 1.2164296998420214
+        "unrealized_r": 1.2164296998420214,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 159,
@@ -11989,10 +12466,10 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.000898,
-        "last_checked_at": "2026-09-22T06:11:00+00:00",
+        "last_price": 0.000889,
+        "last_checked_at": "2026-09-22T11:30:00+00:00",
         "max_favorable_pct": 3.603603603603593,
-        "max_adverse_pct": 0.0,
+        "max_adverse_pct": 0.11261261261262755,
         "expiry_at": "2026-09-22T14:36:27.730722+00:00",
         "resolution_source": null,
         "runner_enabled": 0,
@@ -12003,7 +12480,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 4.2214285714285834e-05,
         "realized_r": 0.0,
-        "unrealized_r": 0.2368866328257165
+        "unrealized_r": 0.02368866328256985,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 160,
@@ -12029,9 +12509,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 3.975e-05,
-        "last_checked_at": "2026-09-22T06:11:00+00:00",
-        "max_favorable_pct": 0.22460693785874927,
+        "last_price": 4.031e-05,
+        "last_checked_at": "2026-09-22T11:30:00+00:00",
+        "max_favorable_pct": 1.6720738707262257,
         "max_adverse_pct": 1.647117544297489,
         "expiry_at": "2026-09-22T15:04:54.584272+00:00",
         "resolution_source": null,
@@ -12043,7 +12523,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 1.2814285714285662e-06,
         "realized_r": 0.0,
-        "unrealized_r": -0.249721293199558
+        "unrealized_r": 0.18729096989966454,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 161,
@@ -12069,9 +12552,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 18.01,
-        "last_checked_at": "2026-09-22T06:10:00+00:00",
-        "max_favorable_pct": 2.1481062747314605,
+        "last_price": 17.87,
+        "last_checked_at": "2026-09-22T11:30:00+00:00",
+        "max_favorable_pct": 2.8829847371395947,
         "max_adverse_pct": 0.8479366873940398,
         "expiry_at": "2026-09-22T15:04:54.962669+00:00",
         "resolution_source": null,
@@ -12083,7 +12566,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.7071428571428591,
         "realized_r": 0.0,
-        "unrealized_r": 0.45252525252524667
+        "unrealized_r": 0.2545454545454484,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 162,
@@ -12123,7 +12609,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.02742857142857158,
         "realized_r": 0.0,
-        "unrealized_r": -0.9843749999999994
+        "unrealized_r": -0.9843749999999994,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 163,
@@ -12149,10 +12638,10 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.0248,
-        "last_checked_at": "2026-09-22T06:11:00+00:00",
-        "max_favorable_pct": 1.6727866177070467,
-        "max_adverse_pct": 1.223990208078356,
+        "last_price": 0.02377,
+        "last_checked_at": "2026-09-22T11:30:00+00:00",
+        "max_favorable_pct": 1.9175846593227037,
+        "max_adverse_pct": 3.4271725826193546,
         "expiry_at": "2026-09-22T15:04:55.709485+00:00",
         "resolution_source": null,
         "runner_enabled": 0,
@@ -12163,7 +12652,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0012750000000000018,
         "realized_r": 0.0,
-        "unrealized_r": 0.22745098039215272
+        "unrealized_r": -0.5803921568627478,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 164,
@@ -12203,7 +12695,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00045214285714285755,
         "realized_r": 0.0,
-        "unrealized_r": 1.2164296998420214
+        "unrealized_r": 1.2164296998420214,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 165,
@@ -12229,10 +12724,10 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.003049,
-        "last_checked_at": "2026-09-22T06:11:00+00:00",
+        "last_price": 0.002992,
+        "last_checked_at": "2026-09-22T11:30:00+00:00",
         "max_favorable_pct": 1.926782273603088,
-        "max_adverse_pct": 3.179190751445091,
+        "max_adverse_pct": 4.784842646114317,
         "expiry_at": "2026-09-22T18:26:00.285116+00:00",
         "resolution_source": null,
         "runner_enabled": 0,
@@ -12243,7 +12738,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00018374999999999989,
         "realized_r": 0.0,
-        "unrealized_r": -0.3537414965986394
+        "unrealized_r": -0.6639455782312937,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 166,
@@ -12269,10 +12767,10 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.0248,
-        "last_checked_at": "2026-09-22T06:11:00+00:00",
-        "max_favorable_pct": 0.8113590263691776,
-        "max_adverse_pct": 1.4604462474645,
+        "last_price": 0.02377,
+        "last_checked_at": "2026-09-22T11:30:00+00:00",
+        "max_favorable_pct": 1.3387423935091296,
+        "max_adverse_pct": 3.975659229208918,
         "expiry_at": "2026-09-22T18:26:00.870466+00:00",
         "resolution_source": null,
         "runner_enabled": 0,
@@ -12283,7 +12781,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.001283571428571429,
         "realized_r": 0.0,
-        "unrealized_r": 0.11686143572621095
+        "unrealized_r": -0.6855870895937662,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 167,
@@ -12323,7 +12824,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.007896428571428582,
         "realized_r": 0.0,
-        "unrealized_r": 0.8991406603346884
+        "unrealized_r": 0.8991406603346884,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 168,
@@ -12349,10 +12853,10 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.281,
-        "last_checked_at": "2026-09-22T06:11:00+00:00",
+        "last_price": 0.279,
+        "last_checked_at": "2026-09-22T11:30:00+00:00",
         "max_favorable_pct": 2.5089605734766844,
-        "max_adverse_pct": 0.0,
+        "max_adverse_pct": 0.3584229390681007,
         "expiry_at": "2026-09-22T18:26:01.973403+00:00",
         "resolution_source": null,
         "runner_enabled": 0,
@@ -12363,7 +12867,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00835714285714284,
         "realized_r": 0.0,
-        "unrealized_r": 0.23931623931624
+        "unrealized_r": 0.0,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 169,
@@ -12389,8 +12896,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 59.22,
-        "last_checked_at": "2026-09-22T06:11:00+00:00",
+        "last_price": 59.01,
+        "last_checked_at": "2026-09-22T11:30:00+00:00",
         "max_favorable_pct": 1.5854472630173495,
         "max_adverse_pct": 2.469959946595467,
         "expiry_at": "2026-09-22T18:26:02.524867+00:00",
@@ -12403,7 +12910,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 2.963571428571427,
         "realized_r": 0.0,
-        "unrealized_r": -0.23620149433598564
+        "unrealized_r": -0.3070619426367813,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 170,
@@ -12429,8 +12939,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 2.948,
-        "last_checked_at": "2026-09-22T06:11:00+00:00",
+        "last_price": 2.942,
+        "last_checked_at": "2026-09-22T11:30:00+00:00",
         "max_favorable_pct": 4.591836734693869,
         "max_adverse_pct": 1.122448979591849,
         "expiry_at": "2026-09-22T22:17:36.041403+00:00",
@@ -12443,7 +12953,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.14110714285714332,
         "realized_r": 0.0,
-        "unrealized_r": 0.05669450771956139
+        "unrealized_r": 0.01417362692988956,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 171,
@@ -12483,7 +12996,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0249428571428571,
         "realized_r": 0.0,
-        "unrealized_r": 1.3150057273768634
+        "unrealized_r": 1.3150057273768634,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 172,
@@ -12509,10 +13025,10 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.281,
-        "last_checked_at": "2026-09-22T06:11:00+00:00",
+        "last_price": 0.279,
+        "last_checked_at": "2026-09-22T11:30:00+00:00",
         "max_favorable_pct": 2.142857142857125,
-        "max_adverse_pct": 0.0,
+        "max_adverse_pct": 0.7142857142857149,
         "expiry_at": "2026-09-22T22:17:37.137157+00:00",
         "resolution_source": null,
         "runner_enabled": 0,
@@ -12523,7 +13039,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.008785714285714286,
         "realized_r": 0.0,
-        "unrealized_r": 0.11382113821138222
+        "unrealized_r": -0.11382113821138222,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 173,
@@ -12549,8 +13068,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.000898,
-        "last_checked_at": "2026-09-22T06:11:00+00:00",
+        "last_price": 0.000889,
+        "last_checked_at": "2026-09-22T11:30:00+00:00",
         "max_favorable_pct": 2.343749999999984,
         "max_adverse_pct": 2.1205357142857295,
         "expiry_at": "2026-09-22T22:17:37.646792+00:00",
@@ -12563,7 +13082,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 6.085714285714288e-05,
         "realized_r": 0.0,
-        "unrealized_r": 0.03286384976525722
+        "unrealized_r": -0.11502347417840472,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       },
       {
         "id": 174,
@@ -12589,10 +13111,10 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.1557,
-        "last_checked_at": "2026-09-22T06:11:00+00:00",
+        "last_price": 0.1519,
+        "last_checked_at": "2026-09-22T11:30:00+00:00",
         "max_favorable_pct": 2.7958387516254866,
-        "max_adverse_pct": 0.6501950585175559,
+        "max_adverse_pct": 1.6254876462938896,
         "expiry_at": "2026-09-22T22:17:38.237112+00:00",
         "resolution_source": null,
         "runner_enabled": 0,
@@ -12603,7 +13125,10 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.009889285714285712,
         "realized_r": 0.0,
-        "unrealized_r": 0.19212712170458784
+        "unrealized_r": -0.19212712170458504,
+        "signal_source": "PRIMARY",
+        "confluence_score": null,
+        "confluence_tier": null
       }
     ]
   }
