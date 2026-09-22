@@ -1,4 +1,4 @@
-"""Deterministic paper-trading ledger with 1h candle resolution.
+"""Deterministic paper-trading ledger with 5m candle resolution.
 
 Normal setups keep the existing TP1/TP2 close behavior. Continuation/breakout
 setups can opt into partial exits plus a trailing runner. This remains paper-only.
@@ -8,7 +8,7 @@ from datetime import datetime, timezone, timedelta
 from .journal import DB, init_db
 
 PAPER_TABLE="paper_trades"
-RESOLUTION_INTERVAL="1h"
+RESOLUTION_INTERVAL="5m"
 TP1_FRACTION=0.30
 TP2_FRACTION=0.30
 
@@ -81,7 +81,7 @@ def _resolve_candle(direction,high,low,stop,tp1,tp2):
 
 
 def mark_candle(symbol,candle):
-    """Resolve an open trade from a completed 1h candle; runners stay open after TP1/TP2."""
+    """Resolve an open trade from a completed 5m candle; runners stay open after TP1/TP2."""
     init_paper_db(); high,low,close=map(float,(candle["high"],candle["low"],candle["close"])); candle_time=candle.get("time") or _now(); atr=float(candle.get("atr") or 0); closed_ids=[]
     with sqlite3.connect(DB) as con:
         rows=con.execute(f"SELECT signal_id,direction,entry,stop_loss,tp1,tp2,max_favorable_pct,max_adverse_pct,opened_at,runner_enabled,runner_active,remaining_pct,realized_pnl_pct,trailing_stop,trailing_atr_multiplier,initial_risk,tp1_hit_at,tp2_hit_at FROM {PAPER_TABLE} WHERE status='OPEN' AND symbol=?",(symbol,)).fetchall()
@@ -96,7 +96,7 @@ def mark_candle(symbol,candle):
                 trail_hit=(low<=trail) if direction=="LONG" else (high>=trail)
                 if trail_hit:
                     exit_price=float(trail); total_pnl=float(realized or 0)+float(remaining_pct or 0)/100*_pnl(direction,float(entry),exit_price); rr=(float(realized or 0)/100 + float(remaining_pct or 0)/100*_r_value(direction,float(entry),exit_price,float(risk),1.0)) if risk else 0
-                    con.execute(f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome='WIN_RUNNER',pnl_pct=?,closed_at=?,exit_reason='RUNNER_TRAIL',last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,trailing_stop=?,realized_pnl_pct=?,realized_r=?,unrealized_r=0,resolution_source='1h_runner' WHERE signal_id=?",(exit_price,total_pnl,candle_time,close,candle_time,fav,adv,trail,total_pnl,rr,sid)); closed_ids.append((sid,"WIN_RUNNER")); continue
+                    con.execute(f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome='WIN_RUNNER',pnl_pct=?,closed_at=?,exit_reason='RUNNER_TRAIL',last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,trailing_stop=?,realized_pnl_pct=?,realized_r=?,unrealized_r=0,resolution_source='5m_runner' WHERE signal_id=?",(exit_price,total_pnl,candle_time,close,candle_time,fav,adv,trail,total_pnl,rr,sid)); closed_ids.append((sid,"WIN_RUNNER")); continue
                 con.execute(f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,trailing_stop=?,unrealized_r=? WHERE signal_id=?",(close,candle_time,fav,adv,trail,_unrealized_r(direction,float(entry),close,float(risk),float(remaining_pct or 0)/100) if risk else 0,sid)); continue
 
             if runner_enabled:
@@ -104,9 +104,9 @@ def mark_candle(symbol,candle):
                 tp1_hit=(direction=="LONG" and tp1 is not None and high>=tp1) or (direction=="SHORT" and tp1 is not None and low<=tp1)
                 tp2_hit=(direction=="LONG" and tp2 is not None and high>=tp2) or (direction=="SHORT" and tp2 is not None and low<=tp2)
                 if stop_hit and (tp1_hit or tp2_hit):
-                    con.execute(f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='1h_ohlc_ambiguous' WHERE signal_id=?",(close,candle_time,fav,adv,sid)); continue
+                    con.execute(f"UPDATE {PAPER_TABLE} SET last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='5m_ohlc_ambiguous' WHERE signal_id=?",(close,candle_time,fav,adv,sid)); continue
                 if stop_hit:
-                    con.execute(f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome='LOSS_SL',pnl_pct=?,closed_at=?,exit_reason='SL',sl_hit_at=?,last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='1h_ohlc' WHERE signal_id=?",(stop,_pnl(direction,float(entry),float(stop)),candle_time,candle_time,close,candle_time,fav,adv,sid)); closed_ids.append((sid,"LOSS_SL")); continue
+                    con.execute(f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome='LOSS_SL',pnl_pct=?,closed_at=?,exit_reason='SL',sl_hit_at=?,last_price=?,last_checked_at=?,max_favorable_pct=?,max_adverse_pct=?,resolution_source='5m_ohlc' WHERE signal_id=?",(stop,_pnl(direction,float(entry),float(stop)),candle_time,candle_time,close,candle_time,fav,adv,sid)); closed_ids.append((sid,"LOSS_SL")); continue
                 touched=False
                 if not tp1_hit_at and tp1_hit:
                     realized_new=float(realized or 0)+TP1_FRACTION*_pnl(direction,float(entry),float(tp1)); remaining_new=float(remaining_pct or 100)-TP1_FRACTION*100
