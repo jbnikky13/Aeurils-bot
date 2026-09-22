@@ -37,12 +37,12 @@ def init_paper_db():
         con.commit()
 
 
-def open_paper_trade(signal_id,symbol,direction,entry,stop_loss=None,tp1=None,tp2=None,final_score=None,market_regime="UNKNOWN",gemini_decision=None,gemini_confidence=None,gemini_available=None,runner_enabled=False,trailing_atr_multiplier=2.0):
+def open_paper_trade(signal_id,symbol,direction,entry,stop_loss=None,tp1=None,tp2=None,final_score=None,market_regime="UNKNOWN",gemini_decision=None,gemini_confidence=None,gemini_available=None,runner_enabled=False,trailing_atr_multiplier=2.0,signal_source="PRIMARY",confluence_score=None,confluence_tier=None):
     init_paper_db(); opened=datetime.now(timezone.utc); expiry=opened+timedelta(hours=24); risk=abs(float(entry)-float(stop_loss)) if stop_loss is not None else None
     with sqlite3.connect(DB) as con:
         cur=con.execute(f"""INSERT OR IGNORE INTO {PAPER_TABLE}
-            (signal_id,symbol,direction,entry,stop_loss,tp1,tp2,opened_at,final_score,market_regime,gemini_decision,gemini_confidence,gemini_available,last_price,last_checked_at,expiry_at,runner_enabled,remaining_pct,trailing_atr_multiplier,initial_risk)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",(signal_id,symbol,direction,float(entry),stop_loss,tp1,tp2,opened.isoformat(),final_score,market_regime,gemini_decision,gemini_confidence,gemini_available,float(entry),opened.isoformat(),expiry.isoformat(),1 if runner_enabled else 0,100.0,float(trailing_atr_multiplier or 2.0),risk))
+            (signal_id,symbol,direction,entry,stop_loss,tp1,tp2,opened_at,final_score,market_regime,gemini_decision,gemini_confidence,gemini_available,last_price,last_checked_at,expiry_at,runner_enabled,remaining_pct,trailing_atr_multiplier,initial_risk,signal_source,confluence_score,confluence_tier)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",(signal_id,symbol,direction,float(entry),stop_loss,tp1,tp2,opened.isoformat(),final_score,market_regime,gemini_decision,gemini_confidence,gemini_available,float(entry),opened.isoformat(),expiry.isoformat(),1 if runner_enabled else 0,100.0,float(trailing_atr_multiplier or 2.0),risk,signal_source,confluence_score,confluence_tier))
         con.commit(); return cur.rowcount==1
 
 
