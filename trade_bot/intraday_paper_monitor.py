@@ -16,6 +16,8 @@ from .market_data import crypto_klines
 PRIMARY_INTERVAL="5m"
 HTF_INTERVAL="1h"
 ATR_PERIOD=14
+# 5m is the execution clock; 1h is confirmation/diagnostics. This keeps the
+# monitor materially more precise than 1m without treating noisy 1m spikes as fills.
 
 
 def _open_symbols():
