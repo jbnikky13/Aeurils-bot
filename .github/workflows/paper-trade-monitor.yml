@@ -34,6 +34,12 @@ jobs:
           PAPER_RESOLUTION: '5m'
           MAX_HOLD_HOURS: '24'
         run: python -m trade_bot.intraday_paper_monitor
+      - name: Run AURELIS Performance Audit v2
+        env:
+          DATABASE_PATH: trade_bot.db
+          PAPER_FEE_BPS_PER_SIDE: '10'
+          PERFORMANCE_AUDIT_PATH: data/aurelis_performance_audit_v2.json
+        run: python -m trade_bot.performance_audit_v2
       - name: Persist updated paper ledger
         env:
           DATABASE_PATH: trade_bot.db
