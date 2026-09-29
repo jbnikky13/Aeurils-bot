@@ -91,6 +91,7 @@ def _candles(symbol, interval=PRIMARY_INTERVAL):
         end_time=now,
     )
 
+    now_ms=int(datetime.now(timezone.utc).timestamp()*1000)
     raw=[{
         "time":datetime.fromtimestamp(
             int(r.open_time)/1000,tz=timezone.utc
@@ -98,7 +99,8 @@ def _candles(symbol, interval=PRIMARY_INTERVAL):
         "high":float(r.high),
         "low":float(r.low),
         "close":float(r.close),
-    } for r in df.itertuples()]
+    } for r in df.itertuples()
+       if int(r.open_time)+5*60*1000 <= now_ms]
 
     atrs=_atr(raw)
     for row,atr in zip(raw,atrs):
