@@ -25,6 +25,8 @@ change signal generation, thresholds, sizing, or execution. It tracks:
 - risk multiples (R), MFE/MAE in R, expectancy, profit factor, and max drawdown
 - LONG/SHORT, regime, score-band, symbol, and signal-source segmentation
 - legacy wall-clock expiry rows separately from strict 5m-boundary results
+- duration classifications: intraday, extended setup, long-duration winner/loser, and timeout neutral
+- median / P75 / P90 observed holding duration and likely duration descriptions
 
 The scheduled paper-trade workflow runs the unit tests and generates
 `data/aurelis_performance_audit_v2.json`.
