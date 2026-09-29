@@ -42,6 +42,51 @@ def _strict_expiry(r):
     return r.get("resolution_source")=="5m_expiry_boundary"
 
 
+def _duration_hours(r):
+    a,b=_dt(r.get("opened_at")),_dt(r.get("closed_at"))
+    return (b-a).total_seconds()/3600 if a and b else None
+
+
+def _duration_class(r):
+    o=_outcome(r); h=_duration_hours(r)
+    if h is None:return "UNKNOWN_DURATION"
+    if o in {"WIN_TP1","WIN_TP2","WIN_RUNNER","LOSS_SL"}:
+        return "INTRADAY_RESOLVED" if h <= 24 else ("LONG_DURATION_WINNER" if o.startswith("WIN_") else "LONG_DURATION_LOSER")
+    if o=="EXPIRED":
+        return "EXTENDED_SETUP" if h > 24 else "TIMEOUT_NEUTRAL"
+    return "OTHER"
+
+
+def _duration_stats(rows):
+    vals=[h for h in (_duration_hours(r) for r in rows) if h is not None]
+    if not vals:return {"trades":0}
+    vals.sort()
+    def pct(p):
+        return round(vals[min(len(vals)-1,max(0,math.ceil(len(vals)*p)-1))],3)
+    return {
+        "trades":len(vals),
+        "median_hours":pct(.50),
+        "p75_hours":pct(.75),
+        "p90_hours":pct(.90),
+        "max_hours":round(max(vals),3),
+        "over_24h_pct":round(sum(x>24 for x in vals)/len(vals)*100,2),
+        "over_36h_pct":round(sum(x>36 for x in vals)/len(vals)*100,2),
+        "over_48h_pct":round(sum(x>48 for x in vals)/len(vals)*100,2),
+        "over_72h_pct":round(sum(x>72 for x in vals)/len(vals)*100,2),
+    }
+
+
+def _likely_duration(rows):
+    vals=[h for h in (_duration_hours(r) for r in rows) if h is not None]
+    if not vals:return None
+    vals.sort()
+    med=vals[len(vals)//2]
+    p75=vals[min(len(vals)-1,math.ceil(len(vals)*.75)-1)]
+    p90=vals[min(len(vals)-1,math.ceil(len(vals)*.90)-1)]
+    return {"median_hours":round(med,2),"p75_hours":round(p75,2),"p90_hours":round(p90,2),
+            "description":f"Typical resolution ~{med:.0f}h; extended setups commonly reach ~{p75:.0f}h and can extend toward ~{p90:.0f}h."}
+
+
 def _return_pct(r):
     return _num(r.get("pnl_pct"))
 
@@ -98,6 +143,7 @@ def _stats(rows):
         "expired":sum(_outcome(r)=="EXPIRED" for r in closed),
         "strict_expiry_trades":sum(_outcome(r)=="EXPIRED" and _strict_expiry(r) for r in closed),
         "legacy_expiry_trades":sum(_outcome(r)=="EXPIRED" and not _strict_expiry(r) for r in closed),
+            "duration_class_counts":dict(__import__("collections").Counter(_duration_class(r) for r in closed)),
         "win_rate_pct":round(len(wins)/len(scored)*100,2) if scored else 0.0,
         "net_pnl_pct":round(sum(net),4),
         "avg_trade_pct":round(sum(net)/len(closed),4) if closed else 0.0,
@@ -142,7 +188,7 @@ def build_report(rows=None):
         "methodology":{
             "execution_resolution":"5m",
             "expiry_policy":"first completed 5m candle at/after expiry_at",
-            "legacy_expiry_treatment":"excluded from strict-boundary performance views",
+            "legacy_expiry_treatment":"retained as an extended-duration research population and excluded only from strict-boundary 24h validation",
             "r_definition":"price move divided by absolute entry-to-SL risk",
             "pnl_basis":"recorded pnl_pct less one entry and one exit fee",
         },
@@ -162,6 +208,12 @@ def build_report(rows=None):
         "by_symbol":_group(strict,lambda r:r.get("symbol","UNKNOWN")),
         "by_signal_source":_group(strict,lambda r:r.get("signal_source","UNKNOWN")),
         "by_expiry_quality":_group(closed,_boundary_quality),
+        "by_duration_class":_group(closed,_duration_class),
+        "duration_profile_all_closed":_duration_stats(closed),
+        "duration_profile_winners":_duration_stats([r for r in closed if _outcome(r).startswith("WIN_")]),
+        "duration_profile_expiries":_duration_stats([r for r in closed if _outcome(r)=="EXPIRED"]),
+        "likely_duration_all_closed":_likely_duration(closed),
+        "likely_duration_winners":_likely_duration([r for r in closed if _outcome(r).startswith("WIN_")]),
     }
     return report
 
