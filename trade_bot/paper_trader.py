@@ -128,18 +128,66 @@ def mark_candle(symbol,candle):
     return len(closed_ids)
 
 
-def expire_old_trades(now=None):
-    init_paper_db(); now=now or datetime.now(timezone.utc); expired=0
+def expire_trade_at_candle(symbol, candle):
+    """Close trades at the first completed 5m candle at/after their 24h expiry.
+
+    This makes the timeout deterministic across delayed GitHub Actions runs. The
+    exit is the candle close at the first execution-resolution candle whose
+    timestamp reaches expiry; it is never allowed to benefit from later runs.
+    """
+    init_paper_db()
+    candle_time = candle.get("time") or _now()
+    close = float(candle["close"])
+    expired = 0
     with sqlite3.connect(DB) as con:
-        rows=con.execute(f"SELECT signal_id,last_price,opened_at,direction,entry,remaining_pct,realized_pnl_pct FROM {PAPER_TABLE} WHERE status='OPEN'").fetchall()
-        for sid,last_price,opened_at,direction,entry,remaining,realized in rows:
-            opened=_parse_time(opened_at)
-            if opened and now>=opened+timedelta(hours=24):
-                price=float(last_price); pnl=float(realized or 0)+float(remaining or 100)/100*_pnl(direction,float(entry),price)
-                con.execute(f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome='EXPIRED',pnl_pct=?,closed_at=?,exit_reason='EXPIRED',resolution_source='24h_timeout',realized_pnl_pct=?,unrealized_r=0 WHERE signal_id=?",(price,pnl,now.isoformat(),pnl,sid)); expired+=1
+        rows = con.execute(
+            f"SELECT signal_id,direction,entry,remaining_pct,realized_pnl_pct,expiry_at "
+            f"FROM {PAPER_TABLE} WHERE status='OPEN' AND symbol=?",
+            (symbol,),
+        ).fetchall()
+        candle_dt = _parse_time(candle_time)
+        for sid,direction,entry,remaining,realized,expiry_at in rows:
+            expiry_dt = _parse_time(expiry_at)
+            if not candle_dt or not expiry_dt or candle_dt < expiry_dt:
+                continue
+            pnl = float(realized or 0) + float(remaining or 100)/100 * _pnl(direction,float(entry),close)
+            risk = None
+            row = con.execute(
+                f"SELECT initial_risk FROM {PAPER_TABLE} WHERE signal_id=?", (sid,)
+            ).fetchone()
+            if row and row[0]:
+                risk = float(row[0])
+            rr = _r_value(direction,float(entry),close,risk,1.0) if risk else 0.0
+            con.execute(
+                f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome='EXPIRED',pnl_pct=?,"
+                f"closed_at=?,exit_reason='24H_TIMEOUT',resolution_source='5m_expiry_boundary',"
+                f"realized_pnl_pct=?,realized_r=?,unrealized_r=0,last_price=?,last_checked_at=? WHERE signal_id=?",
+                (close,pnl,candle_time,pnl,rr,close,candle_time,sid),
+            )
+            expired += 1
         con.commit()
     return expired
 
+
+def expire_old_trades(now=None):
+    """Safety-net expiry for runs with no candle at/after the boundary.
+
+    Normal workflow evaluation should use expire_trade_at_candle first. This
+    fallback preserves the existing behavior for manual/recovery runs while
+    clearly marking the resolution source as wall-clock fallback.
+    """
+    init_paper_db(); now=now or datetime.now(timezone.utc); expired=0
+    with sqlite3.connect(DB) as con:
+        rows=con.execute(f"SELECT signal_id,last_price,opened_at,direction,entry,remaining_pct,realized_pnl_pct,initial_risk FROM {PAPER_TABLE} WHERE status='OPEN'").fetchall()
+        for sid,last_price,opened_at,direction,entry,remaining,realized,risk in rows:
+            opened=_parse_time(opened_at)
+            if opened and now>=opened+timedelta(hours=24):
+                price=float(last_price or entry)
+                pnl=float(realized or 0)+float(remaining or 100)/100*_pnl(direction,float(entry),price)
+                rr=_r_value(direction,float(entry),price,float(risk),1.0) if risk else 0.0
+                con.execute(f"UPDATE {PAPER_TABLE} SET status='CLOSED',exit_price=?,outcome='EXPIRED',pnl_pct=?,closed_at=?,exit_reason='24H_TIMEOUT_FALLBACK',resolution_source='wall_clock_fallback',realized_pnl_pct=?,realized_r=?,unrealized_r=0 WHERE signal_id=?",(price,pnl,now.isoformat(),pnl,rr,sid)); expired+=1
+        con.commit()
+    return expired
 
 def mark_price(symbol,current_price): return mark_candle(symbol,{"high":current_price,"low":current_price,"close":current_price,"time":_now()})
 
