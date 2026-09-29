@@ -9,7 +9,7 @@ import asyncio
 import sqlite3
 from datetime import datetime, timezone, timedelta
 from .journal import DB, init_db
-from .paper_trader import mark_candle, expire_old_trades, paper_summary
+from .paper_trader import mark_candle, expire_trade_at_candle, expire_old_trades, paper_summary
 from .market_data import crypto_klines
 
 
@@ -136,6 +136,9 @@ async def _evaluate_symbol(symbol):
     primary=await asyncio.to_thread(_candles,symbol,PRIMARY_INTERVAL)
     closed=0
     for candle in primary:
+        # Enforce the 24h boundary at the 5m execution clock before resolving
+        # TP/SL on a candle that starts at/after expiry.
+        expire_trade_at_candle(symbol,candle)
         closed += mark_candle(symbol,candle)
 
     htf=None
@@ -164,6 +167,7 @@ async def evaluate():
                 "error":f"{type(exc).__name__}: {exc}",
             })
 
+    # Recovery fallback only: normally every expiry is handled at its 5m boundary.
     expired=expire_old_trades()
     return results,expired
 
