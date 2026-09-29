@@ -34,6 +34,10 @@ jobs:
           PAPER_RESOLUTION: '5m'
           MAX_HOLD_HOURS: '24'
         run: python -m trade_bot.intraday_paper_monitor
+      - name: Run paper audit unit tests
+        env:
+          DATABASE_PATH: trade_bot.db
+        run: python -m unittest discover -s trade_bot/tests -p 'test_*.py'
       - name: Run AURELIS Performance Audit v2
         env:
           DATABASE_PATH: trade_bot.db
