@@ -1,5 +1,5 @@
 import unittest
-from trade_bot.performance_audit_v2 import build_report
+from trade_bot.performance_audit_v2 import build_report, _duration_class
 
 class PerformanceAuditV2Tests(unittest.TestCase):
     def row(self,**kw):
@@ -27,6 +27,16 @@ class PerformanceAuditV2Tests(unittest.TestCase):
         r=build_report(rows)
         self.assertEqual(r["strict_boundary_view"]["expired"],1)
         self.assertEqual(r["strict_boundary_view"]["legacy_expiry_trades"],0)
+
+    def test_duration_classification(self):
+        self.assertEqual(_duration_class(self.row()), "INTRADAY_RESOLVED")
+        self.assertEqual(_duration_class(self.row(
+            outcome="EXPIRED",pnl_pct=3.0,
+            closed_at="2026-09-03T00:00:00+00:00",
+            resolution_source="24h_timeout")), "EXTENDED_SETUP")
+        self.assertEqual(_duration_class(self.row(
+            outcome="WIN_TP1",pnl_pct=4.0,
+            closed_at="2026-09-03T00:00:00+00:00")), "LONG_DURATION_WINNER")
 
     def test_r_and_fee_math(self):
         r=build_report([self.row()])
