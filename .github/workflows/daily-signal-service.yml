@@ -77,14 +77,14 @@ jobs:
           BINANCE_DEMO_MAX_RISK_PER_TRADE_PCT: '0.5'
           BINANCE_DEMO_MAX_LEVERAGE: '3'
         run: python -m trade_bot.daily_service
-      - name: Generate post-scan adaptive calibration snapshot
+      - name: Generate post-scan controlled calibration comparison
         env:
           DATABASE_PATH: trade_bot.db
           PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
           CALIBRATION_MIN_TOTAL_TRADES: '50'
           CALIBRATION_MIN_GROUP_TRADES: '20'
           PAPER_FEE_BPS_PER_SIDE: '10'
-        run: python -m trade_bot.adaptive_calibration
+        run: python -m trade_bot.calibration_backtest
       - name: Persist paper ledger
         env:
           DATABASE_PATH: trade_bot.db
