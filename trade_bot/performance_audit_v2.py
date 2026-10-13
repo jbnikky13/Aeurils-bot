@@ -38,8 +38,22 @@ def _outcome(r):return str(r.get("outcome") or "").upper()
 
 
 def _strict_expiry(r):
+    """Whether an expiry used the intended candle-boundary resolver."""
     if _outcome(r)!="EXPIRED": return True
     return r.get("resolution_source")=="5m_expiry_boundary"
+
+
+def _strict_24h(r):
+    """Include only trades resolved within 24h plus one 5m candle tolerance.
+
+    Expiries must additionally use the intended 5m candle-boundary resolver.
+    Unknown-duration rows are excluded conservatively from the strict view.
+    """
+    hours=_duration_hours(r)
+    if hours is None or hours > 24 + (5/60): return False
+    if _outcome(r)=="EXPIRED":
+        return r.get("resolution_source")=="5m_expiry_boundary"
+    return True
 
 
 def _duration_hours(r):
@@ -179,7 +193,7 @@ def _boundary_quality(r):
 def build_report(rows=None):
     rows=_rows() if rows is None else rows
     closed=[r for r in rows if str(r.get("status","")).upper()=="CLOSED" and _outcome(r)!="AMBIGUOUS"]
-    strict=[r for r in closed if _strict_expiry(r)]
+    strict=[r for r in closed if _strict_24h(r)]
     report={
         "audit_version":"2.0",
         "paper_only":True,
@@ -188,20 +202,23 @@ def build_report(rows=None):
         "methodology":{
             "execution_resolution":"5m",
             "expiry_policy":"first completed 5m candle at/after expiry_at",
-            "legacy_expiry_treatment":"retained as an extended-duration research population and excluded only from strict-boundary 24h validation",
+            "legacy_expiry_treatment":"retained in all-closed research metrics but excluded from strict 24h validation",
+            "strict_24h_policy":"closed duration must be known and no more than 24h plus one 5m candle; EXPIRED rows must use 5m_expiry_boundary",
             "r_definition":"price move divided by absolute entry-to-SL risk",
             "pnl_basis":"recorded pnl_pct less one entry and one exit fee",
         },
         "data_quality":{
             "total_rows":len(rows),
             "closed_rows":len(closed),
-            "strict_boundary_rows":len(strict),
+            "strict_24h_rows":len(strict),
+            "strict_boundary_rows":len(strict),  # Backward-compatible alias
             "legacy_expiry_rows":sum(_outcome(r)=="EXPIRED" and not _strict_expiry(r) for r in closed),
             "fallback_expiry_rows":sum(r.get("resolution_source")=="wall_clock_fallback" for r in closed),
             "missing_initial_risk":sum(_num(r.get("initial_risk"))<=0 for r in closed),
         },
         "all_closed":_stats(closed),
-        "strict_boundary_view":_stats(strict),
+        "strict_24h_view":_stats(strict),
+        "strict_boundary_view":_stats(strict),  # Backward-compatible alias
         "by_direction":_group(strict,lambda r:r.get("direction","UNKNOWN").upper()),
         "by_regime":_group(strict,lambda r:r.get("market_regime","UNKNOWN")),
         "by_score_band":_group(strict,_score_band),
@@ -229,10 +246,10 @@ def write_report():
 
 if __name__=="__main__":
     report=write_report()
-    a=report["strict_boundary_view"]
+    a=report["strict_24h_view"]
     print("AURELIS PERFORMANCE AUDIT v2")
     print(json.dumps({
-        "strict_boundary_trades":a["trades"],
+        "strict_24h_trades":a["trades"],
         "wins":a["wins"],"losses":a["losses"],"expired":a["expired"],
         "win_rate_pct":a["win_rate_pct"],"net_pnl_pct":a["net_pnl_pct"],
         "expectancy_pct":a["expectancy_pct"],"profit_factor":a["profit_factor"],
