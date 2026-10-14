@@ -1,0 +1,51 @@
+name: AURELIS Walk-Forward Pattern Validation
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "50 9 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r trade_bot/requirements.txt
+      - name: Run walk-forward validation
+        env:
+          AURELIS_PATTERN_SYMBOLS: BTCUSDT,ETHUSDT,BNBUSDT,SOLUSDT,XRPUSDT,ADAUSDT,DOGEUSDT,LINKUSDT,AVAXUSDT,DOTUSDT
+          AURELIS_PATTERN_DAYS: "1095"
+          AURELIS_PATTERN_COST_R: "0.08"
+          AURELIS_HISTORY_DIR: /tmp/aurelis-pattern-history
+        run: |
+          mkdir -p reports
+          python -m trade_bot.pattern_walk_forward > reports/pattern-walk-forward.json
+          python - <<'PY'
+          import json
+          with open("reports/pattern-walk-forward.json", encoding="utf-8") as file:
+              report = json.load(file)
+          print("Research only:", report["research_only"])
+          print("Symbols loaded:", report["symbols_loaded"])
+          print("Estimated cost (R/trade):", report["estimated_cost_r_per_trade"])
+          for fold in report["folds"]:
+              print("Fold", fold["fold"], "selected:", fold["selected_pattern_directions"],
+                    "OOS samples:", fold["out_of_sample"]["samples"],
+                    "OOS avg R:", fold["out_of_sample"]["avg_r"],
+                    "OOS win rate:", fold["out_of_sample"]["win_rate_pct"])
+          print("Overall OOS:", report["overall_out_of_sample"])
+          if report["symbols_loaded"] == 0:
+              raise SystemExit("No symbols loaded; refusing to publish an empty validation report")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aurelis-walk-forward-validation-report
+          path: reports/pattern-walk-forward.json
+          retention-days: 60
