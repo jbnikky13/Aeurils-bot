@@ -1,0 +1,52 @@
+name: AURELIS Pattern Loss Diagnostics
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "20 10 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r trade_bot/requirements.txt
+      - name: Run loss attribution and filter comparisons
+        env:
+          AURELIS_PATTERN_SYMBOLS: BTCUSDT,ETHUSDT,BNBUSDT,SOLUSDT,XRPUSDT,ADAUSDT,DOGEUSDT,LINKUSDT,AVAXUSDT,DOTUSDT
+          AURELIS_PATTERN_DAYS: "1095"
+          AURELIS_PATTERN_COST_R: "0.08"
+          AURELIS_HISTORY_DIR: /tmp/aurelis-pattern-history
+        run: |
+          mkdir -p reports
+          python -m trade_bot.pattern_loss_analysis > reports/pattern-loss-analysis.json
+          python - <<'PY'
+          import json
+          with open("reports/pattern-loss-analysis.json", encoding="utf-8") as file:
+              report = json.load(file)
+          if report["symbols_loaded"] == 0:
+              raise SystemExit("No symbols loaded; refusing to publish an empty diagnostics report")
+          print("Research only:", report["research_only"])
+          print("Symbols loaded:", report["symbols_loaded"])
+          print("Baseline:", report["baseline"]["at_selection_cost"])
+          print("Filter comparison (net average R):")
+          for name, result in report["filter_comparisons"].items():
+              print(name, result["at_selection_cost"]["samples"],
+                    result["at_selection_cost"]["net_avg_r"])
+          print("Worst pattern-direction groups:")
+          for item in report["worst_pattern_directions"][:10]:
+              print(item["group"], item["samples"], item["net_avg_r"])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aurelis-pattern-loss-diagnostics
+          path: reports/pattern-loss-analysis.json
+          retention-days: 60
