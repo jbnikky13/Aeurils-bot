@@ -1,0 +1,53 @@
+name: AURELIS Cross-Asset Pattern Research
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "20 9 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r trade_bot/requirements.txt
+      - name: Discover recurring patterns across assets
+        env:
+          AURELIS_PATTERN_SYMBOLS: BTCUSDT,ETHUSDT,BNBUSDT,SOLUSDT,XRPUSDT,ADAUSDT,DOGEUSDT,LINKUSDT,AVAXUSDT,DOTUSDT
+          AURELIS_PATTERN_DAYS: "180"
+          AURELIS_HISTORY_DIR: /tmp/aurelis-pattern-history
+        run: |
+          mkdir -p reports
+          python -m trade_bot.cross_asset_patterns > reports/cross-asset-patterns.json
+          python - <<'PY'
+          import json
+          report = json.load(open("reports/cross-asset-patterns.json"))
+          print("Research only:", report["research_only"])
+          print("Symbols loaded:", report["symbols_loaded"])
+          print("Patterns evaluated:", report["patterns_evaluated"])
+          print("Validation-positive patterns:", report["validated_patterns"])
+          for pattern in report["patterns"][:10]:
+              print(
+                  pattern["direction"],
+                  "| validation avg R:", pattern["validation"]["avg_r"],
+                  "| validation win rate:", pattern["validation"]["win_rate_pct"],
+                  "| validation samples:", pattern["validation"]["samples"],
+                  "| symbols:", pattern["validation"]["symbols"],
+                  "| pass:", pattern["validation_pass"],
+              )
+          if report["symbols_loaded"] == 0:
+              raise SystemExit("No symbols could be loaded; refusing to publish an empty research report")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aurelis-cross-asset-pattern-report
+          path: reports/cross-asset-patterns.json
+          retention-days: 60
