@@ -2,6 +2,13 @@ name: AURELIS Pattern Loss Diagnostics
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "trade_bot/pattern_loss_analysis.py"
+      - "trade_bot/cross_asset_patterns.py"
+      - "trade_bot/historical_features.py"
+      - ".github/workflows/pattern-loss-diagnostics.yml"
   schedule:
     - cron: "20 10 * * 1"
 
