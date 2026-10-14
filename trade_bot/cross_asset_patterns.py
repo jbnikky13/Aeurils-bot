@@ -1,4 +1,4 @@
-"""Cross-asset recurring-pattern research for AURELIS.
+""""Cross-asset recurring-pattern research for AURELIS.
 
 Research only: no signal scoring, order placement, or live-trading integration.
 Patterns use scale-independent feature buckets, fixed-horizon outcomes, and a
@@ -36,7 +36,6 @@ def pattern_key(row) -> tuple[str, ...] | None:
                 return label
         return labels[-1] if len(labels) == len(edges) else f"ge_{edges[-1]}"
 
-    # Broad buckets deliberately favour repeatable regimes over exact matches.
     return (
         bucket(values["ret_3"], (-0.04, -0.015, 0.015, 0.04), ("hard_down", "down", "flat", "up", "hard_up")),
         bucket(values["ret_6"], (-0.07, -0.025, 0.025, 0.07), ("hard_down", "down", "flat", "up", "hard_up")),
@@ -82,7 +81,7 @@ def _summarize(rows: list[dict]) -> dict:
         return {"samples": 0, "symbols": 0, "win_rate_pct": 0.0, "avg_r": 0.0}
     outcomes = [float(item["r"]) for item in rows]
     return {
-        "samples": len(rows),
+        "samples": len(outcomes),
         "symbols": len({item["symbol"] for item in rows}),
         "win_rate_pct": round(sum(value > 0 for value in outcomes) / len(outcomes) * 100, 2),
         "avg_r": round(sum(outcomes) / len(outcomes), 4),
@@ -99,10 +98,10 @@ def analyze(
 ) -> dict:
     """Evaluate recurring pattern keys with a chronological holdout.
 
-    Each symbol is split by row order. Training rows must have complete forward
-    outcomes entirely inside the training segment; validation outcomes must be
-    entirely inside the validation segment. This prevents split-boundary
-    leakage and ensures the validation period is never used to select patterns.
+    Training outcomes stay entirely inside the training segment, and validation
+    outcomes stay entirely inside validation. The default research workflow now
+    supplies three years of history so regimes can be compared over longer
+    market cycles; the holdout remains strictly chronological.
     """
     if not 0.5 <= train_fraction <= 0.85:
         raise ValueError("train_fraction must be between 0.50 and 0.85")
@@ -113,6 +112,7 @@ def analyze(
     validation: dict[tuple[str, ...], dict[str, list[dict]]] = defaultdict(lambda: {"LONG": [], "SHORT": []})
     latest: dict[str, dict] = {}
     symbol_errors = {}
+    date_ranges = {}
 
     for raw_symbol, raw_frame in frames.items():
         symbol = str(raw_symbol).upper()
@@ -124,6 +124,14 @@ def analyze(
                 raise ValueError("missing columns: " + ", ".join(missing))
             if len(frame) < max(100, horizon * 2 + 30):
                 raise ValueError("insufficient candles")
+            if "open_time" in frame.columns and not frame["open_time"].empty:
+                date_ranges[symbol] = {
+                    "start": str(frame["open_time"].iloc[0]),
+                    "end": str(frame["open_time"].iloc[-1]),
+                    "candles": len(frame),
+                }
+            else:
+                date_ranges[symbol] = {"start": None, "end": None, "candles": len(frame)}
             split = int(len(frame) * train_fraction)
             latest_key = pattern_key(frame.iloc[-1])
             latest[symbol] = {"pattern": list(latest_key) if latest_key else None, "rows": len(frame)}
@@ -174,6 +182,7 @@ def analyze(
         "research_only": True,
         "signal_engine_modified": False,
         "real_money_enabled": False,
+        "history_days_requested": int(__import__("os").getenv("AURELIS_PATTERN_DAYS", "1095")),
         "timeframe": "4h",
         "forward_horizon_bars": horizon,
         "forward_horizon_hours": horizon * 4,
@@ -182,6 +191,7 @@ def analyze(
         "minimum_validation_samples": min_validation_samples,
         "symbols_loaded": len(frames) - len(symbol_errors),
         "symbols": latest,
+        "date_ranges": date_ranges,
         "symbol_errors": symbol_errors,
         "patterns_evaluated": len(results),
         "validated_patterns": sum(bool(item["validation_pass"]) for item in results),
@@ -190,7 +200,7 @@ def analyze(
             "Historical patterns are not forecasts or guarantees.",
             "Symbols can be correlated; symbol counts do not imply independent evidence.",
             "Fees, slippage, funding, and executable entry timing are not modeled.",
-            "Patterns must be reviewed across more periods before any signal integration.",
+            "One chronological holdout can still be regime-dependent; validate across multiple market cycles before signal integration.",
         ],
     }
 
@@ -202,9 +212,9 @@ if __name__ == "__main__":
 
     symbols = [s.strip().upper() for s in os.getenv(
         "AURELIS_PATTERN_SYMBOLS",
-        "BTCUSDT,ETHUSDT,BNBUSDT,SOLUSDT,XRPUSDT,ADAUSDT,DOGEUSDT"
+        "BTCUSDT,ETHUSDT,BNBUSDT,SOLUSDT,XRPUSDT,ADAUSDT,DOGEUSDT,LINKUSDT,AVAXUSDT,DOTUSDT"
     ).split(",") if s.strip()]
-    days = int(os.getenv("AURELIS_PATTERN_DAYS", "180"))
+    days = int(os.getenv("AURELIS_PATTERN_DAYS", "1095"))
     data = load_symbols(symbols, interval="4h", days=days)
     report = analyze(data)
     print(json.dumps(report, indent=2, default=str))
