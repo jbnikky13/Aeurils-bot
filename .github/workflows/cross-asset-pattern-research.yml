@@ -1,4 +1,4 @@
-name: AURELIS Cross-Asset Pattern Research
+name: AURELIS Multi-Year Cross-Asset Pattern Research
 
 on:
   workflow_dispatch:
@@ -22,7 +22,7 @@ jobs:
       - name: Discover recurring patterns across assets
         env:
           AURELIS_PATTERN_SYMBOLS: BTCUSDT,ETHUSDT,BNBUSDT,SOLUSDT,XRPUSDT,ADAUSDT,DOGEUSDT,LINKUSDT,AVAXUSDT,DOTUSDT
-          AURELIS_PATTERN_DAYS: "180"
+          AURELIS_PATTERN_DAYS: "1095"
           AURELIS_HISTORY_DIR: /tmp/aurelis-pattern-history
         run: |
           mkdir -p reports
