@@ -1,4 +1,4 @@
-""""Cross-asset recurring-pattern research for AURELIS.
+"""Cross-asset recurring-pattern research for AURELIS.
 
 Research only: no signal scoring, order placement, or live-trading integration.
 Patterns use scale-independent feature buckets, fixed-horizon outcomes, and a
