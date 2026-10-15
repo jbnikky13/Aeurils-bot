@@ -12,7 +12,7 @@
     "pnl_basis": "recorded pnl_pct less one entry and one exit fee"
   },
   "data_quality": {
-    "total_rows": 204,
+    "total_rows": 209,
     "closed_rows": 198,
     "strict_24h_rows": 110,
     "strict_boundary_rows": 110,
