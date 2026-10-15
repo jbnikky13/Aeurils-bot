@@ -1,0 +1,59 @@
+name: AURELIS Execution Cost Robustness
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "trade_bot/execution_robustness.py"
+      - "tests/test_execution_robustness.py"
+      - ".github/workflows/execution-cost-robustness.yml"
+      - "trade_bot/cross_asset_patterns.py"
+      - "trade_bot/historical_features.py"
+  schedule:
+    - cron: "45 10 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  robustness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r trade_bot/requirements.txt
+      - name: Run unit tests
+        run: python -m unittest tests.test_execution_robustness -v
+      - name: Run final-holdout execution-cost analysis
+        env:
+          AURELIS_PATTERN_SYMBOLS: BTCUSDT,ETHUSDT,BNBUSDT,SOLUSDT,XRPUSDT,ADAUSDT,DOGEUSDT,LINKUSDT,AVAXUSDT,DOTUSDT
+          AURELIS_PATTERN_DAYS: "1095"
+          AURELIS_BOOTSTRAP_ITERATIONS: "1000"
+          AURELIS_HISTORY_DIR: /tmp/aurelis-pattern-history
+        run: |
+          mkdir -p reports
+          python -m trade_bot.execution_robustness > reports/execution-robustness.json
+          python - <<'PY'
+          import json
+          with open("reports/execution-robustness.json", encoding="utf-8") as file:
+              report = json.load(file)
+          if report["symbols_loaded"] == 0:
+              raise SystemExit("No symbols loaded; refusing to publish an empty report")
+          print("Research only:", report["research_only"])
+          print("Holdout observations:", report["holdout_selected_observations"])
+          print("Holdout pass:", report["holdout_pass"])
+          for name, result in report["cost_scenarios"].items():
+              print(name, "samples=", result["samples"], "net_avg_r=", result["net_avg_r"],
+                    "avg_cost_r=", result["total_cost_avg_r"])
+          print("Base cost 95% CI:", report["base_cost_bootstrap_ci"])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aurelis-execution-cost-robustness
+          path: reports/execution-robustness.json
+          retention-days: 60
