@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from trade_bot.pattern_loss_analysis import COST_GRID_R, _stats, analyze_losses
+from trade_bot.pattern_loss_analysis import COST_GRID_R, _stats, _volatility_regime, analyze_losses
 
 
 def candles(n=520, seed=17):
@@ -26,6 +26,11 @@ def candles(n=520, seed=17):
 
 
 class PatternLossAnalysisTests(unittest.TestCase):
+    def test_volatility_regime_uses_training_quantile_cutoffs(self):
+        self.assertEqual(_volatility_regime(1.0, 1.5, 2.5), "low_volatility")
+        self.assertEqual(_volatility_regime(2.0, 1.5, 2.5), "normal_volatility")
+        self.assertEqual(_volatility_regime(3.0, 1.5, 2.5), "high_volatility")
+
     def test_cost_sensitivity_is_monotonic(self):
         rows = [{"symbol": "BTCUSDT", "gross_r": 0.5}]
         values = [_stats(rows, cost)["net_avg_r"] for cost in COST_GRID_R]
