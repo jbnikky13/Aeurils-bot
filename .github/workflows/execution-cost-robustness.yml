@@ -2,6 +2,13 @@ name: AURELIS Execution Cost Robustness
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - "trade_bot/execution_robustness.py"
+      - "tests/test_execution_robustness.py"
+      - ".github/workflows/execution-cost-robustness.yml"
+      - "trade_bot/cross_asset_patterns.py"
+      - "trade_bot/historical_features.py"
   push:
     branches: [main]
     paths:
