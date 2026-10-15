@@ -47,6 +47,15 @@ def _dedupe(rows: list[dict], horizon: int) -> list[dict]:
     return selected
 
 
+def _volatility_regime(value: float, lower_cutoff: float, upper_cutoff: float) -> str:
+    """Classify test volatility against quantiles calculated only from its training window."""
+    if value <= lower_cutoff:
+        return "low_volatility"
+    if value >= upper_cutoff:
+        return "high_volatility"
+    return "normal_volatility"
+
+
 def analyze_losses(
     frames: Mapping[str, pd.DataFrame],
     horizon: int = 6,
@@ -86,6 +95,13 @@ def analyze_losses(
         for symbol, frame in prepared.items():
             n = len(frame)
             train_end, test_end = int(n * train_fraction), int(n * test_fraction)
+            # Thresholds are fitted only on data available before this fold's test window.
+            train_atr = frame.loc[:train_end - 1, "atr_pct"].dropna()
+            if train_atr.empty:
+                lower_atr, upper_atr = 0.0, float("inf")
+            else:
+                lower_atr, upper_atr = (float(train_atr.quantile(1 / 3)),
+                                        float(train_atr.quantile(2 / 3)))
             for i in range(60, n - horizon):
                 row = frame.iloc[i]
                 key = pattern_key(row)
@@ -100,6 +116,11 @@ def analyze_losses(
                             "trend_gap_pct": float(row["trend_gap_pct"]),
                             "ret_3": float(row["ret_3"]) if pd.notna(row["ret_3"]) else 0.0,
                             "atr_pct": float(row["atr_pct"]) if pd.notna(row["atr_pct"]) else 999.0,
+                            "atr_regime": _volatility_regime(
+                                float(row["atr_pct"]) if pd.notna(row["atr_pct"]) else 999.0,
+                                lower_atr, upper_atr),
+                            "atr_train_lower_cutoff": lower_atr,
+                            "atr_train_upper_cutoff": upper_atr,
                             "rsi14": float(row["rsi14"]) if pd.notna(row["rsi14"]) else 50.0}
                     if i + horizon < train_end:
                         train[key][direction].append(item)
@@ -133,10 +154,10 @@ def analyze_losses(
         "baseline": lambda r: True,
         "trend_aligned": lambda r: (r["direction"] == "LONG" and r["trend_gap_pct"] > 0)
                                    or (r["direction"] == "SHORT" and r["trend_gap_pct"] < 0),
-        "moderate_volatility_atr_pct_le_5": lambda r: r["atr_pct"] <= 5.0,
+        "lower_two_thirds_training_volatility": lambda r: r["atr_regime"] != "high_volatility",
         "momentum_confirmed": lambda r: (r["direction"] == "LONG" and r["ret_3"] > 0)
                                         or (r["direction"] == "SHORT" and r["ret_3"] < 0),
-        "trend_and_moderate_volatility": lambda r: r["atr_pct"] <= 5.0 and (
+        "trend_and_lower_two_thirds_training_volatility": lambda r: r["atr_regime"] != "high_volatility" and (
             (r["direction"] == "LONG" and r["trend_gap_pct"] > 0)
             or (r["direction"] == "SHORT" and r["trend_gap_pct"] < 0)),
         "trend_and_momentum": lambda r: (
@@ -163,10 +184,11 @@ def analyze_losses(
                  **_stats(items, selection_cost_r)}
                 for key, items in buckets.items()]
 
-    pattern_groups = aggregate(lambda r: (r["pattern"], r["direction"]))
+    pattern_groups = [group for group in aggregate(lambda r: (r["pattern"], r["direction"]))
+                      if group["samples"] >= 20]
     pattern_groups.sort(key=lambda x: (x["net_avg_r"], -x["samples"]))
     direction = aggregate(lambda r: r["direction"])
-    regimes = aggregate(lambda r: "high_volatility" if r["atr_pct"] > 5 else "normal_or_low_volatility")
+    regimes = aggregate(lambda r: r["atr_regime"])
     return {
         "research_only": True,
         "signal_engine_modified": False,
@@ -183,6 +205,7 @@ def analyze_losses(
         "filter_comparisons": comparisons,
         "by_direction": direction,
         "by_volatility_regime": regimes,
+        "minimum_pattern_group_samples": 20,
         "worst_pattern_directions": pattern_groups[:20],
         "best_pattern_directions": list(reversed(pattern_groups[-20:])),
         "observations": len(rows),
