@@ -30,9 +30,7 @@
       "strategy_mode",
       "continuation_score",
       "runner_enabled",
-      "trailing_atr_multiplier",
-      "signal_key",
-      "updated_at"
+      "trailing_atr_multiplier"
     ],
     "rows": [
       {
@@ -65,9 +63,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 2,
@@ -99,9 +95,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 3,
@@ -133,9 +127,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 4,
@@ -167,9 +159,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 5,
@@ -201,9 +191,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 6,
@@ -235,9 +223,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 7,
@@ -269,9 +255,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 8,
@@ -303,9 +287,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 9,
@@ -337,9 +319,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 10,
@@ -371,9 +351,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 11,
@@ -405,9 +383,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 12,
@@ -439,9 +415,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 13,
@@ -473,9 +447,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 14,
@@ -507,9 +479,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 15,
@@ -541,9 +511,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 16,
@@ -575,9 +543,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 17,
@@ -609,9 +575,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 18,
@@ -643,9 +607,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 19,
@@ -677,9 +639,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 20,
@@ -711,9 +671,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 21,
@@ -745,9 +703,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 22,
@@ -779,9 +735,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 23,
@@ -813,9 +767,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 24,
@@ -847,9 +799,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 25,
@@ -881,9 +831,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 26,
@@ -915,9 +863,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 27,
@@ -949,9 +895,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 28,
@@ -983,9 +927,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 29,
@@ -1017,9 +959,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 30,
@@ -1051,9 +991,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 31,
@@ -1085,9 +1023,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 32,
@@ -1119,9 +1055,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 33,
@@ -1153,9 +1087,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 34,
@@ -1187,9 +1119,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 35,
@@ -1221,9 +1151,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 36,
@@ -1255,9 +1183,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 37,
@@ -1289,9 +1215,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 38,
@@ -1323,9 +1247,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 39,
@@ -1357,9 +1279,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 40,
@@ -1391,9 +1311,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 41,
@@ -1425,9 +1343,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 42,
@@ -1459,9 +1375,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 43,
@@ -1493,9 +1407,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 44,
@@ -1527,9 +1439,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 45,
@@ -1561,9 +1471,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 46,
@@ -1595,9 +1503,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 47,
@@ -1629,9 +1535,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 48,
@@ -1663,9 +1567,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 49,
@@ -1697,9 +1599,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 50,
@@ -1731,9 +1631,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 51,
@@ -1765,9 +1663,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 52,
@@ -1799,9 +1695,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 53,
@@ -1833,9 +1727,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 54,
@@ -1867,9 +1759,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 55,
@@ -1901,9 +1791,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 56,
@@ -1935,9 +1823,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 57,
@@ -1969,9 +1855,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 58,
@@ -2003,9 +1887,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 59,
@@ -2037,9 +1919,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 60,
@@ -2071,9 +1951,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 61,
@@ -2105,9 +1983,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 62,
@@ -2139,9 +2015,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 63,
@@ -2173,9 +2047,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 64,
@@ -2207,9 +2079,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 65,
@@ -2241,9 +2111,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 66,
@@ -2275,9 +2143,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 0.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 67,
@@ -2309,9 +2175,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 68,
@@ -2343,9 +2207,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 69,
@@ -2377,9 +2239,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 70,
@@ -2411,9 +2271,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 71,
@@ -2445,9 +2303,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 72,
@@ -2479,9 +2335,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 73,
@@ -2513,9 +2367,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 74,
@@ -2547,9 +2399,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 75,
@@ -2581,9 +2431,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 76,
@@ -2615,9 +2463,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 77,
@@ -2649,9 +2495,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 78,
@@ -2683,9 +2527,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 79,
@@ -2717,9 +2559,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 80,
@@ -2751,9 +2591,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 81,
@@ -2785,9 +2623,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 82,
@@ -2819,9 +2655,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 83,
@@ -2853,9 +2687,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 84,
@@ -2887,9 +2719,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 85,
@@ -2921,9 +2751,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 86,
@@ -2955,9 +2783,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 87,
@@ -2989,9 +2815,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 88,
@@ -3023,9 +2847,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 89,
@@ -3057,9 +2879,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 90,
@@ -3091,9 +2911,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 91,
@@ -3125,9 +2943,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 92,
@@ -3159,9 +2975,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 93,
@@ -3193,9 +3007,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 94,
@@ -3227,9 +3039,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 95,
@@ -3261,9 +3071,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 55.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 96,
@@ -3295,9 +3103,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 97,
@@ -3329,9 +3135,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 98,
@@ -3363,9 +3167,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 99,
@@ -3397,9 +3199,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 100,
@@ -3431,9 +3231,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 55.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 101,
@@ -3465,9 +3263,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 102,
@@ -3499,9 +3295,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 55.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 103,
@@ -3533,9 +3327,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 104,
@@ -3567,9 +3359,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 105,
@@ -3601,9 +3391,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 106,
@@ -3635,9 +3423,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 55.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 107,
@@ -3669,9 +3455,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 108,
@@ -3703,9 +3487,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 109,
@@ -3737,9 +3519,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 110,
@@ -3771,9 +3551,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 111,
@@ -3805,9 +3583,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 112,
@@ -3839,9 +3615,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 55.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 113,
@@ -3873,9 +3647,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 114,
@@ -3907,9 +3679,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 115,
@@ -3941,9 +3711,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 116,
@@ -3975,9 +3743,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 117,
@@ -4009,9 +3775,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 118,
@@ -4043,9 +3807,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 55.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 119,
@@ -4077,9 +3839,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 120,
@@ -4111,9 +3871,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 121,
@@ -4145,9 +3903,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 122,
@@ -4179,9 +3935,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 123,
@@ -4213,9 +3967,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 124,
@@ -4247,9 +3999,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 55.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 125,
@@ -4281,9 +4031,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 126,
@@ -4315,9 +4063,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 127,
@@ -4349,9 +4095,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 128,
@@ -4383,9 +4127,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 129,
@@ -4417,9 +4159,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 130,
@@ -4451,9 +4191,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 131,
@@ -4485,9 +4223,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 132,
@@ -4519,9 +4255,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 133,
@@ -4553,9 +4287,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 30.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 134,
@@ -4587,9 +4319,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 135,
@@ -4621,9 +4351,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 55.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 136,
@@ -4655,9 +4383,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 137,
@@ -4689,9 +4415,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 138,
@@ -4723,9 +4447,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 139,
@@ -4757,9 +4479,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 140,
@@ -4791,9 +4511,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 141,
@@ -4825,9 +4543,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 142,
@@ -4859,9 +4575,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 143,
@@ -4893,9 +4607,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 144,
@@ -4927,9 +4639,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 145,
@@ -4961,9 +4671,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 146,
@@ -4995,9 +4703,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 147,
@@ -5029,9 +4735,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 148,
@@ -5063,9 +4767,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 149,
@@ -5097,9 +4799,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 150,
@@ -5131,9 +4831,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 151,
@@ -5165,9 +4863,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 152,
@@ -5199,9 +4895,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 153,
@@ -5233,9 +4927,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 154,
@@ -5267,9 +4959,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 155,
@@ -5301,9 +4991,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 156,
@@ -5335,9 +5023,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 157,
@@ -5369,9 +5055,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 158,
@@ -5403,9 +5087,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 159,
@@ -5437,9 +5119,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 160,
@@ -5471,9 +5151,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 161,
@@ -5505,9 +5183,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 162,
@@ -5539,9 +5215,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 163,
@@ -5573,9 +5247,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 164,
@@ -5607,9 +5279,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 165,
@@ -5641,9 +5311,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 166,
@@ -5675,9 +5343,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 167,
@@ -5709,9 +5375,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 168,
@@ -5743,9 +5407,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 169,
@@ -5777,9 +5439,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 170,
@@ -5811,9 +5471,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 55.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 171,
@@ -5845,9 +5503,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 172,
@@ -5879,9 +5535,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 173,
@@ -5913,9 +5567,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 174,
@@ -5947,9 +5599,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 175,
@@ -5981,9 +5631,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 176,
@@ -6015,9 +5663,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 177,
@@ -6049,9 +5695,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 178,
@@ -6083,9 +5727,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 55.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 179,
@@ -6117,9 +5759,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 180,
@@ -6151,9 +5791,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 181,
@@ -6185,9 +5823,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 182,
@@ -6219,9 +5855,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 183,
@@ -6253,9 +5887,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 55.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 184,
@@ -6287,9 +5919,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 185,
@@ -6321,9 +5951,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 186,
@@ -6355,9 +5983,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 187,
@@ -6389,9 +6015,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 188,
@@ -6423,9 +6047,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 189,
@@ -6457,9 +6079,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 190,
@@ -6491,9 +6111,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 191,
@@ -6525,9 +6143,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 192,
@@ -6559,9 +6175,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 193,
@@ -6593,9 +6207,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 194,
@@ -6627,9 +6239,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 55.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 195,
@@ -6661,9 +6271,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 196,
@@ -6695,9 +6303,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 197,
@@ -6729,9 +6335,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 198,
@@ -6763,9 +6367,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 199,
@@ -6797,9 +6399,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 200,
@@ -6831,9 +6431,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 201,
@@ -6865,9 +6463,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 202,
@@ -6899,9 +6495,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 203,
@@ -6933,9 +6527,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 204,
@@ -6967,9 +6559,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 205,
@@ -7001,9 +6591,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 206,
@@ -7035,9 +6623,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 207,
@@ -7069,9 +6655,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 208,
@@ -7103,9 +6687,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 209,
@@ -7137,9 +6719,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 55.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 210,
@@ -7171,9 +6751,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 211,
@@ -7205,9 +6783,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 212,
@@ -7239,9 +6815,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 213,
@@ -7273,9 +6847,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 214,
@@ -7307,9 +6879,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 215,
@@ -7341,9 +6911,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 55.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 216,
@@ -7375,9 +6943,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 217,
@@ -7409,9 +6975,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 218,
@@ -7443,9 +7007,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 219,
@@ -7477,9 +7039,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 220,
@@ -7511,9 +7071,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 221,
@@ -7545,9 +7103,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 222,
@@ -7579,9 +7135,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 65.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 223,
@@ -7613,9 +7167,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 224,
@@ -7647,9 +7199,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 225,
@@ -7681,9 +7231,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 226,
@@ -7715,9 +7263,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 227,
@@ -7749,9 +7295,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 228,
@@ -7783,9 +7327,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 229,
@@ -7817,9 +7359,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 230,
@@ -7851,9 +7391,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 231,
@@ -7871,8 +7409,8 @@
         "technical_score": 85,
         "whale_score": 50,
         "sentiment_score": 50,
-        "outcome": "OPEN",
-        "closed_at": null,
+        "outcome": "WIN_TP1",
+        "closed_at": "2026-10-17T22:46:48.727100+00:00",
         "market_regime": "BEARISH",
         "gemini_confidence": null,
         "gemini_decision": "UNAVAILABLE",
@@ -7885,9 +7423,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 232,
@@ -7919,9 +7455,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 233,
@@ -7953,9 +7487,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 234,
@@ -7987,9 +7519,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 235,
@@ -8021,9 +7551,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 236,
@@ -8055,9 +7583,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 237,
@@ -8089,9 +7615,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 50.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 238,
@@ -8123,9 +7647,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 40.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 239,
@@ -8143,8 +7665,8 @@
         "technical_score": 78,
         "whale_score": 50,
         "sentiment_score": 50,
-        "outcome": "OPEN",
-        "closed_at": null,
+        "outcome": "WIN_TP1",
+        "closed_at": "2026-10-17T22:46:43.220335+00:00",
         "market_regime": "BEARISH",
         "gemini_confidence": null,
         "gemini_decision": "UNAVAILABLE",
@@ -8157,9 +7679,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": null,
-        "updated_at": null
+        "trailing_atr_multiplier": null
       },
       {
         "id": 240,
@@ -8191,9 +7711,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 55.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": "74a67aadf6a5124c77752d9f08c5dabaec293fb00ce3dff6600462bfeb9619b5",
-        "updated_at": "2026-10-17T20:59:26.557595+00:00"
+        "trailing_atr_multiplier": null
       },
       {
         "id": 241,
@@ -8225,9 +7743,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": "598070de64f380495d76b755fb060107463fcb6cfa905bf6ca8103eefa5fb8b8",
-        "updated_at": "2026-10-17T20:59:27.124777+00:00"
+        "trailing_atr_multiplier": null
       },
       {
         "id": 242,
@@ -8259,9 +7775,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": "21ec7a2fa957fedc038d3e432876cccee7acf294fd9ddca9fa06676173154bab",
-        "updated_at": "2026-10-17T20:59:27.625562+00:00"
+        "trailing_atr_multiplier": null
       },
       {
         "id": 243,
@@ -8293,9 +7807,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": "d292348312adfa08bb5bc8b56586e8e6119da04f6e17121c3ac1adff8de747cb",
-        "updated_at": "2026-10-17T20:59:28.148459+00:00"
+        "trailing_atr_multiplier": null
       },
       {
         "id": 244,
@@ -8327,9 +7839,7 @@
         "strategy_mode": "NORMAL",
         "continuation_score": 25.0,
         "runner_enabled": 0,
-        "trailing_atr_multiplier": null,
-        "signal_key": "15f5b61f7f2b08ee6c8af56c17bc472bb4007038b6665b3111612a4b446649b3",
-        "updated_at": "2026-10-17T20:59:28.656392+00:00"
+        "trailing_atr_multiplier": null
       }
     ]
   },
@@ -18019,12 +17529,12 @@
         "stop_loss": 2.4042142857142856,
         "tp1": 2.1937142857142855,
         "tp2": 2.1335714285714285,
-        "status": "OPEN",
-        "exit_price": null,
-        "outcome": null,
-        "pnl_pct": null,
+        "status": "CLOSED",
+        "exit_price": 2.225,
+        "outcome": "EXPIRED",
+        "pnl_pct": 3.846153846153845,
         "opened_at": "2026-10-16T21:42:14.906288+00:00",
-        "closed_at": null,
+        "closed_at": "2026-10-17T21:45:00+00:00",
         "final_score": 69.0,
         "market_regime": "BEARISH",
         "gemini_decision": "UNAVAILABLE",
@@ -18033,22 +17543,22 @@
         "tp1_hit_at": null,
         "tp2_hit_at": null,
         "sl_hit_at": null,
-        "exit_reason": null,
-        "last_price": 2.276,
-        "last_checked_at": "2026-10-17T20:40:00+00:00",
-        "max_favorable_pct": 2.3768366464995747,
+        "exit_reason": "24H_TIMEOUT",
+        "last_price": 2.225,
+        "last_checked_at": "2026-10-17T21:45:00+00:00",
+        "max_favorable_pct": 4.58081244598098,
         "max_adverse_pct": 2.5496974935177255,
         "expiry_at": "2026-10-17T21:42:14.906288+00:00",
-        "resolution_source": null,
+        "resolution_source": "5m_expiry_boundary",
         "runner_enabled": 0,
         "runner_active": 0,
         "remaining_pct": 100.0,
-        "realized_pnl_pct": 0.0,
+        "realized_pnl_pct": 3.846153846153845,
         "trailing_stop": null,
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.09021428571428558,
-        "realized_r": 0.0,
-        "unrealized_r": 0.4212193190815553,
+        "realized_r": 0.9865399841646884,
+        "unrealized_r": 0.0,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18062,12 +17572,12 @@
         "stop_loss": 0.09633928571428572,
         "tp1": 0.08901428571428571,
         "tp2": 0.08692142857142857,
-        "status": "OPEN",
-        "exit_price": null,
-        "outcome": null,
-        "pnl_pct": null,
+        "status": "CLOSED",
+        "exit_price": 0.0912,
+        "outcome": "EXPIRED",
+        "pnl_pct": 2.1459227467811175,
         "opened_at": "2026-10-16T21:42:15.509031+00:00",
-        "closed_at": null,
+        "closed_at": "2026-10-17T21:45:00+00:00",
         "final_score": 69.0,
         "market_regime": "BEARISH",
         "gemini_decision": "WAIT",
@@ -18076,22 +17586,22 @@
         "tp1_hit_at": null,
         "tp2_hit_at": null,
         "sl_hit_at": null,
-        "exit_reason": null,
-        "last_price": 0.0928,
-        "last_checked_at": "2026-10-17T20:40:00+00:00",
-        "max_favorable_pct": 1.6094420600858381,
+        "exit_reason": "24H_TIMEOUT",
+        "last_price": 0.0912,
+        "last_checked_at": "2026-10-17T21:45:00+00:00",
+        "max_favorable_pct": 3.0042918454935736,
         "max_adverse_pct": 0.6437768240343233,
         "expiry_at": "2026-10-17T21:42:15.509031+00:00",
-        "resolution_source": null,
+        "resolution_source": "5m_expiry_boundary",
         "runner_enabled": 0,
         "runner_active": 0,
         "remaining_pct": 100.0,
-        "realized_pnl_pct": 0.0,
+        "realized_pnl_pct": 2.1459227467811175,
         "trailing_stop": null,
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0031392857142857195,
-        "realized_r": 0.0,
-        "unrealized_r": 0.12741751990899092,
+        "realized_r": 0.637087599544937,
+        "unrealized_r": 0.0,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18105,12 +17615,12 @@
         "stop_loss": 0.005777857142857143,
         "tp1": 0.005152857142857143,
         "tp2": 0.004974285714285715,
-        "status": "OPEN",
-        "exit_price": null,
-        "outcome": null,
-        "pnl_pct": null,
+        "status": "CLOSED",
+        "exit_price": 0.00526,
+        "outcome": "EXPIRED",
+        "pnl_pct": 4.537205081669696,
         "opened_at": "2026-10-16T21:42:16.085324+00:00",
-        "closed_at": null,
+        "closed_at": "2026-10-17T21:45:00+00:00",
         "final_score": 69.0,
         "market_regime": "BEARISH",
         "gemini_decision": "UNAVAILABLE",
@@ -18119,22 +17629,22 @@
         "tp1_hit_at": null,
         "tp2_hit_at": null,
         "sl_hit_at": null,
-        "exit_reason": null,
-        "last_price": 0.00544,
-        "last_checked_at": "2026-10-17T20:40:00+00:00",
-        "max_favorable_pct": 2.540834845735034,
+        "exit_reason": "24H_TIMEOUT",
+        "last_price": 0.00526,
+        "last_checked_at": "2026-10-17T21:45:00+00:00",
+        "max_favorable_pct": 4.9001814882032715,
         "max_adverse_pct": 2.177858439201442,
         "expiry_at": "2026-10-17T21:42:16.085324+00:00",
-        "resolution_source": null,
+        "resolution_source": "5m_expiry_boundary",
         "runner_enabled": 0,
         "runner_active": 0,
         "remaining_pct": 100.0,
-        "realized_pnl_pct": 0.0,
+        "realized_pnl_pct": 4.537205081669696,
         "trailing_stop": null,
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0002678571428571426,
-        "realized_r": 0.0,
-        "unrealized_r": 0.26133333333333264,
+        "realized_r": 0.933333333333335,
+        "unrealized_r": 0.0,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18148,12 +17658,12 @@
         "stop_loss": 0.004533214285714285,
         "tp1": 0.0041057142857142855,
         "tp2": 0.003983571428571428,
-        "status": "OPEN",
-        "exit_price": null,
-        "outcome": null,
-        "pnl_pct": null,
+        "status": "CLOSED",
+        "exit_price": 0.00415,
+        "outcome": "EXPIRED",
+        "pnl_pct": 4.59770114942528,
         "opened_at": "2026-10-16T21:42:16.650123+00:00",
-        "closed_at": null,
+        "closed_at": "2026-10-17T21:45:00+00:00",
         "final_score": 69.0,
         "market_regime": "BEARISH",
         "gemini_decision": "UNAVAILABLE",
@@ -18162,22 +17672,22 @@
         "tp1_hit_at": null,
         "tp2_hit_at": null,
         "sl_hit_at": null,
-        "exit_reason": null,
-        "last_price": 0.00424,
-        "last_checked_at": "2026-10-17T20:40:00+00:00",
-        "max_favorable_pct": 4.827586206896554,
+        "exit_reason": "24H_TIMEOUT",
+        "last_price": 0.00415,
+        "last_checked_at": "2026-10-17T21:45:00+00:00",
+        "max_favorable_pct": 5.51724137931034,
         "max_adverse_pct": 1.37931034482759,
         "expiry_at": "2026-10-17T21:42:16.650123+00:00",
-        "resolution_source": null,
+        "resolution_source": "5m_expiry_boundary",
         "runner_enabled": 0,
         "runner_active": 0,
         "remaining_pct": 100.0,
-        "realized_pnl_pct": 0.0,
+        "realized_pnl_pct": 4.59770114942528,
         "trailing_stop": null,
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00018321428571428568,
-        "realized_r": 0.0,
-        "unrealized_r": 0.6003898635477576,
+        "realized_r": 1.0916179337231953,
+        "unrealized_r": 0.0,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18191,12 +17701,12 @@
         "stop_loss": 8.182857142857143,
         "tp1": 7.522857142857143,
         "tp2": 7.3342857142857145,
-        "status": "OPEN",
-        "exit_price": null,
-        "outcome": null,
-        "pnl_pct": null,
+        "status": "CLOSED",
+        "exit_price": 7.66,
+        "outcome": "EXPIRED",
+        "pnl_pct": 3.0379746835443067,
         "opened_at": "2026-10-16T21:42:17.152335+00:00",
-        "closed_at": null,
+        "closed_at": "2026-10-17T21:45:00+00:00",
         "final_score": 69.0,
         "market_regime": "BEARISH",
         "gemini_decision": "UNAVAILABLE",
@@ -18205,22 +17715,22 @@
         "tp1_hit_at": null,
         "tp2_hit_at": null,
         "sl_hit_at": null,
-        "exit_reason": null,
-        "last_price": 7.84,
-        "last_checked_at": "2026-10-17T20:40:00+00:00",
-        "max_favorable_pct": 1.8987341772151944,
+        "exit_reason": "24H_TIMEOUT",
+        "last_price": 7.66,
+        "last_checked_at": "2026-10-17T21:45:00+00:00",
+        "max_favorable_pct": 3.4177215189873476,
         "max_adverse_pct": 1.265822784810122,
         "expiry_at": "2026-10-17T21:42:17.152335+00:00",
-        "resolution_source": null,
+        "resolution_source": "5m_expiry_boundary",
         "runner_enabled": 0,
         "runner_active": 0,
         "remaining_pct": 100.0,
-        "realized_pnl_pct": 0.0,
+        "realized_pnl_pct": 3.0379746835443067,
         "trailing_stop": null,
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.2828571428571429,
-        "realized_r": 0.0,
-        "unrealized_r": 0.21212121212121382,
+        "realized_r": 0.8484848484848491,
+        "unrealized_r": 0.0,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18249,9 +17759,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.0003604,
-        "last_checked_at": "2026-10-17T20:40:00+00:00",
-        "max_favorable_pct": 2.690090584682959,
+        "last_price": 0.0003575,
+        "last_checked_at": "2026-10-17T22:40:00+00:00",
+        "max_favorable_pct": 3.4586878945923787,
         "max_adverse_pct": 0.0,
         "expiry_at": "2026-10-18T11:51:37.593204+00:00",
         "resolution_source": null,
@@ -18263,7 +17773,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 1.0692857142857151e-05,
         "realized_r": 0.0,
-        "unrealized_r": 0.3647294589178392,
+        "unrealized_r": 0.6359385437541748,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18277,27 +17787,27 @@
         "stop_loss": 0.00015786428571428572,
         "tp1": 0.0001465142857142857,
         "tp2": 0.00014327142857142858,
-        "status": "OPEN",
-        "exit_price": null,
-        "outcome": null,
-        "pnl_pct": null,
+        "status": "CLOSED",
+        "exit_price": 0.0001465142857142857,
+        "outcome": "WIN_TP1",
+        "pnl_pct": 4.239028944911285,
         "opened_at": "2026-10-17T11:51:37.990244+00:00",
-        "closed_at": null,
+        "closed_at": "2026-10-17T21:30:00+00:00",
         "final_score": 69.0,
         "market_regime": "BEARISH",
         "gemini_decision": "UNAVAILABLE",
         "gemini_confidence": null,
         "gemini_available": 0,
-        "tp1_hit_at": null,
+        "tp1_hit_at": "2026-10-17T21:30:00+00:00",
         "tp2_hit_at": null,
         "sl_hit_at": null,
-        "exit_reason": null,
-        "last_price": 0.0001506,
-        "last_checked_at": "2026-10-17T20:40:00+00:00",
-        "max_favorable_pct": 2.483660130718944,
+        "exit_reason": "TP1",
+        "last_price": 0.0001469,
+        "last_checked_at": "2026-10-17T21:30:00+00:00",
+        "max_favorable_pct": 4.379084967320244,
         "max_adverse_pct": 0.0,
         "expiry_at": "2026-10-18T11:51:37.990244+00:00",
-        "resolution_source": null,
+        "resolution_source": "1h_ohlc",
         "runner_enabled": 0,
         "runner_active": 0,
         "remaining_pct": 100.0,
@@ -18306,7 +17816,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 4.86428571428574e-06,
         "realized_r": 0.0,
-        "unrealized_r": 0.49339207048457423,
+        "unrealized_r": 1.0895741556534382,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18335,9 +17845,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.3938,
-        "last_checked_at": "2026-10-17T20:40:00+00:00",
-        "max_favorable_pct": 3.984962406015044,
+        "last_price": 0.3877,
+        "last_checked_at": "2026-10-17T22:40:00+00:00",
+        "max_favorable_pct": 5.062656641604009,
         "max_adverse_pct": 0.27568922305764154,
         "expiry_at": "2026-10-18T11:51:38.417701+00:00",
         "resolution_source": null,
@@ -18349,7 +17859,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.021139285714285694,
         "realized_r": 0.0,
-        "unrealized_r": 0.24598749788815882,
+        "unrealized_r": 0.5345497550261888,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18378,9 +17888,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.00544,
-        "last_checked_at": "2026-10-17T20:40:00+00:00",
-        "max_favorable_pct": 2.3636363636363624,
+        "last_price": 0.00531,
+        "last_checked_at": "2026-10-17T22:40:00+00:00",
+        "max_favorable_pct": 4.727272727272725,
         "max_adverse_pct": 0.7272727272727292,
         "expiry_at": "2026-10-18T11:51:38.775723+00:00",
         "resolution_source": null,
@@ -18392,7 +17902,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00024428571428571424,
         "realized_r": 0.0,
-        "unrealized_r": 0.24561403508771643,
+        "unrealized_r": 0.7777777777777781,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18421,9 +17931,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 3.363,
-        "last_checked_at": "2026-10-17T20:40:00+00:00",
-        "max_favorable_pct": 2.897278314310792,
+        "last_price": 3.324,
+        "last_checked_at": "2026-10-17T22:40:00+00:00",
+        "max_favorable_pct": 4.2727538776704685,
         "max_adverse_pct": 0.0,
         "expiry_at": "2026-10-18T11:51:39.174866+00:00",
         "resolution_source": null,
@@ -18435,7 +17945,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.1351071428571431,
         "realized_r": 0.0,
-        "unrealized_r": 0.3996827914353668,
+        "unrealized_r": 0.6883425852498003,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18464,8 +17974,8 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.002038,
-        "last_checked_at": "2026-10-17T20:40:00+00:00",
+        "last_price": 0.002013,
+        "last_checked_at": "2026-10-17T22:40:00+00:00",
         "max_favorable_pct": 2.279484638255701,
         "max_adverse_pct": 4.806739345887011,
         "expiry_at": "2026-10-18T15:55:39.214359+00:00",
@@ -18478,7 +17988,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00015717857142857157,
         "realized_r": 0.0,
-        "unrealized_r": 0.12724380822540354,
+        "unrealized_r": -0.031810952056349505,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18507,9 +18017,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.000375,
-        "last_checked_at": "2026-10-17T20:40:00+00:00",
-        "max_favorable_pct": 2.9023746701846953,
+        "last_price": 0.000369,
+        "last_checked_at": "2026-10-17T22:40:00+00:00",
+        "max_favorable_pct": 3.6939313984168907,
         "max_adverse_pct": 0.0,
         "expiry_at": "2026-10-18T15:55:39.585584+00:00",
         "resolution_source": null,
@@ -18521,7 +18031,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 1.2321428571428596e-05,
         "realized_r": 0.0,
-        "unrealized_r": 0.3246376811594187,
+        "unrealized_r": 0.8115942028985469,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18550,9 +18060,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.815,
-        "last_checked_at": "2026-10-17T20:40:00+00:00",
-        "max_favorable_pct": 0.7334963325183246,
+        "last_price": 0.813,
+        "last_checked_at": "2026-10-17T22:40:00+00:00",
+        "max_favorable_pct": 0.9779951100244372,
         "max_adverse_pct": 0.48899755501222536,
         "expiry_at": "2026-10-18T15:55:39.944855+00:00",
         "resolution_source": null,
@@ -18564,7 +18074,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.018107142857142877,
         "realized_r": 0.0,
-        "unrealized_r": 0.16568047337278102,
+        "unrealized_r": 0.2761341222879684,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18593,10 +18103,10 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.000713,
-        "last_checked_at": "2026-10-17T20:40:00+00:00",
+        "last_price": 0.000703,
+        "last_checked_at": "2026-10-17T22:40:00+00:00",
         "max_favorable_pct": 3.2033426183844034,
-        "max_adverse_pct": 1.9498607242339854,
+        "max_adverse_pct": 2.5069637883008364,
         "expiry_at": "2026-10-18T15:55:40.303536+00:00",
         "resolution_source": null,
         "runner_enabled": 0,
@@ -18607,7 +18117,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 7.275e-05,
         "realized_r": 0.0,
-        "unrealized_r": -0.06872852233676993,
+        "unrealized_r": -0.2061855670103098,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18621,27 +18131,27 @@
         "stop_loss": 0.005735,
         "tp1": 0.00528,
         "tp2": 0.00515,
-        "status": "OPEN",
-        "exit_price": null,
-        "outcome": null,
-        "pnl_pct": null,
+        "status": "CLOSED",
+        "exit_price": 0.00528,
+        "outcome": "WIN_TP1",
+        "pnl_pct": 4.693140794223823,
         "opened_at": "2026-10-17T15:55:40.649899+00:00",
-        "closed_at": null,
+        "closed_at": "2026-10-17T21:35:00+00:00",
         "final_score": 65.0,
         "market_regime": "BEARISH",
         "gemini_decision": "UNAVAILABLE",
         "gemini_confidence": null,
         "gemini_available": 0,
-        "tp1_hit_at": null,
+        "tp1_hit_at": "2026-10-17T21:35:00+00:00",
         "tp2_hit_at": null,
         "sl_hit_at": null,
-        "exit_reason": null,
-        "last_price": 0.00544,
-        "last_checked_at": "2026-10-17T20:40:00+00:00",
-        "max_favorable_pct": 3.068592057761733,
+        "exit_reason": "TP1",
+        "last_price": 0.00526,
+        "last_checked_at": "2026-10-17T21:35:00+00:00",
+        "max_favorable_pct": 5.415162454873645,
         "max_adverse_pct": 0.0,
         "expiry_at": "2026-10-18T15:55:40.649899+00:00",
-        "resolution_source": null,
+        "resolution_source": "1h_ohlc",
         "runner_enabled": 0,
         "runner_active": 0,
         "remaining_pct": 100.0,
@@ -18650,7 +18160,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00019499999999999986,
         "realized_r": 0.0,
-        "unrealized_r": 0.5128205128205101,
+        "unrealized_r": 1.1282051282051275,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18679,9 +18189,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.00547,
-        "last_checked_at": "2026-10-17T20:59:26.559041+00:00",
-        "max_favorable_pct": 0.0,
+        "last_price": 0.00531,
+        "last_checked_at": "2026-10-17T22:40:00+00:00",
+        "max_favorable_pct": 4.204753199268742,
         "max_adverse_pct": 0.0,
         "expiry_at": "2026-10-18T20:59:26.559041+00:00",
         "resolution_source": null,
@@ -18693,7 +18203,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.00019928571428571434,
         "realized_r": 0.0,
-        "unrealized_r": 0.0,
+        "unrealized_r": 0.8028673835125467,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18722,9 +18232,9 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.01869,
-        "last_checked_at": "2026-10-17T20:59:27.126319+00:00",
-        "max_favorable_pct": 0.0,
+        "last_price": 0.01839,
+        "last_checked_at": "2026-10-17T22:40:00+00:00",
+        "max_favorable_pct": 3.905831995719626,
         "max_adverse_pct": 0.0,
         "expiry_at": "2026-10-18T20:59:27.126319+00:00",
         "resolution_source": null,
@@ -18736,7 +18246,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.0006739285714285718,
         "realized_r": 0.0,
-        "unrealized_r": 0.0,
+        "unrealized_r": 0.44515103338632456,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18765,10 +18275,10 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 0.0746,
-        "last_checked_at": "2026-10-17T20:59:27.627055+00:00",
-        "max_favorable_pct": 0.0,
-        "max_adverse_pct": 0.0,
+        "last_price": 0.0731,
+        "last_checked_at": "2026-10-17T22:40:00+00:00",
+        "max_favorable_pct": 3.4852546916890152,
+        "max_adverse_pct": 0.5361930294906134,
         "expiry_at": "2026-10-18T20:59:27.627055+00:00",
         "resolution_source": null,
         "runner_enabled": 0,
@@ -18779,7 +18289,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 0.004049999999999998,
         "realized_r": 0.0,
-        "unrealized_r": 0.0,
+        "unrealized_r": 0.3703703703703709,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18808,10 +18318,10 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 118.1,
-        "last_checked_at": "2026-10-17T20:59:28.149879+00:00",
-        "max_favorable_pct": 0.0,
-        "max_adverse_pct": 0.0,
+        "last_price": 116.9,
+        "last_checked_at": "2026-10-17T22:40:00+00:00",
+        "max_favorable_pct": 2.7942421676545277,
+        "max_adverse_pct": 0.16934801016088302,
         "expiry_at": "2026-10-18T20:59:28.149879+00:00",
         "resolution_source": null,
         "runner_enabled": 0,
@@ -18822,7 +18332,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 2.7428571428571473,
         "realized_r": 0.0,
-        "unrealized_r": 0.0,
+        "unrealized_r": 0.43749999999999517,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
@@ -18851,10 +18361,10 @@
         "tp2_hit_at": null,
         "sl_hit_at": null,
         "exit_reason": null,
-        "last_price": 4.775e-05,
-        "last_checked_at": "2026-10-17T20:59:28.657742+00:00",
-        "max_favorable_pct": 0.0,
-        "max_adverse_pct": 0.0,
+        "last_price": 4.785e-05,
+        "last_checked_at": "2026-10-17T22:40:00+00:00",
+        "max_favorable_pct": 3.0575916230366555,
+        "max_adverse_pct": 2.303664921465968,
         "expiry_at": "2026-10-18T20:59:28.657742+00:00",
         "resolution_source": null,
         "runner_enabled": 0,
@@ -18865,7 +18375,7 @@
         "trailing_atr_multiplier": 2.0,
         "initial_risk": 1.4014285714285718e-06,
         "realized_r": 0.0,
-        "unrealized_r": 0.0,
+        "unrealized_r": -0.0713557594291508,
         "signal_source": "PRIMARY",
         "confluence_score": 70.0,
         "confluence_tier": "A_SETUP"
