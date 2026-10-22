@@ -13,41 +13,41 @@
   },
   "data_quality": {
     "total_rows": 304,
-    "closed_rows": 295,
+    "closed_rows": 298,
     "strict_24h_rows": 206,
     "strict_boundary_rows": 206,
-    "legacy_expiry_rows": 85,
-    "fallback_expiry_rows": 1,
+    "legacy_expiry_rows": 88,
+    "fallback_expiry_rows": 4,
     "missing_initial_risk": 66
   },
   "all_closed": {
-    "trades": 295,
-    "closed": 295,
+    "trades": 298,
+    "closed": 298,
     "scored": 159,
     "wins": 98,
     "losses": 61,
-    "expired": 136,
+    "expired": 139,
     "strict_expiry_trades": 51,
-    "legacy_expiry_trades": 85,
+    "legacy_expiry_trades": 88,
     "duration_class_counts": {
-      "EXTENDED_SETUP": 136,
+      "EXTENDED_SETUP": 139,
       "LONG_DURATION_LOSER": 1,
       "LONG_DURATION_WINNER": 3,
       "INTRADAY_RESOLVED": 155
     },
     "win_rate_pct": 61.64,
-    "net_pnl_pct": 402.4778,
-    "avg_trade_pct": 1.3643,
+    "net_pnl_pct": 401.9753,
+    "avg_trade_pct": 1.3489,
     "expectancy_pct": 2.3647,
     "avg_win_pct": 6.4918,
     "avg_loss_pct": -4.2657,
-    "profit_factor": 2.0419,
+    "profit_factor": 2.0307,
     "max_drawdown_pct": 73.1897,
-    "sum_r": 62.6036,
-    "avg_r": 0.2734,
-    "avg_mfe_r": 0.8755,
-    "avg_mae_r": 0.5162,
-    "avg_holding_hours": 19.325
+    "sum_r": 62.3153,
+    "avg_r": 0.2686,
+    "avg_mfe_r": 0.8756,
+    "avg_mae_r": 0.5185,
+    "avg_holding_hours": 19.373
   },
   "strict_24h_view": {
     "trades": 206,
@@ -4375,30 +4375,30 @@
   },
   "by_expiry_quality": {
     "LEGACY_WALL_CLOCK": {
-      "trades": 85,
-      "closed": 85,
+      "trades": 88,
+      "closed": 88,
       "scored": 0,
       "wins": 0,
       "losses": 0,
-      "expired": 85,
+      "expired": 88,
       "strict_expiry_trades": 0,
-      "legacy_expiry_trades": 85,
+      "legacy_expiry_trades": 88,
       "duration_class_counts": {
-        "EXTENDED_SETUP": 85
+        "EXTENDED_SETUP": 88
       },
       "win_rate_pct": 0.0,
-      "net_pnl_pct": -4.0322,
-      "avg_trade_pct": -0.0474,
+      "net_pnl_pct": -4.5346,
+      "avg_trade_pct": -0.0515,
       "expectancy_pct": 0.0,
       "avg_win_pct": 0.0,
       "avg_loss_pct": 0.0,
-      "profit_factor": 0.9511,
+      "profit_factor": 0.9474,
       "max_drawdown_pct": 30.5258,
-      "sum_r": 5.1458,
-      "avg_r": 0.0971,
-      "avg_mfe_r": 0.6651,
-      "avg_mae_r": 0.4897,
-      "avg_holding_hours": 28.509
+      "sum_r": 4.8575,
+      "avg_r": 0.0867,
+      "avg_mfe_r": 0.6766,
+      "avg_mae_r": 0.5007,
+      "avg_holding_hours": 28.357
     },
     "NOT_EXPIRY": {
       "trades": 159,
@@ -4457,30 +4457,30 @@
   },
   "by_duration_class": {
     "EXTENDED_SETUP": {
-      "trades": 136,
-      "closed": 136,
+      "trades": 139,
+      "closed": 139,
       "scored": 0,
       "wins": 0,
       "losses": 0,
-      "expired": 136,
+      "expired": 139,
       "strict_expiry_trades": 51,
-      "legacy_expiry_trades": 85,
+      "legacy_expiry_trades": 88,
       "duration_class_counts": {
-        "EXTENDED_SETUP": 136
+        "EXTENDED_SETUP": 139
       },
       "win_rate_pct": 0.0,
-      "net_pnl_pct": 26.4901,
-      "avg_trade_pct": 0.1948,
+      "net_pnl_pct": 25.9877,
+      "avg_trade_pct": 0.187,
       "expectancy_pct": 0.0,
       "avg_win_pct": 0.0,
       "avg_loss_pct": 0.0,
-      "profit_factor": 1.2106,
+      "profit_factor": 1.2007,
       "max_drawdown_pct": 30.5258,
-      "sum_r": 15.2703,
-      "avg_r": 0.1468,
-      "avg_mfe_r": 0.6909,
-      "avg_mae_r": 0.4626,
-      "avg_holding_hours": 26.834
+      "sum_r": 14.982,
+      "avg_r": 0.14,
+      "avg_mfe_r": 0.6962,
+      "avg_mae_r": 0.4692,
+      "avg_holding_hours": 26.774
     },
     "INTRADAY_RESOLVED": {
       "trades": 155,
@@ -4562,15 +4562,15 @@
     }
   },
   "duration_profile_all_closed": {
-    "trades": 295,
-    "median_hours": 22.359,
+    "trades": 298,
+    "median_hours": 22.509,
     "p75_hours": 24.565,
     "p90_hours": 25.906,
     "max_hours": 117.461,
-    "over_24h_pct": 47.46,
-    "over_36h_pct": 2.37,
-    "over_48h_pct": 2.03,
-    "over_72h_pct": 1.02
+    "over_24h_pct": 47.99,
+    "over_36h_pct": 2.35,
+    "over_48h_pct": 2.01,
+    "over_72h_pct": 1.01
   },
   "duration_profile_winners": {
     "trades": 98,
@@ -4584,21 +4584,21 @@
     "over_72h_pct": 0.0
   },
   "duration_profile_expiries": {
-    "trades": 136,
+    "trades": 139,
     "median_hours": 24.602,
     "p75_hours": 25.442,
     "p90_hours": 26.85,
     "max_hours": 117.461,
     "over_24h_pct": 100.0,
-    "over_36h_pct": 3.68,
-    "over_48h_pct": 2.94,
-    "over_72h_pct": 2.21
+    "over_36h_pct": 3.6,
+    "over_48h_pct": 2.88,
+    "over_72h_pct": 2.16
   },
   "likely_duration_all_closed": {
-    "median_hours": 22.36,
+    "median_hours": 22.65,
     "p75_hours": 24.57,
     "p90_hours": 25.91,
-    "description": "Typical resolution ~22h; extended setups commonly reach ~25h and can extend toward ~26h."
+    "description": "Typical resolution ~23h; extended setups commonly reach ~25h and can extend toward ~26h."
   },
   "likely_duration_winners": {
     "median_hours": 13.51,
