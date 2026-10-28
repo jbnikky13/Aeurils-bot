@@ -1,5 +1,11 @@
 name: AURELIS Accelerated Candle Replay
 on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "trade_bot/candle_replay_audit.py"
+      - "tests/test_candle_replay_audit.py"
+      - ".github/workflows/accelerated-candle-replay.yml"
   workflow_dispatch:
     inputs:
       fee_bps_per_side:
@@ -26,7 +32,7 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_candle_replay_audit.py' -v
       - name: Replay recorded setups against Binance 5m candles
         env:
-          PAPER_FEE_BPS_PER_SIDE: ${{ inputs.fee_bps_per_side }}
+          PAPER_FEE_BPS_PER_SIDE: ${{ inputs.fee_bps_per_side || '10' }}
           AURELIS_CANDLE_REPLAY_OUT: data/candle_replay_report.json
         run: python -m trade_bot.candle_replay_audit
       - name: Upload replay report
