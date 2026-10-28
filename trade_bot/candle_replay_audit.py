@@ -20,7 +20,8 @@ import httpx
 BASE_URL = os.getenv("CRYPTO_API_URL", "https://data-api.binance.vision").rstrip("/")
 LEDGER_PATH = Path(os.getenv("AURELIS_LEDGER_PATH", "data/aurelis_paper_ledger.json"))
 FEE_BPS_PER_SIDE = float(os.getenv("PAPER_FEE_BPS_PER_SIDE", "10"))
-ROUND_TRIP_FEE_PCT = 2 * FEE_BPS_PER_SIDE / 100.0
+SLIPPAGE_BPS_PER_SIDE = float(os.getenv("PAPER_SLIPPAGE_BPS_PER_SIDE", "5"))
+ROUND_TRIP_COST_PCT = 2 * (FEE_BPS_PER_SIDE + SLIPPAGE_BPS_PER_SIDE) / 100.0
 BAR_MS = 5 * 60 * 1000
 HORIZON_HOURS = 24
 SCORED = {"WIN_TP1", "WIN_TP2", "LOSS_SL", "LOSS_AMBIGUOUS_STOP", "EXPIRED"}
@@ -96,6 +97,10 @@ def _hit(direction, candle, stop, tp1, tp2):
         return ("LOSS_AMBIGUOUS_STOP", stop)
     if stop_hit:
         return ("LOSS_SL", stop)
+    # If both targets are touched in one candle, intrabar order is unknown.
+    # Credit only TP1 rather than assuming the farther target was reached first.
+    if tp1_hit and tp2_hit:
+        return ("WIN_TP1", tp1)
     if tp2_hit:
         return ("WIN_TP2", tp2)
     if tp1_hit:
@@ -112,6 +117,10 @@ def replay_trade(row: Mapping, candles: Iterable[Mapping]):
     direction = str(row.get("direction") or "").upper()
     if not opened or not entry or not stop or not tp1:
         return {"status": "SKIPPED", "reason": "missing_entry_time_or_risk_or_target"}
+    if direction not in {"LONG", "SHORT"}:
+        return {"status": "SKIPPED", "reason": "invalid_direction"}
+    if (direction == "LONG" and not (stop < entry < tp1)) or (direction == "SHORT" and not (tp1 < entry < stop)):
+        return {"status": "SKIPPED", "reason": "inconsistent_entry_stop_target"}
     opened_ms = int(opened.timestamp() * 1000)
     start_ms = (opened_ms // BAR_MS + 1) * BAR_MS  # never use the entry candle
     end_ms = opened_ms + HORIZON_HOURS * 60 * 60 * 1000
@@ -139,7 +148,7 @@ def replay_trade(row: Mapping, candles: Iterable[Mapping]):
                  else (entry - exit_price) / entry * 100)
     return {
         "status": "SCORED", "outcome": outcome, "exit_price": exit_price,
-        "gross_pct": gross_pct, "net_pct": gross_pct - ROUND_TRIP_FEE_PCT,
+        "gross_pct": gross_pct, "net_pct": gross_pct - ROUND_TRIP_COST_PCT,
         "opened_at": opened.isoformat(), "symbol": row.get("symbol"),
         "score": _num(row.get("score")), "market_regime": str(row.get("market_regime") or "UNKNOWN").upper(),
     }
