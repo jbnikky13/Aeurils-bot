@@ -117,8 +117,15 @@ def replay_trade(row: Mapping, candles: Iterable[Mapping]):
     end_ms = opened_ms + HORIZON_HOURS * 60 * 60 * 1000
     eligible = sorted((c for c in candles if start_ms <= int(c["time_ms"]) < end_ms),
                       key=lambda c: int(c["time_ms"]))
-    if not eligible or int(eligible[-1]["time_ms"]) + BAR_MS < end_ms:
+    expected_bars = max(1, (end_ms - start_ms + BAR_MS - 1) // BAR_MS)
+    minimum_bars = int(expected_bars * 0.95 + 0.999999)
+    gaps = [int(eligible[i]["time_ms"]) - int(eligible[i - 1]["time_ms"])
+            for i in range(1, len(eligible))]
+    if (len(eligible) < minimum_bars
+            or int(eligible[-1]["time_ms"]) + BAR_MS < end_ms if eligible else True):
         return {"status": "SKIPPED", "reason": "insufficient_candle_coverage"}
+    if any(gap > 2 * BAR_MS for gap in gaps):
+        return {"status": "SKIPPED", "reason": "candle_data_gaps"}
     for candle in eligible:
         hit = _hit(direction, candle, stop, tp1, tp2)
         if hit:
