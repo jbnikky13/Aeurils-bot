@@ -97,10 +97,6 @@ def _hit(direction, candle, stop, tp1, tp2):
         return ("LOSS_AMBIGUOUS_STOP", stop)
     if stop_hit:
         return ("LOSS_SL", stop)
-    # If both targets are touched in one candle, intrabar order is unknown.
-    # Credit only TP1 rather than assuming the farther target was reached first.
-    if tp1_hit and tp2_hit:
-        return ("WIN_TP1", tp1)
     if tp2_hit:
         return ("WIN_TP2", tp2)
     if tp1_hit:
