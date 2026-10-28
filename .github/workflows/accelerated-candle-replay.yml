@@ -33,6 +33,7 @@ jobs:
       - name: Replay recorded setups against Binance 5m candles
         env:
           PAPER_FEE_BPS_PER_SIDE: ${{ inputs.fee_bps_per_side || '10' }}
+          PAPER_SLIPPAGE_BPS_PER_SIDE: '5'
           AURELIS_CANDLE_REPLAY_OUT: data/candle_replay_report.json
         run: python -m trade_bot.candle_replay_audit
       - name: Upload replay report
