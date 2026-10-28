@@ -1,6 +1,9 @@
 import unittest
 
-from trade_bot.candle_replay_audit import _hit, metrics, replay_trade
+from trade_bot.candle_replay_audit import (
+    FEE_BPS_PER_SIDE, SLIPPAGE_BPS_PER_SIDE, ROUND_TRIP_COST_PCT,
+    _hit, metrics, replay_trade,
+)
 
 
 class CandleReplayAuditTests(unittest.TestCase):
@@ -16,6 +19,11 @@ class CandleReplayAuditTests(unittest.TestCase):
             "score": 70,
             "market_regime": "BULLISH",
         }
+
+    def test_modeled_round_trip_cost_includes_fee_and_slippage(self):
+        self.assertEqual(FEE_BPS_PER_SIDE, 10.0)
+        self.assertEqual(SLIPPAGE_BPS_PER_SIDE, 5.0)
+        self.assertAlmostEqual(ROUND_TRIP_COST_PCT, 0.30, places=8)
 
     def test_entry_candle_is_excluded(self):
         # Opened at 12:02; the 12:00 candle overlaps entry and must not be used.
