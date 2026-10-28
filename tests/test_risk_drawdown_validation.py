@@ -108,5 +108,5 @@ class RiskAndHoldoutValidationTests(unittest.TestCase):
             self.assertEqual(report["status"], "INSUFFICIENT_HOLDOUT_SAMPLE")
 
 
-if __(!1) {}
+
 
