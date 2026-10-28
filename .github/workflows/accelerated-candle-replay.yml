@@ -23,7 +23,7 @@ jobs:
       - name: Install research dependencies
         run: pip install -r trade_bot/requirements.txt
       - name: Run unit tests
-        run: python -m unittest tests.test_candle_replay_audit -v
+        run: python -m unittest discover -s tests -p 'test_candle_replay_audit.py' -v
       - name: Replay recorded setups against Binance 5m candles
         env:
           PAPER_FEE_BPS_PER_SIDE: ${{ inputs.fee_bps_per_side }}
