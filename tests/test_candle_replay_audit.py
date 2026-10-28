@@ -48,6 +48,17 @@ class CandleReplayAuditTests(unittest.TestCase):
         self.assertEqual(result["max_additive_drawdown_pct_points"], 2.2)
         self.assertEqual(result["win_rate_pct"], 66.67)
 
+    def test_missing_candle_gap_is_skipped(self):
+        start = 1790856300000
+        candles = []
+        for i in range(288):
+            if i in (10, 11):
+                continue
+            candles.append({"time_ms": start + i * 300000, "high": 104, "low": 99, "close": 102})
+        result = replay_trade(self.base, candles)
+        self.assertEqual(result["status"], "SKIPPED")
+        self.assertEqual(result["reason"], "candle_data_gaps")
+
     def test_expiry_uses_last_close_and_subtracts_round_trip_fee(self):
         # Opened at 12:02, first eligible bar begins at 12:05.
         start = 1790856300000
