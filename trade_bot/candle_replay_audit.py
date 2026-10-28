@@ -111,12 +111,19 @@ def replay_trade(row: Mapping, candles: Iterable[Mapping]):
     tp1 = _num(row.get("tp1"))
     tp2 = _num(row.get("tp2"))
     direction = str(row.get("direction") or "").upper()
-    if not opened or not entry or not stop or not tp1:
+    if not opened or entry is None or stop is None or tp1 is None:
         return {"status": "SKIPPED", "reason": "missing_entry_time_or_risk_or_target"}
+    if entry <= 0 or stop <= 0 or tp1 <= 0 or (tp2 is not None and tp2 <= 0):
+        return {"status": "SKIPPED", "reason": "nonpositive_price"}
     if direction not in {"LONG", "SHORT"}:
         return {"status": "SKIPPED", "reason": "invalid_direction"}
     if (direction == "LONG" and not (stop < entry < tp1)) or (direction == "SHORT" and not (tp1 < entry < stop)):
         return {"status": "SKIPPED", "reason": "inconsistent_entry_stop_target"}
+    if tp2 is not None and (
+        (direction == "LONG" and tp2 <= tp1)
+        or (direction == "SHORT" and tp2 >= tp1)
+    ):
+        return {"status": "SKIPPED", "reason": "inconsistent_tp2_target"}
     opened_ms = int(opened.timestamp() * 1000)
     start_ms = (opened_ms // BAR_MS + 1) * BAR_MS  # never use the entry candle
     end_ms = opened_ms + HORIZON_HOURS * 60 * 60 * 1000
