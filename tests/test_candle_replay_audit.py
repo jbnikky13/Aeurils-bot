@@ -65,7 +65,7 @@ class CandleReplayAuditTests(unittest.TestCase):
         self.assertEqual(result["status"], "SKIPPED")
         self.assertEqual(result["reason"], "candle_data_gaps")
 
-    def test_expiry_uses_last_close_and_subtracts_round_trip_fee(self):
+    def test_expiry_uses_last_close_and_subtracts_fee_and_slippage(self):
         # Opened at 12:02, first eligible bar begins at 12:05.
         start = 1790856300000
         candles = []
@@ -74,7 +74,7 @@ class CandleReplayAuditTests(unittest.TestCase):
         result = replay_trade(self.base, candles)
         self.assertEqual(result["status"], "SCORED")
         self.assertEqual(result["outcome"], "EXPIRED")
-        self.assertAlmostEqual(result["net_pct"], 1.7, places=6)
+        self.assertAlmostEqual(result["net_pct"], 1.7, places=6)  # 2.0% gross minus 0.30% modeled round-trip costs
 
 
 if __name__ == "__main__":
