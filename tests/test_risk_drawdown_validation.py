@@ -1,4 +1,3 @@
-import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -95,7 +94,18 @@ class RiskAndHoldoutValidationTests(unittest.TestCase):
                 "OUT_OF_SAMPLE_IMPROVEMENT_NOT_SUPPORTED",
                 "OUT_OF_SAMPLE_IMPROVEMENT_SUPPORTED",
             })
-        self.assertEqual(report["test_start"], rows[70]["opened_at"] if rows[69]["opened_at"] <= rows[70]["opened_at"] else report["test_start"])
+        self.assertGreater(report["test_start"], report["train_end"])
+
+    def test_checked_in_ledger_does_not_promote_an_underpowered_holdout(self):
+        ledger_path = Path(__file__).resolve().parents[1] / "data" / "aurelis_paper_ledger.json"
+        report = paper_filter_validation.validate(paper_filter_validation.load_ledger(ledger_path))
+        self.assertTrue(report["research_only"])
+        self.assertFalse(report["signal_engine_modified"])
+        self.assertFalse(report["real_money_enabled"])
+        self.assertGreater(report["test_rows"], 0)
+        self.assertGreater(report["test_start"], report["train_end"])
+        if report["selected_filter_test"] is not None and report["selected_filter_test"]["scored"] < report["minimum_holdout_scored_trades"]:
+            self.assertEqual(report["status"], "INSUFFICIENT_HOLDOUT_SAMPLE")
 
 
 if __(!1) {}
