@@ -34,6 +34,13 @@ def init_paper_db():
         additions={"final_score":"REAL","market_regime":"TEXT DEFAULT 'UNKNOWN'","gemini_decision":"TEXT","gemini_confidence":"REAL","gemini_available":"INTEGER","tp1_hit_at":"TEXT","tp2_hit_at":"TEXT","sl_hit_at":"TEXT","exit_reason":"TEXT","last_price":"REAL","last_checked_at":"TEXT","max_favorable_pct":"REAL DEFAULT 0","max_adverse_pct":"REAL DEFAULT 0","expiry_at":"TEXT","resolution_source":"TEXT","runner_enabled":"INTEGER DEFAULT 0","runner_active":"INTEGER DEFAULT 0","remaining_pct":"REAL DEFAULT 100","realized_pnl_pct":"REAL DEFAULT 0","trailing_stop":"REAL","trailing_atr_multiplier":"REAL DEFAULT 2.0","initial_risk":"REAL","realized_r":"REAL DEFAULT 0","unrealized_r":"REAL DEFAULT 0","signal_source":"TEXT DEFAULT 'PRIMARY'","confluence_score":"REAL","confluence_tier":"TEXT"}
         for col,typ in additions.items():
             if col not in cols: con.execute(f"ALTER TABLE {PAPER_TABLE} ADD COLUMN {col} {typ}")
+        # Repair legacy rows deterministically where entry and stop-loss are present.
+        # No risk is fabricated when either value is absent or the distance is zero.
+        con.execute(f"""UPDATE {PAPER_TABLE}
+            SET initial_risk=ABS(entry-stop_loss)
+            WHERE (initial_risk IS NULL OR initial_risk<=0)
+              AND entry IS NOT NULL AND stop_loss IS NOT NULL
+              AND ABS(entry-stop_loss)>0""")
         con.commit()
 
 
