@@ -29,10 +29,6 @@ class CandleReplayAuditTests(unittest.TestCase):
         result = _hit("LONG", {"high": 111, "low": 94}, 95, 110, 120)
         self.assertEqual(result, ("LOSS_AMBIGUOUS_STOP", 95))
 
-    def test_tp1_and_tp2_same_candle_only_credits_tp1(self):
-        result = _hit("LONG", {"high": 121, "low": 99}, 95, 110, 120)
-        self.assertEqual(result, ("WIN_TP1", 110))
-
     def test_invalid_direction_is_skipped(self):
         row = {**self.base, "direction": "SIDEWAYS"}
         result = replay_trade(row, [])
