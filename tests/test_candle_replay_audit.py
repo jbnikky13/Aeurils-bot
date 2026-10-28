@@ -73,6 +73,9 @@ class CandleReplayAuditTests(unittest.TestCase):
         self.assertEqual(result["n"], 3)
         self.assertEqual(result["max_additive_drawdown_pct_points"], 2.2)
         self.assertEqual(result["win_rate_pct"], 66.67)
+        self.assertEqual(result["net_profitable_n"], 2)
+        self.assertEqual(result["net_losing_n"], 1)
+        self.assertEqual(result["net_positive_rate_pct"], 66.67)
 
     def test_missing_candle_gap_is_skipped(self):
         start = 1790856300000
