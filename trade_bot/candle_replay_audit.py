@@ -122,7 +122,8 @@ def replay_trade(row: Mapping, candles: Iterable[Mapping]):
     gaps = [int(eligible[i]["time_ms"]) - int(eligible[i - 1]["time_ms"])
             for i in range(1, len(eligible))]
     coverage_ok = bool(eligible) and len(eligible) >= minimum_bars
-    coverage_ok = coverage_ok and int(eligible[-1]["time_ms"]) + BAR_MS >= end_ms if eligible else False
+    if coverage_ok:
+        coverage_ok = int(eligible[-1]["time_ms"]) + BAR_MS >= end_ms
     if not coverage_ok:
         return {"status": "SKIPPED", "reason": "insufficient_candle_coverage"}
     if any(gap > 2 * BAR_MS for gap in gaps):
