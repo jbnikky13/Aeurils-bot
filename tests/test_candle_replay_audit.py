@@ -37,6 +37,18 @@ class CandleReplayAuditTests(unittest.TestCase):
         result = _hit("LONG", {"high": 111, "low": 94}, 95, 110, 120)
         self.assertEqual(result, ("LOSS_AMBIGUOUS_STOP", 95))
 
+    def test_inconsistent_tp2_target_is_skipped(self):
+        row = {**self.base, "tp2": 108.0}
+        result = replay_trade(row, [])
+        self.assertEqual(result["status"], "SKIPPED")
+        self.assertEqual(result["reason"], "inconsistent_tp2_target")
+
+    def test_nonpositive_entry_price_is_skipped(self):
+        row = {**self.base, "entry": -100.0}
+        result = replay_trade(row, [])
+        self.assertEqual(result["status"], "SKIPPED")
+        self.assertEqual(result["reason"], "nonpositive_price")
+
     def test_invalid_direction_is_skipped(self):
         row = {**self.base, "direction": "SIDEWAYS"}
         result = replay_trade(row, [])
