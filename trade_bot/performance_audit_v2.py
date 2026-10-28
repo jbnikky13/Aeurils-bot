@@ -109,11 +109,26 @@ def _net_pct(r):
     return _return_pct(r)-ROUND_TRIP_FEE_PCT
 
 
-def _r(r):
+def _risk_value(r):
+    """Use recorded initial risk, or reconstruct it exactly from entry and stop."""
     risk=_num(r.get("initial_risk"))
-    if risk<=0:return None
+    if risk>0:return risk
+    entry=_num(r.get("entry"))
+    stop=_num(r.get("stop_loss"))
+    inferred=abs(entry-stop)
+    return inferred if entry>0 and stop>0 and inferred>0 else None
+
+
+def _risk_derived(r):
+    return _num(r.get("initial_risk"))<=0 and _risk_value(r) is not None
+
+
+def _r(r):
+    risk=_risk_value(r)
+    if risk is None:return None
     entry=_num(r.get("entry"))
     exit_price=_num(r.get("exit_price"))
+    if entry<=0 or exit_price<=0:return None
     if str(r.get("direction")).upper()=="SHORT":
         move=entry-exit_price
     else:
@@ -127,13 +142,15 @@ def _holding_hours(r):
 
 
 def _mfe_r(r):
-    risk=_num(r.get("initial_risk"))
-    return _num(r.get("max_favorable_pct"))/(risk/_num(r.get("entry"))*100) if risk>0 and _num(r.get("entry")) else None
+    risk=_risk_value(r)
+    entry=_num(r.get("entry"))
+    return _num(r.get("max_favorable_pct"))/(risk/entry*100) if risk and entry>0 else None
 
 
 def _mae_r(r):
-    risk=_num(r.get("initial_risk"))
-    return _num(r.get("max_adverse_pct"))/(risk/_num(r.get("entry"))*100) if risk>0 and _num(r.get("entry")) else None
+    risk=_risk_value(r)
+    entry=_num(r.get("entry"))
+    return _num(r.get("max_adverse_pct"))/(risk/entry*100) if risk and entry>0 else None
 
 
 def _stats(rows):
@@ -165,11 +182,21 @@ def _stats(rows):
         "avg_win_pct":round(sum(_net_pct(r) for r in wins)/len(wins),4) if wins else 0.0,
         "avg_loss_pct":round(sum(_net_pct(r) for r in losses)/len(losses),4) if losses else 0.0,
         "profit_factor":round(gross_profit/gross_loss,4) if gross_loss else None,
+        # Legacy field is additive percentage-point drawdown, not account-equity drawdown.
         "max_drawdown_pct":round(dd,4),
-        "sum_r":round(sum(rs),4) if rs else 0.0,
-        "avg_r":round(sum(rs)/len(rs),4) if rs else 0.0,
-        "avg_mfe_r":round(sum(mfe)/len(mfe),4) if mfe else 0.0,
-        "avg_mae_r":round(sum(mae)/len(mae),4) if mae else 0.0,
+        "max_drawdown_pct_points":round(dd,4),
+        "drawdown_basis":"cumulative sum of per-trade net P&L percentages; not account-equity drawdown",
+        "missing_initial_risk":sum(_num(r.get("initial_risk"))<=0 for r in closed),
+        "risk_derived_from_stop_loss":sum(_risk_derived(r) for r in closed),
+        "risk_unrecoverable":sum(_risk_value(r) is None for r in closed),
+        "r_samples":len(rs),
+        "r_coverage_pct":round(len(rs)/len(closed)*100,2) if closed else 0.0,
+        "sum_r":round(sum(rs),4) if rs else None,
+        "avg_r":round(sum(rs)/len(rs),4) if rs else None,
+        "mfe_r_samples":len(mfe),
+        "avg_mfe_r":round(sum(mfe)/len(mfe),4) if mfe else None,
+        "mae_r_samples":len(mae),
+        "avg_mae_r":round(sum(mae)/len(mae),4) if mae else None,
         "avg_holding_hours":round(sum(holding)/len(holding),3) if holding else 0.0,
     }
 
@@ -206,6 +233,8 @@ def build_report(rows=None):
             "strict_24h_policy":"closed duration must be known and no more than 24h plus one 5m candle; EXPIRED rows must use 5m_expiry_boundary",
             "r_definition":"price move divided by absolute entry-to-SL risk",
             "pnl_basis":"recorded pnl_pct less one entry and one exit fee",
+            "drawdown_basis":"additive cumulative trade-return percentage points; not account-equity drawdown",
+            "risk_fallback":"when initial_risk is missing, infer abs(entry - stop_loss); unrecoverable records are excluded from R statistics",
         },
         "data_quality":{
             "total_rows":len(rows),
@@ -215,6 +244,9 @@ def build_report(rows=None):
             "legacy_expiry_rows":sum(_outcome(r)=="EXPIRED" and not _strict_expiry(r) for r in closed),
             "fallback_expiry_rows":sum(r.get("resolution_source")=="wall_clock_fallback" for r in closed),
             "missing_initial_risk":sum(_num(r.get("initial_risk"))<=0 for r in closed),
+            "stored_missing_initial_risk":sum(_num(r.get("initial_risk"))<=0 for r in closed),
+            "risk_recoverable_from_stop_loss":sum(_risk_derived(r) for r in closed),
+            "risk_unrecoverable":sum(_risk_value(r) is None for r in closed),
         },
         "all_closed":_stats(closed),
         "strict_24h_view":_stats(strict),
