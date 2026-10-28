@@ -171,7 +171,11 @@ def metrics(rows):
         equity += value
         peak = max(peak, equity)
         max_dd = max(max_dd, peak - equity)
+    net_positive = sum(v > 0 for v in returns)
+    net_negative = sum(v < 0 for v in returns)
     return {"n": len(scored), "win_rate_pct": round(100 * wins / len(scored), 2),
+            "net_profitable_n": net_positive, "net_losing_n": net_negative,
+            "net_positive_rate_pct": round(100 * net_positive / len(returns), 2),
             "expectancy_net_pct": round(sum(returns) / len(returns), 4),
             "profit_factor": round(positive / negative, 4) if negative else None,
             "max_additive_drawdown_pct_points": round(max_dd, 4)}
