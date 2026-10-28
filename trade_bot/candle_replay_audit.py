@@ -245,6 +245,8 @@ def run(path=LEDGER_PATH, client=None):
                    "skip_reasons": dict((reason, sum(r.get("reason") == reason for r in skipped))
                                         for reason in sorted({r.get("reason", "unknown") for r in skipped})),
                    "all_trade_metrics": metrics(scored), "fee_bps_per_side": FEE_BPS_PER_SIDE,
+                   "slippage_bps_per_side": SLIPPAGE_BPS_PER_SIDE,
+                   "round_trip_cost_pct": ROUND_TRIP_COST_PCT,
                    "horizon_hours": HORIZON_HOURS})
     output = Path(os.getenv("AURELIS_CANDLE_REPLAY_OUT", "data/candle_replay_report.json"))
     output.parent.mkdir(parents=True, exist_ok=True)
