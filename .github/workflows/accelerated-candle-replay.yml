@@ -1,0 +1,39 @@
+name: AURELIS Accelerated Candle Replay
+on:
+  workflow_dispatch:
+    inputs:
+      fee_bps_per_side:
+        description: "Assumed fee in basis points per side (10 = 0.10%)"
+        required: true
+        default: "10"
+        type: string
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: research/accelerated-candle-replay
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install research dependencies
+        run: pip install -r trade_bot/requirements.txt
+      - name: Run unit tests
+        run: python -m unittest tests.test_candle_replay_audit -v
+      - name: Replay recorded setups against Binance 5m candles
+        env:
+          PAPER_FEE_BPS_PER_SIDE: ${{ inputs.fee_bps_per_side }}
+          AURELIS_CANDLE_REPLAY_OUT: data/candle_replay_report.json
+        run: python -m trade_bot.candle_replay_audit
+      - name: Upload replay report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aurelis-candle-replay-report
+          path: data/candle_replay_report.json
+          if-no-files-found: warn
+          retention-days: 30
