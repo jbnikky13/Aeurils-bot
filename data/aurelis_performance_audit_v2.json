@@ -14,7 +14,7 @@
     "risk_fallback": "when initial_risk is missing, infer abs(entry - stop_loss); unrecoverable records are excluded from R statistics"
   },
   "data_quality": {
-    "total_rows": 454,
+    "total_rows": 459,
     "closed_rows": 446,
     "strict_24h_rows": 350,
     "strict_boundary_rows": 350,
