@@ -18,7 +18,7 @@ class FV1RuntimeTests(unittest.TestCase):
                 signal_id INTEGER PRIMARY KEY, symbol TEXT, opened_at TEXT, status TEXT,
                 outcome TEXT, pnl_pct REAL, realized_r REAL, closed_at TEXT,
                 resolution_source TEXT, initial_risk REAL, entry REAL, direction TEXT,
-                exit_price REAL, final_score REAL)""")
+                exit_price REAL, final_score REAL, realized_pnl_pct REAL DEFAULT 0, unrealized_r REAL DEFAULT 0)""")
     def tearDown(self):
         self.patcher.stop(); self.tmp.cleanup()
     def add_trade(self,sid,symbol,status="OPEN",outcome=None,r=None,closed=None,score=70):
