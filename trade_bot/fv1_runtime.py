@@ -136,7 +136,7 @@ def cohort_metrics():
     ci=bootstrap_daily_block_ci([daily[k] for k in sorted(daily)]) if len(daily)>=2 else None
     metrics={"signals":signals,"scored":len(scored),"days":days,
         "expectancy_pct":expectancy*RISK_PER_TRADE_PCT if expectancy is not None else None,
-        "profit_factor":pf,"equity_drawdown_pct":max_dd if scored else None,
+        "profit_factor":pf,"equity_drawdown_pct":None,"equity_drawdown_proxy_pct":max_dd if scored else None,
         "integrity_pct":integrity if signals else None,
         "bootstrap_ci_low_pct":ci["lower_95_pct"] if ci else None,
         "critical_risk_breaches":None,
@@ -145,7 +145,7 @@ def cohort_metrics():
         "equity_index":equity,"max_drawdown_pct":max_dd,"bootstrap_ci":ci,
         "frozen_at":meta["frozen_at"] if meta else None,
         "strategy_fingerprint":meta["strategy_fingerprint"] if meta else None,
-        "drawdown_method":"compounded equity index using fixed 0.25% equity risk per realized R; overlapping exposure not netted"}
+        "drawdown_method":"proxy: compounded fixed 0.25% risk per realized R; actual overlapping portfolio equity path is not yet instrumented"}
     metrics["gates"]=evaluate_gates(metrics)
     return metrics
 
@@ -240,7 +240,7 @@ def build_fv1_report():
         f"Status: {m['gates']['status']} · Paper only",
         f"Eligible signals: {m['signals']}/200 · Scored TP/SL: {m['scored']}/100 · Days: {m['days']}/30",
         f"Expectancy: {m['expectancy_pct'] if m['expectancy_pct'] is not None else 'PENDING'}% · PF: {m['profit_factor'] if m['profit_factor'] is not None else 'PENDING'}",
-        f"Equity drawdown: {m['equity_drawdown_pct']:.2f}%" if m['equity_drawdown_pct'] is not None else "Equity drawdown: PENDING",
+        f"Equity DD proxy: {m['equity_drawdown_proxy_pct']:.2f}% · verified gate PENDING" if m['equity_drawdown_proxy_pct'] is not None else "Equity DD: PENDING (account-level exposure not yet instrumented)",
         f"Integrity: {m['integrity_pct']:.2f}%" if m['integrity_pct'] is not None else "Integrity: PENDING",
         f"Bootstrap lower 95% CI: {m['bootstrap_ci_low_pct'] if m['bootstrap_ci_low_pct'] is not None else 'PENDING'}",
         f"Risk breaches: {m['critical_risk_breaches']}","",
