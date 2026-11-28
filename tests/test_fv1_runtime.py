@@ -62,6 +62,38 @@ class FV1RuntimeTests(unittest.TestCase):
             w=fv.rank_from_paper_trades()
         self.assertEqual(w["selected"][0]["symbol"],"BTCUSDT")
         self.assertEqual(w["source"],"PAPER_LEDGER_HISTORY_PLUS_BINANCE_LIQUIDITY")
+    def test_overlapping_equity_and_risk_controls(self):
+        fv.initialize()
+        now=datetime.now(timezone.utc).isoformat()
+        # Three concurrent positions consume 0.75% aggregate risk.
+        for sid in (101,102,103):
+            self.add_trade(sid,"BTCUSDT")
+            fv.register_signal(sid)
+        with sqlite3.connect(self.db) as con:
+            con.execute("UPDATE paper_trades SET initial_risk=2, realized_pnl_pct=0, unrealized_r=1 WHERE signal_id IN (101,102,103)")
+        from trade_bot import fv1_risk_ledger as risk
+        first=risk.record_snapshot(now)
+        self.assertEqual(first["open_positions"],3)
+        self.assertAlmostEqual(first["aggregate_open_risk_pct"],0.75)
+        self.assertAlmostEqual(first["unrealized_r"],3.0)
+        # A fourth overlapping position breaches both concurrency and risk caps.
+        self.add_trade(104,"ETHUSDT")
+        fv.register_signal(104)
+        with sqlite3.connect(self.db) as con:
+            con.execute("UPDATE paper_trades SET initial_risk=2, unrealized_r=1 WHERE signal_id=104")
+        second=risk.record_snapshot((datetime.now(timezone.utc)+timedelta(seconds=2)).isoformat())
+        self.assertEqual(second["open_positions"],4)
+        self.assertAlmostEqual(second["aggregate_open_risk_pct"],1.0)
+        metrics=risk.risk_metrics()
+        self.assertEqual(metrics["critical_risk_breaches"],1)
+        self.assertIsNotNone(metrics["equity_drawdown_pct"])
+
+    def test_risk_ledger_is_persisted_and_fail_closed_without_snapshots(self):
+        fv.initialize()
+        from trade_bot import fv1_risk_ledger as risk
+        self.assertIsNone(risk.risk_metrics()["equity_drawdown_pct"])
+        self.assertIsNone(risk.risk_metrics()["critical_risk_breaches"])
+
     def test_missing_risk_controls_remain_pending(self):
         fv.initialize()
         m=fv.cohort_metrics()
