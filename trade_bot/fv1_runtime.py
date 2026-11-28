@@ -10,6 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from .journal import DB
 from .forward_validation import PROTOCOL, evaluate_gates, bootstrap_daily_block_ci
+from .token_intelligence import select_watchlist
 
 RISK_PER_TRADE_PCT = 0.25
 BINANCE_DATA_BASE = os.getenv('CRYPTO_API_URL','https://data-api.binance.vision').rstrip('/')
@@ -170,7 +171,7 @@ def rank_from_paper_trades():
         avg_r=float(r["avg_r"] or 0)
         # Evidence count dominates; expectancy and engine score are tie-breakers.
         score=100*(.50*min(1,float(r["scored"])/20)+.30*max(0,min(1,(avg_r+1)/2))+.20*max(0,min(1,float(r["avg_score"] or 0)/100)))
-        candidates.append({"symbol":r["symbol"],"trades":r["n"],"scored":r["scored"],
+        candidates.append({"eligible":True,"symbol":r["symbol"],"trades":r["n"],"scored":r["scored"],
             "win_rate_pct":round(win*100,2),"avg_r":round(avg_r,3),
             "avg_engine_score":round(float(r["avg_score"] or 0),1),
             "score":round(score,2),"source":"GENERATED_PAPER_TRADES"})
@@ -204,11 +205,9 @@ def rank_from_paper_trades():
             except Exception:
                 continue
     candidates=market
-    candidates.sort(key=lambda x:(x["score"],x["scored"],x["symbol"]),reverse=True)
-    return {"selected":candidates[:10],"reserves":candidates[10:15],
-        "unfilled_active_slots":max(0,10-len(candidates[:10])),
-        "unfilled_reserve_slots":max(0,5-len(candidates[10:15])),
-        "source":"GENERATED_PAPER_TRADES_PLUS_BINANCE_LIQUIDITY","generated_at":_utc()}
+    selection=select_watchlist(candidates,active_count=10,reserve_count=5)
+    selection["source"]="GENERATED_PAPER_TRADES_PLUS_BINANCE_LIQUIDITY"
+    return selection
 
 def save_watchlist(selection):
     con=_connect()
