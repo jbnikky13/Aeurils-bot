@@ -175,8 +175,10 @@ async def evaluate():
 
 
 async def main():
+    from .fv1_runtime import sync_outcomes
     print("AURELIS MULTI-TIMEFRAME PAPER MONITOR")
     results,expired=await evaluate()
+    sync_outcomes()
     print({
         "primary_interval":PRIMARY_INTERVAL,
         "higher_timeframe":HTF_INTERVAL,
