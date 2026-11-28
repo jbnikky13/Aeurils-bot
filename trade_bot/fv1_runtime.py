@@ -136,7 +136,7 @@ def cohort_metrics():
         "profit_factor":pf,"equity_drawdown_pct":max_dd if scored else None,
         "integrity_pct":integrity if signals else None,
         "bootstrap_ci_low_pct":ci["lower_95_pct"] if ci else None,
-        "critical_risk_breaches":0,
+        "critical_risk_breaches":None,
         "wins":wins,"losses":losses,"expiries":sum(1 for r in rows if r["outcome"] in ("EXPIRED","EXPIRY")),
         "win_rate_pct":wins/len(scored)*100 if scored else None,
         "equity_index":equity,"max_drawdown_pct":max_dd,"bootstrap_ci":ci,
