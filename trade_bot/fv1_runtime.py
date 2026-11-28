@@ -127,13 +127,12 @@ def cohort_metrics():
     expectancy=(sum(rs)/len(rs)) if rs else None
     pf=(gross_win/gross_loss) if gross_loss>0 else (float("inf") if gross_win>0 else None)
     days=0
-    if meta and signals:
-        first=min(r["created_at"] for r in rows)
-        last=max((r["closed_at"] or r["created_at"]) for r in rows)
+    if meta:
         try:
-            a=datetime.fromisoformat(first.replace("Z","+00:00")); b=datetime.fromisoformat(last.replace("Z","+00:00"))
-            days=max(0,(b-a).days)
-        except Exception: pass
+            frozen=datetime.fromisoformat(meta["frozen_at"].replace("Z","+00:00"))
+            days=max(0,(datetime.now(timezone.utc)-frozen).days)
+        except Exception:
+            days=0
     ci=bootstrap_daily_block_ci([daily[k] for k in sorted(daily)]) if len(daily)>=2 else None
     metrics={"signals":signals,"scored":len(scored),"days":days,
         "expectancy_pct":expectancy*RISK_PER_TRADE_PCT if expectancy is not None else None,
