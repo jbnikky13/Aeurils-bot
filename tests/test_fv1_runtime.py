@@ -61,7 +61,7 @@ class FV1RuntimeTests(unittest.TestCase):
         with patch.object(fv.httpx,"Client",return_value=FakeClient()):
             w=fv.rank_from_paper_trades()
         self.assertEqual(w["selected"][0]["symbol"],"BTCUSDT")
-        self.assertEqual(w["source"],"GENERATED_PAPER_TRADES_PLUS_BINANCE_LIQUIDITY")
+        self.assertEqual(w["source"],"PAPER_LEDGER_HISTORY_PLUS_BINANCE_LIQUIDITY")
     def test_missing_risk_controls_remain_pending(self):
         fv.initialize()
         m=fv.cohort_metrics()
