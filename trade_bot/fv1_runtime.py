@@ -5,12 +5,14 @@ this module never places or authorizes orders.
 """
 from __future__ import annotations
 import hashlib, json, math, os, sqlite3
+import httpx
 from datetime import datetime, timezone
 from pathlib import Path
 from .journal import DB
 from .forward_validation import PROTOCOL, evaluate_gates, bootstrap_daily_block_ci
 
 RISK_PER_TRADE_PCT = 0.25
+BINANCE_DATA_BASE = os.getenv('CRYPTO_API_URL','https://data-api.binance.vision').rstrip('/')
 MIN_TOKEN_TRADES = 3
 MIN_TOKEN_SCORED = 2
 
@@ -173,17 +175,38 @@ def rank_from_paper_trades():
             "win_rate_pct":round(win*100,2),"avg_r":round(avg_r,3),
             "avg_engine_score":round(float(r["avg_score"] or 0),1),
             "score":round(score,2),"source":"GENERATED_PAPER_TRADES"})
+    # The signal engine defines the candidate pool; current Binance liquidity
+    # and spread are hard eligibility checks before Top 10 + reserve selection.
+    market=[]
+    with httpx.Client(timeout=12) as client:
+        for item in candidates:
+            try:
+                q=client.get(BINANCE_DATA_BASE+"/api/v3/ticker/24hr",params={"symbol":item["symbol"]})
+                b=client.get(BINANCE_DATA_BASE+"/api/v3/ticker/bookTicker",params={"symbol":item["symbol"]})
+                q.raise_for_status(); b.raise_for_status()
+                quote_volume=float(q.json().get("quoteVolume",0))
+                bid=float(b.json().get("bidPrice",0)); ask=float(b.json().get("askPrice",0))
+                spread=(ask-bid)/((ask+bid)/2)*100 if bid>0 and ask>=bid else 999
+                if quote_volume < 2_000_000 or spread > .35: continue
+                item["quote_volume_24h_usd"]=round(quote_volume,2)
+                item["spread_pct"]=round(spread,4)
+                item["score"]=round(min(100,item["score"]+min(5,math.log10(max(1,quote_volume/2_000_000))*2)),2)
+                item["market_data_source"]="BINANCE_SPOT_24H_AND_BOOK_TICKER"
+                market.append(item)
+            except Exception:
+                continue
+    candidates=market
     candidates.sort(key=lambda x:(x["score"],x["scored"],x["symbol"]),reverse=True)
     return {"selected":candidates[:10],"reserves":candidates[10:15],
         "unfilled_active_slots":max(0,10-len(candidates[:10])),
         "unfilled_reserve_slots":max(0,5-len(candidates[10:15])),
-        "source":"GENERATED_PAPER_TRADES","generated_at":_utc()}
+        "source":"GENERATED_PAPER_TRADES_PLUS_BINANCE_LIQUIDITY","generated_at":_utc()}
 
 def save_watchlist(selection):
     con=_connect()
     try:
         con.execute("INSERT INTO fv1_watchlist_history(generated_at,selection_json,source) VALUES(?,?,?)",
-            (selection["generated_at"],json.dumps(selection,sort_keys=True),"GENERATED_PAPER_TRADES"))
+            (selection["generated_at"],json.dumps(selection,sort_keys=True),selection.get("source","GENERATED_PAPER_TRADES")))
         con.commit()
     finally: con.close()
 
@@ -204,7 +227,7 @@ def build_fv1_report():
 def build_token_report():
     w=rank_from_paper_trades()
     lines=["🔎 AURELIS TOKEN INTELLIGENCE",
-        "Ranking source: AURELIS-generated prospective paper trades",
+        "Ranking source: FV1 paper-trade history + live Binance spot liquidity/spread",
         "Research/watchlist only — not trade authorization","","TOP 10"]
     for i,x in enumerate(w["selected"],1):
         lines.append(f"{i}. {x['symbol']} — {x['score']:.1f}/100 | {x['scored']} scored | WR {x['win_rate_pct']:.1f}% | avg {x['avg_r']:+.2f}R")
