@@ -25,7 +25,7 @@ def record_snapshot(captured_at=None):
           occurred_at TEXT NOT NULL,event_type TEXT NOT NULL,severity TEXT NOT NULL,
           observed_value REAL,limit_value REAL,details TEXT NOT NULL)""")
         rows=con.execute("""SELECT p.signal_id,p.status,p.entry,p.initial_risk,
-          p.realized_pnl_pct,p.realized_r,p.unrealized_r
+          p.realized_pnl_pct,p.realized_r,p.unrealized_r,p.exit_price,p.direction
           FROM fv1_cohort c JOIN paper_trades p ON p.signal_id=c.signal_id
           ORDER BY p.opened_at,p.signal_id""").fetchall()
         if not rows: return {"recorded":False,"reason":"no_fv1_trades"}
@@ -37,8 +37,12 @@ def record_snapshot(captured_at=None):
                 invalid+=1
                 continue
             rr=float(r["realized_pnl_pct"] or 0)/100*entry/risk
-            if r["status"]=="CLOSED" and r["realized_r"] is not None:
-                rr=float(r["realized_r"])
+            if r["status"]=="CLOSED":
+                if r["realized_r"] not in (None,0):
+                    rr=float(r["realized_r"])
+                elif r["exit_price"] is not None:
+                    move=(float(r["exit_price"])-entry) if r["direction"]=="LONG" else (entry-float(r["exit_price"]))
+                    rr=move/risk
             ur=0.0 if r["status"]=="CLOSED" else float(r["unrealized_r"] or 0)
             realized+=rr; unrealized+=ur
             if r["status"]=="OPEN": opened+=1
