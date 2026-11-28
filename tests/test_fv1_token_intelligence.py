@@ -22,7 +22,7 @@ class FV1Tests(unittest.TestCase):
         self.assertEqual(evaluate_gates(m)["status"],"FAIL")
     def test_daily_block_bootstrap(self):
         self.assertIsNone(bootstrap_daily_block_ci([1]))
-        self.assertGreater(bootstrap_daily_block_ci([1,2,3],iterations=100)["lower_95_pct"],0)
+        self.assertGreater(bootstrap_daily_block_ci([1,2,3,4,5],iterations=100)["lower_95_pct"],0)
     def test_state_roundtrip(self):
         import tempfile, os
         with tempfile.TemporaryDirectory() as d:
