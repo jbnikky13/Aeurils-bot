@@ -151,32 +151,39 @@ def cohort_metrics():
     return metrics
 
 def rank_from_paper_trades():
-    """Rank only assets actually emitted by the signal engine; require minimum evidence."""
-    sync_outcomes()
+    """Rank Binance assets represented in the persisted paper ledger.
+
+    This research watchlist may use legacy paper-trade history for immediate
+    coverage. It is explicitly separate from the prospective FV1 validation
+    cohort and never feeds a trade filter or authorizes an order.
+    """
     con=_connect()
     try:
-        rows=con.execute("""SELECT c.symbol,COUNT(*) n,
-            SUM(CASE WHEN c.status='CLOSED' AND c.outcome IN
+        rows=con.execute("""SELECT p.symbol,COUNT(*) n,
+            SUM(CASE WHEN p.status='CLOSED' AND p.outcome IN
             ('WIN_TP1','WIN_TP2','WIN_RUNNER','LOSS_SL') THEN 1 ELSE 0 END) scored,
-            SUM(CASE WHEN c.outcome IN ('WIN_TP1','WIN_TP2','WIN_RUNNER') THEN 1 ELSE 0 END) wins,
-            AVG(CASE WHEN c.realized_r IS NOT NULL THEN c.realized_r END) avg_r,
-            AVG(p.final_score) avg_score, MAX(c.created_at) latest
-            FROM fv1_cohort c JOIN paper_trades p ON p.signal_id=c.signal_id
-            GROUP BY c.symbol ORDER BY c.symbol""").fetchall()
+            SUM(CASE WHEN p.outcome IN ('WIN_TP1','WIN_TP2','WIN_RUNNER') THEN 1 ELSE 0 END) wins,
+            AVG(CASE WHEN p.realized_r IS NOT NULL AND p.realized_r!=0 THEN p.realized_r
+                WHEN p.initial_risk>0 AND p.exit_price IS NOT NULL AND p.direction='LONG'
+                    THEN (p.exit_price-p.entry)/p.initial_risk
+                WHEN p.initial_risk>0 AND p.exit_price IS NOT NULL AND p.direction='SHORT'
+                    THEN (p.entry-p.exit_price)/p.initial_risk END) avg_r,
+            AVG(p.final_score) avg_score, MAX(p.opened_at) latest
+            FROM paper_trades p WHERE p.symbol LIKE '%USDT'
+            GROUP BY p.symbol""").fetchall()
     finally: con.close()
     candidates=[]
     for r in rows:
         if r["n"]<MIN_TOKEN_TRADES or r["scored"]<MIN_TOKEN_SCORED: continue
         win=float(r["wins"] or 0)/float(r["scored"])
         avg_r=float(r["avg_r"] or 0)
-        # Evidence count dominates; expectancy and engine score are tie-breakers.
         score=100*(.50*min(1,float(r["scored"])/20)+.30*max(0,min(1,(avg_r+1)/2))+.20*max(0,min(1,float(r["avg_score"] or 0)/100)))
         candidates.append({"eligible":True,"symbol":r["symbol"],"trades":r["n"],"scored":r["scored"],
             "win_rate_pct":round(win*100,2),"avg_r":round(avg_r,3),
             "avg_engine_score":round(float(r["avg_score"] or 0),1),
-            "score":round(score,2),"source":"GENERATED_PAPER_TRADES"})
-    # The signal engine defines the candidate pool; current Binance liquidity
-    # and spread are hard eligibility checks before Top 10 + reserve selection.
+            "score":round(score,2),"source":"PAPER_LEDGER_HISTORY"})
+    # Current Binance spot liquidity/spread and closed 4h candles qualify the
+    # candidate pool; historical ledger data never enters the FV1 gate metrics.
     market=[]
     with httpx.Client(timeout=12) as client:
         for item in candidates:
@@ -199,14 +206,13 @@ def rank_from_paper_trades():
                 if len(closes)<30: continue
                 returns=[closes[i]/closes[i-1]-1 for i in range(1,len(closes))]
                 item["trend_7d_pct"]=round((closes[-1]/closes[0]-1)*100,2)
-                item["realized_vol_4h_pct"]=round(math.sqrt(sum(x*x for x in returns)/len(returns))*math.sqrt(6)*100,3)
+                item["realized_vol_24h_pct"]=round(math.sqrt(sum(x*x for x in returns)/len(returns))*math.sqrt(6)*100,3)
                 item["market_data_source"]="BINANCE_SPOT_24H_BOOK_TICKER_CLOSED_4H_CANDLES"
                 market.append(item)
             except Exception:
                 continue
-    candidates=market
-    selection=select_watchlist(candidates,active_count=10,reserve_count=5)
-    selection["source"]="GENERATED_PAPER_TRADES_PLUS_BINANCE_LIQUIDITY"
+    selection=select_watchlist(market,active_count=10,reserve_count=5)
+    selection["source"]="PAPER_LEDGER_HISTORY_PLUS_BINANCE_LIQUIDITY"
     return selection
 
 def save_watchlist(selection):
@@ -250,8 +256,8 @@ def build_fv1_report():
 def build_token_report():
     w=rank_from_paper_trades()
     lines=["🔎 AURELIS TOKEN INTELLIGENCE",
-        "Ranking source: FV1 paper-trade history + Binance 24h liquidity, spread and closed 4h candles",
-        "Research/watchlist only — not trade authorization","","TOP 10"]
+        "Ranking source: stored AURELIS paper-trade history + Binance liquidity, spread and closed 4h candles",
+        "","","TOP 10"]
     for i,x in enumerate(w["selected"],1):
         lines.append(f"{i}. {x['symbol']} — {x['score']:.1f}/100 | {x['scored']} scored | WR {x['win_rate_pct']:.1f}% | avg {x['avg_r']:+.2f}R | 7d {x.get('trend_7d_pct',0):+.1f}%")
     lines += ["","RESERVES"]
