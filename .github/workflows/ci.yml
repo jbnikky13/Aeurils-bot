@@ -22,6 +22,19 @@ jobs:
       - run: python -m compileall -q trade_bot tests
       - name: Unit tests
         run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Restore ledger and generate Telegram preview (no delivery)
+        env:
+          DATABASE_PATH: trade_bot.db
+          PAPER_LEDGER_PATH: data/aurelis_paper_ledger.json
+        run: |
+          python -m trade_bot.paper_persistence restore
+          python -m trade_bot.fv1_preview > data/aurelis_telegram_preview.txt
+      - name: Upload Telegram preview artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aurelis-telegram-preview
+          path: data/aurelis_telegram_preview.txt
+          if-no-files-found: error
       - name: Paper-filter chronological holdout (research only)
         run: python -m trade_bot.paper_filter_validation
       - run: |
