@@ -4,6 +4,7 @@ import tempfile
 import unittest
 from datetime import datetime, timezone, timedelta
 from unittest.mock import patch
+from types import SimpleNamespace
 
 from trade_bot import fv1_runtime as fv
 
@@ -44,7 +45,21 @@ class FV1RuntimeTests(unittest.TestCase):
         for sid in range(5,8):
             self.add_trade(sid,"ETHUSDT","CLOSED","LOSS_SL",-1,datetime.now(timezone.utc).isoformat())
             fv.register_signal(sid)
-        w=fv.rank_from_paper_trades()
+        class FakeResponse:
+            def __init__(self,payload): self.payload=payload
+            def raise_for_status(self): pass
+            def json(self): return self.payload
+        class FakeClient:
+            def __enter__(self): return self
+            def __exit__(self,*args): pass
+            def get(self,url,params=None):
+                if url.endswith("24hr"): return FakeResponse({"quoteVolume":"10000000"})
+                if url.endswith("bookTicker"): return FakeResponse({"bidPrice":"100","askPrice":"100.02"})
+                now=int(datetime.now(timezone.utc).timestamp()*1000)
+                candles=[[0,"100","102","99",str(100+i),"1000",now-1000] for i in range(45)]
+                return FakeResponse(candles)
+        with patch.object(fv.httpx,"Client",return_value=FakeClient()):
+            w=fv.rank_from_paper_trades()
         self.assertEqual(w["selected"][0]["symbol"],"BTCUSDT")
         self.assertEqual(w["source"],"GENERATED_PAPER_TRADES")
     def test_missing_risk_controls_remain_pending(self):
