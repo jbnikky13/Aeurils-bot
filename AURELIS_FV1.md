@@ -20,12 +20,12 @@ The fixed-risk compounded equity curve is currently a **proxy**. It does not mod
 
 ## Token Intelligence
 
-The candidate pool is restricted to symbols with at least three FV1-generated paper trades and two scored outcomes. Each candidate must then pass current Binance spot checks:
+The Token Intelligence candidate pool uses symbols represented in the persisted AURELIS paper-trade ledger (including legacy history for immediate coverage), with at least three trades and two scored outcomes. This retrospective ranking is strictly separate from FV1; legacy records never enter FV1 validation metrics. Each candidate must then pass current Binance spot checks:
 - 24-hour quote volume at least USD 2 million
 - bid/ask spread no greater than 0.35%
 - at least 30 closed 4-hour candles for a seven-day trend and dailyized volatility snapshot
 
-The shared selector returns up to 10 active symbols and five reserves. It does not fill slots artificially. The ranking is research/watchlist information, not an instruction to trade. Watchlist changes and weekly refreshes are recorded in the persistent ledger.
+The shared selector returns up to 10 active symbols and five reserves. It does not fill slots artificially. The ranking is research/watchlist information, not an instruction to trade. If there is not enough history or Binance market data, slots remain empty. Watchlist changes and weekly refreshes are recorded in the persistent ledger.
 
 ## Reports and preview
 
