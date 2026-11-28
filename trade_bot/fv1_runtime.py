@@ -190,7 +190,16 @@ def rank_from_paper_trades():
                 item["quote_volume_24h_usd"]=round(quote_volume,2)
                 item["spread_pct"]=round(spread,4)
                 item["score"]=round(min(100,item["score"]+min(5,math.log10(max(1,quote_volume/2_000_000))*2)),2)
-                item["market_data_source"]="BINANCE_SPOT_24H_AND_BOOK_TICKER"
+                k=client.get(BINANCE_DATA_BASE+"/api/v3/klines",params={"symbol":item["symbol"],"interval":"4h","limit":45})
+                k.raise_for_status()
+                now_ms=int(datetime.now(timezone.utc).timestamp()*1000)
+                closed=[row for row in k.json() if int(row[6])<now_ms]
+                closes=[float(row[4]) for row in closed[-42:] if float(row[4])>0]
+                if len(closes)<30: continue
+                returns=[closes[i]/closes[i-1]-1 for i in range(1,len(closes))]
+                item["trend_7d_pct"]=round((closes[-1]/closes[0]-1)*100,2)
+                item["realized_vol_4h_pct"]=round(math.sqrt(sum(x*x for x in returns)/len(returns))*math.sqrt(6)*100,3)
+                item["market_data_source"]="BINANCE_SPOT_24H_BOOK_TICKER_CLOSED_4H_CANDLES"
                 market.append(item)
             except Exception:
                 continue
@@ -204,9 +213,25 @@ def rank_from_paper_trades():
 def save_watchlist(selection):
     con=_connect()
     try:
-        con.execute("INSERT INTO fv1_watchlist_history(generated_at,selection_json,source) VALUES(?,?,?)",
-            (selection["generated_at"],json.dumps(selection,sort_keys=True),selection.get("source","GENERATED_PAPER_TRADES")))
-        con.commit()
+        previous=con.execute("SELECT generated_at,selection_json FROM fv1_watchlist_history ORDER BY id DESC LIMIT 1").fetchone()
+        current_symbols=[x["symbol"] for x in selection.get("selected",[])]
+        previous_symbols=[]
+        if previous:
+            try: previous_symbols=[x["symbol"] for x in json.loads(previous["selection_json"]).get("selected",[])]
+            except Exception: previous_symbols=[]
+        added=sorted(set(current_symbols)-set(previous_symbols))
+        removed=sorted(set(previous_symbols)-set(current_symbols))
+        selection["rotation"]={"added":added,"removed":removed,"reason":"WEEKLY_RANK_REFRESH" if added or removed else "NO_CHANGE"}
+        due=not previous or bool(added or removed)
+        if previous and not due:
+            try:
+                last=datetime.fromisoformat(previous["generated_at"].replace("Z","+00:00"))
+                due=(datetime.now(timezone.utc)-last).days>=7
+            except Exception: due=True
+        if due:
+            con.execute("INSERT INTO fv1_watchlist_history(generated_at,selection_json,source) VALUES(?,?,?)",
+                (selection["generated_at"],json.dumps(selection,sort_keys=True),selection.get("source","GENERATED_PAPER_TRADES")))
+            con.commit()
     finally: con.close()
 
 def build_fv1_report():
@@ -226,10 +251,10 @@ def build_fv1_report():
 def build_token_report():
     w=rank_from_paper_trades()
     lines=["🔎 AURELIS TOKEN INTELLIGENCE",
-        "Ranking source: FV1 paper-trade history + live Binance spot liquidity/spread",
+        "Ranking source: FV1 paper-trade history + Binance 24h liquidity, spread and closed 4h candles",
         "Research/watchlist only — not trade authorization","","TOP 10"]
     for i,x in enumerate(w["selected"],1):
-        lines.append(f"{i}. {x['symbol']} — {x['score']:.1f}/100 | {x['scored']} scored | WR {x['win_rate_pct']:.1f}% | avg {x['avg_r']:+.2f}R")
+        lines.append(f"{i}. {x['symbol']} — {x['score']:.1f}/100 | {x['scored']} scored | WR {x['win_rate_pct']:.1f}% | avg {x['avg_r']:+.2f}R | 7d {x.get('trend_7d_pct',0):+.1f}%")
     lines += ["","RESERVES"]
     lines += [f"• {x['symbol']} — {x['score']:.1f}" for x in w["reserves"]] or ["• None qualified"]
     if w["unfilled_active_slots"]: lines.append(f"⚠️ Only {len(w['selected'])} assets meet minimum evidence; {w['unfilled_active_slots']} slots intentionally unfilled.")
