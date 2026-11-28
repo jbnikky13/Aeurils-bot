@@ -8,6 +8,7 @@ from .confluence_gate import evaluate
 from .confluence_providers import crypto_evidence
 from .binance_universe import all_binance_usdt_spot_symbols
 from .signal_execution import execute_signal_if_enabled
+from .fv1_runtime import register_signal
 
 CHAT_ID=os.getenv('TELEGRAM_CHAT_ID')
 MAX_DAILY_ACTIONABLE_SIGNALS=int(os.getenv('MAX_DAILY_ACTIONABLE_SIGNALS','5'))
@@ -116,6 +117,7 @@ async def daily_scan(context:ContextTypes.DEFAULT_TYPE):
                               runner_enabled=getattr(signal,'runner_enabled',False),
                               trailing_atr_multiplier=getattr(signal,'trailing_atr_multiplier',None) or 2.0,
                               signal_source=source,confluence_score=gate.get('score'),confluence_tier=gate.get('tier'))
+            register_signal(sid)
             try:
                 demo=execute_signal_if_enabled({
                     'symbol':signal.symbol,'direction':signal.direction,'entry':entry,

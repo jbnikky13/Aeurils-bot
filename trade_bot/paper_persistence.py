@@ -7,9 +7,15 @@ STORE=os.getenv('PAPER_LEDGER_PATH','data/aurelis_paper_ledger.json')
 
 def _tables():
     init_paper_db()
+    from .fv1_runtime import initialize
+    from .fv1_risk_ledger import initialize as initialize_risk_ledger
+    initialize()
+    initialize_risk_ledger()
     out={}
     with sqlite3.connect(DB) as con:
-        for table in ('setups','paper_trades'):
+        for table in ('setups','paper_trades','fv1_meta','fv1_cohort','fv1_watchlist_history','fv1_equity_snapshots','fv1_risk_events'):
+            exists=con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?",(table,)).fetchone()
+            if not exists: continue
             cols=[r[1] for r in con.execute(f'PRAGMA table_info({table})').fetchall()]
             rows=[dict(zip(cols,row)) for row in con.execute(f'SELECT * FROM {table}').fetchall()]
             out[table]={'columns':cols,'rows':rows}
@@ -23,11 +29,17 @@ def export_ledger():
 
 def restore_ledger():
     init_paper_db()
+    from .fv1_runtime import initialize
+    from .fv1_risk_ledger import initialize as initialize_risk_ledger
+    initialize()
+    initialize_risk_ledger()
     if not os.path.exists(STORE): return
     with open(STORE,encoding='utf-8') as f: data=json.load(f)
     with sqlite3.connect(DB) as con:
         for table,payload in data.items():
-            if table not in {'setups','paper_trades'}: continue
+            if table not in {'setups','paper_trades','fv1_meta','fv1_cohort','fv1_watchlist_history','fv1_equity_snapshots','fv1_risk_events'}: continue
+            exists=con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?",(table,)).fetchone()
+            if not exists: continue
             source_cols=payload.get('columns',[])
             if not source_cols: continue
             target_cols={r[1] for r in con.execute(f'PRAGMA table_info({table})').fetchall()}
