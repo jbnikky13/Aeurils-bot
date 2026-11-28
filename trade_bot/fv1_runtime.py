@@ -59,6 +59,8 @@ def initialize():
 
 def register_signal(signal_id):
     meta=initialize()
+    if _fingerprint() != meta["strategy_fingerprint"]:
+        raise RuntimeError("FV1 frozen strategy fingerprint changed; stop cohort intake and restart under a new cohort")
     con=_connect()
     try:
         trade=con.execute("SELECT symbol,opened_at,status FROM paper_trades WHERE signal_id=?",(int(signal_id),)).fetchone()
