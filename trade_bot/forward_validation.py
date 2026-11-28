@@ -48,17 +48,30 @@ def cohort_eligible(signal, frozen_at, strategy_hash):
     return True, "eligible"
 
 def bootstrap_daily_block_ci(daily_returns, iterations=None, seed=20261128):
-    """Percentile CI for mean daily return using resampled daily blocks (days as units)."""
-    values = [float(x) for x in daily_returns]
-    if len(values) < 2 or not all(math.isfinite(x) for x in values):
+    """Circular moving-block bootstrap of daily portfolio returns.
+
+    Adjacent daily observations stay together in short blocks to preserve
+    near-term serial dependence. The returned interval is for mean daily return.
+    """
+    values=[float(x) for x in daily_returns]
+    if len(values)<4 or not all(math.isfinite(x) for x in values):
         return None
-    n = len(values)
-    iterations = int(iterations or PROTOCOL["bootstrap_iterations"])
-    rng = random.Random(seed)
-    means = sorted(sum(rng.choice(values) for _ in range(n)) / n for _ in range(iterations))
-    return {"lower_95_pct": means[max(0, int(0.025 * iterations) - 1)],
-            "upper_95_pct": means[min(iterations - 1, int(0.975 * iterations))],
-            "days": n, "iterations": iterations}
+    n=len(values)
+    iterations=int(iterations or PROTOCOL["bootstrap_iterations"])
+    block=max(2,int(math.sqrt(n)))
+    rng=random.Random(seed)
+    means=[]
+    for _ in range(iterations):
+        sample=[]
+        while len(sample)<n:
+            start=rng.randrange(n)
+            sample.extend(values[(start+j)%n] for j in range(block))
+        sample=sample[:n]
+        means.append(sum(sample)/n)
+    means.sort()
+    return {"lower_95_pct":means[max(0,int(0.025*iterations)-1)],
+            "upper_95_pct":means[min(iterations-1,int(0.975*iterations))],
+            "days":n,"iterations":iterations,"block_length_days":block}
 
 def evaluate_gates(metrics):
     required = ("signals", "scored", "days", "expectancy_pct", "profit_factor",
