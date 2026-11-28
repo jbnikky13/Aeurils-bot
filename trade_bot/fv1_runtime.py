@@ -86,7 +86,7 @@ def sync_outcomes():
     try:
         con.execute("""UPDATE fv1_cohort SET
             status=p.status, outcome=p.outcome, pnl_pct=p.pnl_pct,
-            realized_r=p.realized_r, closed_at=p.closed_at,
+            realized_r=CASE WHEN (p.realized_r IS NULL OR p.realized_r=0) AND p.initial_risk>0 AND p.exit_price IS NOT NULL THEN CASE WHEN p.direction='LONG' THEN (p.exit_price-p.entry)/p.initial_risk WHEN p.direction='SHORT' THEN (p.entry-p.exit_price)/p.initial_risk ELSE NULL END ELSE p.realized_r END, closed_at=p.closed_at,
             resolution_source=p.resolution_source
             FROM paper_trades p
             WHERE fv1_cohort.signal_id=p.signal_id""")
@@ -109,7 +109,7 @@ def cohort_metrics():
     losses=len(scored)-wins
     # Realized R is the normalized outcome; missing/zero risk is an integrity defect.
     rs=[float(r["realized_r"]) for r in scored if r["realized_r"] is not None]
-    integrity=sum(1 for r in rows if r["integrity_ok"]==1 and r["strategy_fingerprint"]==meta["strategy_fingerprint"])/signals*100 if signals else 0.0
+    integrity=sum(1 for r in rows if r["integrity_ok"]==1 and r["strategy_fingerprint"]==meta["strategy_fingerprint"] and r["initial_risk"] is not None and float(r["initial_risk"] or 0)>0)/signals*100 if signals else 0.0
     daily={}
     for r in scored:
         if r["realized_r"] is None or not r["closed_at"]: continue
