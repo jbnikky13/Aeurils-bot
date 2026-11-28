@@ -179,7 +179,10 @@ async def main():
     print("AURELIS MULTI-TIMEFRAME PAPER MONITOR")
     results,expired=await evaluate()
     sync_outcomes()
+    from .fv1_risk_ledger import record_snapshot
+    risk_snapshot=record_snapshot()
     print({
+        "risk_snapshot":risk_snapshot,
         "primary_interval":PRIMARY_INTERVAL,
         "higher_timeframe":HTF_INTERVAL,
         "results":results,
