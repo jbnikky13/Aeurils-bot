@@ -10,8 +10,23 @@ MAX_AGGREGATE_OPEN_RISK_PCT=1.0
 DAILY_LOSS_LIMIT_PCT=1.0
 WEEKLY_LOSS_LIMIT_PCT=3.0
 
+def initialize():
+    with sqlite3.connect(DB) as con:
+        con.execute("""CREATE TABLE IF NOT EXISTS fv1_equity_snapshots (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,captured_at TEXT NOT NULL UNIQUE,
+          equity_index REAL NOT NULL,open_positions INTEGER NOT NULL,
+          aggregate_open_risk_pct REAL NOT NULL,realized_r REAL NOT NULL,
+          unrealized_r REAL NOT NULL,total_r REAL NOT NULL,daily_return_pct REAL,
+          weekly_return_pct REAL,max_drawdown_pct REAL NOT NULL)""")
+        con.execute("""CREATE TABLE IF NOT EXISTS fv1_risk_events (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,event_key TEXT NOT NULL UNIQUE,
+          occurred_at TEXT NOT NULL,event_type TEXT NOT NULL,severity TEXT NOT NULL,
+          observed_value REAL,limit_value REAL,details TEXT NOT NULL)""")
+        con.commit()
+
 def record_snapshot(captured_at=None):
     stamp=captured_at or datetime.now(timezone.utc).isoformat()
+    initialize()
     with sqlite3.connect(DB) as con:
         con.row_factory=sqlite3.Row
         con.execute("""CREATE TABLE IF NOT EXISTS fv1_equity_snapshots (
