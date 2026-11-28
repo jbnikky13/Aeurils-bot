@@ -11,7 +11,7 @@ def _tables():
     initialize()
     out={}
     with sqlite3.connect(DB) as con:
-        for table in ('setups','paper_trades','fv1_meta','fv1_cohort','fv1_watchlist_history'):
+        for table in ('setups','paper_trades','fv1_meta','fv1_cohort','fv1_watchlist_history','fv1_equity_snapshots','fv1_risk_events'):
             exists=con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?",(table,)).fetchone()
             if not exists: continue
             cols=[r[1] for r in con.execute(f'PRAGMA table_info({table})').fetchall()]
@@ -33,7 +33,7 @@ def restore_ledger():
     with open(STORE,encoding='utf-8') as f: data=json.load(f)
     with sqlite3.connect(DB) as con:
         for table,payload in data.items():
-            if table not in {'setups','paper_trades','fv1_meta','fv1_cohort','fv1_watchlist_history'}: continue
+            if table not in {'setups','paper_trades','fv1_meta','fv1_cohort','fv1_watchlist_history','fv1_equity_snapshots','fv1_risk_events'}: continue
             exists=con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?",(table,)).fetchone()
             if not exists: continue
             source_cols=payload.get('columns',[])
