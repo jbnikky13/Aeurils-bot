@@ -7,6 +7,8 @@ STORE=os.getenv('PAPER_LEDGER_PATH','data/aurelis_paper_ledger.json')
 
 def _tables():
     init_paper_db()
+    from .fv1_runtime import initialize
+    initialize()
     out={}
     with sqlite3.connect(DB) as con:
         for table in ('setups','paper_trades','fv1_meta','fv1_cohort','fv1_watchlist_history'):
@@ -25,6 +27,8 @@ def export_ledger():
 
 def restore_ledger():
     init_paper_db()
+    from .fv1_runtime import initialize
+    initialize()
     if not os.path.exists(STORE): return
     with open(STORE,encoding='utf-8') as f: data=json.load(f)
     with sqlite3.connect(DB) as con:
