@@ -7,12 +7,14 @@ from unittest.mock import patch
 from types import SimpleNamespace
 
 from trade_bot import fv1_runtime as fv
+from trade_bot import fv1_risk_ledger as risk
 
 class FV1RuntimeTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory()
         self.db=os.path.join(self.tmp.name,"test.db")
         self.patcher=patch.object(fv,"DB",self.db); self.patcher.start()
+        self.risk_patcher=patch.object(risk,"DB",self.db); self.risk_patcher.start()
         with sqlite3.connect(self.db) as con:
             con.execute("""CREATE TABLE paper_trades (
                 signal_id INTEGER PRIMARY KEY, symbol TEXT, opened_at TEXT, status TEXT,
@@ -20,7 +22,7 @@ class FV1RuntimeTests(unittest.TestCase):
                 resolution_source TEXT, initial_risk REAL, entry REAL, direction TEXT,
                 exit_price REAL, final_score REAL, realized_pnl_pct REAL DEFAULT 0, unrealized_r REAL DEFAULT 0)""")
     def tearDown(self):
-        self.patcher.stop(); self.tmp.cleanup()
+        self.risk_patcher.stop(); self.patcher.stop(); self.tmp.cleanup()
     def add_trade(self,sid,symbol,status="OPEN",outcome=None,r=None,closed=None,score=70):
         opened=(datetime.now(timezone.utc)+timedelta(seconds=1)).isoformat()
         with sqlite3.connect(self.db) as con:
@@ -71,7 +73,6 @@ class FV1RuntimeTests(unittest.TestCase):
             fv.register_signal(sid)
         with sqlite3.connect(self.db) as con:
             con.execute("UPDATE paper_trades SET initial_risk=2, realized_pnl_pct=0, unrealized_r=1 WHERE signal_id IN (101,102,103)")
-        from trade_bot import fv1_risk_ledger as risk
         first=risk.record_snapshot(now)
         self.assertEqual(first["open_positions"],3)
         self.assertAlmostEqual(first["aggregate_open_risk_pct"],0.75)
@@ -90,7 +91,6 @@ class FV1RuntimeTests(unittest.TestCase):
 
     def test_risk_ledger_is_persisted_and_fail_closed_without_snapshots(self):
         fv.initialize()
-        from trade_bot import fv1_risk_ledger as risk
         self.assertIsNone(risk.risk_metrics()["equity_drawdown_pct"])
         self.assertIsNone(risk.risk_metrics()["critical_risk_breaches"])
 
