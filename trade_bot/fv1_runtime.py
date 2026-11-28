@@ -135,18 +135,25 @@ def cohort_metrics():
         except Exception:
             days=0
     ci=bootstrap_daily_block_ci([daily[k] for k in sorted(daily)]) if len(daily)>=2 else None
+    from .fv1_risk_ledger import risk_metrics
+    portfolio=risk_metrics()
     metrics={"signals":signals,"scored":len(scored),"days":days,
         "expectancy_pct":expectancy*RISK_PER_TRADE_PCT if expectancy is not None else None,
-        "profit_factor":pf,"equity_drawdown_pct":None,"equity_drawdown_proxy_pct":max_dd if scored else None,
+        "profit_factor":pf,"equity_drawdown_pct":portfolio["equity_drawdown_pct"],"equity_drawdown_proxy_pct":max_dd if scored else None,
         "integrity_pct":integrity if signals else None,
         "bootstrap_ci_low_pct":ci["lower_95_pct"] if ci else None,
-        "critical_risk_breaches":None,
+        "critical_risk_breaches":portfolio["critical_risk_breaches"],
+        "equity_snapshots":portfolio["equity_snapshots"],
+        "latest_equity_index":portfolio.get("latest_equity_index"),
+        "latest_open_positions":portfolio.get("latest_open_positions"),
+        "latest_aggregate_open_risk_pct":portfolio.get("latest_aggregate_open_risk_pct"),
+        "risk_events":portfolio["risk_events"],
         "wins":wins,"losses":losses,"expiries":sum(1 for r in rows if r["outcome"] in ("EXPIRED","EXPIRY")),
         "win_rate_pct":wins/len(scored)*100 if scored else None,
         "equity_index":equity,"max_drawdown_pct":max_dd,"bootstrap_ci":ci,
         "frozen_at":meta["frozen_at"] if meta else None,
         "strategy_fingerprint":meta["strategy_fingerprint"] if meta else None,
-        "drawdown_method":"proxy: compounded fixed 0.25% risk per realized R; actual overlapping portfolio equity path is not yet instrumented"}
+        "drawdown_method":"time-stamped FV1 mark-to-market portfolio equity; overlapping positions include realized and unrealized R"}
     metrics["gates"]=evaluate_gates(metrics)
     return metrics
 
@@ -245,12 +252,12 @@ def build_fv1_report():
         f"Status: {m['gates']['status']} · Paper only",
         f"Eligible signals: {m['signals']}/200 · Scored TP/SL: {m['scored']}/100 · Days: {m['days']}/30",
         f"Expectancy: {m['expectancy_pct'] if m['expectancy_pct'] is not None else 'PENDING'}% · PF: {m['profit_factor'] if m['profit_factor'] is not None else 'PENDING'}",
-        f"Equity DD proxy: {m['equity_drawdown_proxy_pct']:.2f}% · verified gate PENDING" if m['equity_drawdown_proxy_pct'] is not None else "Equity DD: PENDING (account-level exposure not yet instrumented)",
+        f"Portfolio equity DD: {m['equity_drawdown_pct']:.2f}% · snapshots {m.get('equity_snapshots',0)}" if m['equity_drawdown_pct'] is not None else "Portfolio equity DD: PENDING (awaiting monitor snapshots)",
         f"Integrity: {m['integrity_pct']:.2f}%" if m['integrity_pct'] is not None else "Integrity: PENDING",
         f"Bootstrap lower 95% CI: {m['bootstrap_ci_low_pct'] if m['bootstrap_ci_low_pct'] is not None else 'PENDING'}",
         f"Risk breaches: {m['critical_risk_breaches']}","",
         "GATES: "+", ".join(f"{k}={v['status']}" for k,v in m["gates"]["gates"].items()),
-        "Note: equity index assumes fixed 0.25% risk per realized R; overlapping exposure is not netted. No live trading."]
+        f"Open positions: {m.get('latest_open_positions','PENDING')} · aggregate open risk: {m.get('latest_aggregate_open_risk_pct','PENDING')}%","Note: fixed-risk paper equity includes overlapping positions; risk controls are monitored at each paper-monitor checkpoint. No live trading."]
     return "\n".join(lines)
 
 def build_token_report():
